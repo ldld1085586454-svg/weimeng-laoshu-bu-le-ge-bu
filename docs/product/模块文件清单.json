@@ -1,0 +1,105 @@
+{
+  "version": "0.12",
+  "files": [
+    {
+      "path": "src/product/board.js",
+      "bytes": 5820
+    },
+    {
+      "path": "src/product/catalog.js",
+      "bytes": 1777
+    },
+    {
+      "path": "src/product/client.js",
+      "bytes": 987
+    },
+    {
+      "path": "src/product/clock.js",
+      "bytes": 691
+    },
+    {
+      "path": "src/product/controller.js",
+      "bytes": 2993
+    },
+    {
+      "path": "src/product/effects.js",
+      "bytes": 1221
+    },
+    {
+      "path": "src/product/round.js",
+      "bytes": 9369
+    },
+    {
+      "path": "src/product/social.js",
+      "bytes": 7538
+    },
+    {
+      "path": "src/product/wechat.js",
+      "bytes": 1846
+    },
+    {
+      "path": "ui/product/app.js",
+      "bytes": 31136
+    },
+    {
+      "path": "ui/product/art.js",
+      "bytes": 6241
+    },
+    {
+      "path": "services/server.js",
+      "bytes": 4101
+    },
+    {
+      "path": "templates/wechat-full/game.js",
+      "bytes": 2444
+    },
+    {
+      "path": "templates/wechat-full/game.json",
+      "bytes": 85
+    },
+    {
+      "path": "templates/wechat-full/open-data/index.js",
+      "bytes": 37
+    },
+    {
+      "path": "templates/wechat-full/open-data/renderer.js",
+      "bytes": 2602
+    },
+    {
+      "path": "templates/wechat-full/preview-config.js",
+      "bytes": 180
+    },
+    {
+      "path": "templates/wechat-full/project.config.json",
+      "bytes": 251
+    },
+    {
+      "path": "tools/build-full.js",
+      "bytes": 7833
+    },
+    {
+      "path": "tools/check-full.js",
+      "bytes": 1411
+    },
+    {
+      "path": "tools/full-browser-qa.py",
+      "bytes": 7639
+    },
+    {
+      "path": "tools/full-stress.js",
+      "bytes": 3878
+    },
+    {
+      "path": "tools/full_visual_first.py",
+      "bytes": 1532
+    },
+    {
+      "path": "tools/release-gate-full.js",
+      "bytes": 429
+    },
+    {
+      "path": "tools/start-full.js",
+      "bytes": 1072
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "src/analysis.js": "3e500479ba326ae6a41660dccd9a7ba92a2b00585a6cdd57d11684587cab9e7d",
+  "src/commerce/model.js": "4e33e0932424e49cc3a953b790dfe6194b8aa62a402be9a084f4e3efd6033b7b",
+  "src/content-hash.js": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df",
+  "src/generator.js": "2c37ebfbebed04be0298e8ed83cce4d60bb7172199a57364ad3e66850b0d7c38",
+  "src/index.js": "f515f03674a052008ff65c36142cd3653e2f2c6482b3dfbf12e9b8aef1cf8473",
+  "src/integration/controller.js": "8f2ba53a8f16e68a2947fd7c633c8ddca23fd38edd9c5a10276fb0bc35eb64d0",
+  "src/integration/round.js": "cda4c5ce6ce0216f8c96827a23cbccd156646626b53b1df348b8da7c84e9cd33",
+  "src/integration/wechat-provider.js": "9227c03cfe68454826abf83a40834468b499f00a4183de5f067c61b0308eeff0",
+  "src/layout.js": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f",
+  "src/play/board.js": "f37d5a6c85920e100b7396013963651ed262a4a00554eeaf1574751fd3e5dff1",
+  "src/play/profile.js": "600d85f73781f54894a00a2ce5b9d594def5f09aa05013d547d4bf28c84d2174",
+  "src/play/session.js": "178cb319605ac859fef197f38e5efb71cf1f3e05138e7632603f5516decf7d33",
+  "src/play/shuffle.js": "3aa9cd690625bf87263d397a5c04255366159f5b495a3b18f9f5d07085ca8cab",
+  "src/policies.js": "56bd472d70c149a76fc7a302b1ad8727c3029bf83068e4bafb5d8ba02dfca8e3",
+  "src/random.js": "42c8af5f97137881ac71a6ea47616611566e494e5157aad0121c94778801820e",
+  "src/release.js": "328f67517678d40f0900212c2fd7c773876d3121dacbedd73a0d72f4e5632f54",
+  "src/replay.js": "1e34bdde84f5ef94472b1cbe6fef086f977e976cf132135e8aed81ccc616bacd",
+  "src/runtime.js": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd",
+  "src/schema.js": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699",
+  "src/solver.js": "0df2b639f4c3dd5a577c61c53ba221d8474e750233cc0b357692fc011b70efee"
+}

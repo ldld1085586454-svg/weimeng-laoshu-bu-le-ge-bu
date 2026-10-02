@@ -1,0 +1,58 @@
+{
+  "art": {
+    "path": "ui/product/art.js",
+    "origin": "new development vector drawing",
+    "originalGameAssets": false
+  },
+  "audio": [
+    {
+      "file": "audio/click.wav",
+      "bytes": 2910,
+      "origin": "newly synthesized development tones",
+      "originalGameAudio": false
+    },
+    {
+      "file": "audio/clear.wav",
+      "bytes": 10628,
+      "origin": "newly synthesized development tones",
+      "originalGameAudio": false
+    },
+    {
+      "file": "audio/win.wav",
+      "bytes": 22094,
+      "origin": "newly synthesized development tones",
+      "originalGameAudio": false
+    },
+    {
+      "file": "audio/fail.wav",
+      "bytes": 14596,
+      "origin": "newly synthesized development tones",
+      "originalGameAudio": false
+    },
+    {
+      "file": "audio/music.wav",
+      "bytes": 282284,
+      "origin": "newly synthesized development tones",
+      "originalGameAudio": false
+    }
+  ],
+  "fonts": "system fonts only; no font files distributed",
+  "maps": [
+    {
+      "dealId": "astra-4b0f5d75d17706b3b237e8d9",
+      "tiles": 270,
+      "origin": "SYNTHETIC_NOT_HISTORICAL"
+    },
+    {
+      "dealId": "astra-2be57d0d90cf5d686b2c33d2",
+      "tiles": 540,
+      "origin": "SYNTHETIC_NOT_HISTORICAL"
+    },
+    {
+      "dealId": "astra-f7279efd402079d05ea52a7c",
+      "tiles": 720,
+      "origin": "SYNTHETIC_NOT_HISTORICAL"
+    }
+  ],
+  "date": "2026-09-18"
+}
