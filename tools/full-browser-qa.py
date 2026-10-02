@@ -1,10 +1,12 @@
 """Development browser QA: real pointer input, with transport limitations recorded."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import json,shutil,time
+import argparse,json,os,shutil,time
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'reports/product';OUT.mkdir(exist_ok=True)
-report={'version':'0.12','navigation':'set_content (complete self-contained HTML)','checks':[], 'screenshots':[], 'pageErrors':[], 'realWeChatTested':False}
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output-dir',default=os.environ.get('SHEEP_BROWSER_REPORT_DIR',str(ROOT/'local_reports/product')))
+OUT=Path(parser.parse_args().output_dir).expanduser().resolve();OUT.mkdir(parents=True,exist_ok=True)
+report={'version':'0.12','navigation':'set_content (complete self-contained HTML)','browser':'Chromium / repository Playwright (Browser plugin not available)','checks':[], 'screenshots':[], 'pageErrors':[], 'consoleErrors':[], 'realWeChatTested':False}
 html=(ROOT/'全模块游戏_双击打开.html').read_text()
 def check(name,actual=True):
     if not actual: raise AssertionError(name)
@@ -13,26 +15,55 @@ with sync_playwright() as p:
  b=p.chromium.launch(executable_path=shutil.which('chromium'),headless=True,args=['--no-sandbox'])
  pg=b.new_page(viewport={'width':390,'height':844})
  pg.on('pageerror',lambda e:report['pageErrors'].append(str(e)))
+ pg.on('console',lambda msg:report['consoleErrors'].append(msg.text) if msg.type=='error' else None)
  pg.set_content(html,wait_until='load');pg.wait_for_function('window.game && game.getInfo() !== null')
+ pg.evaluate('game.ready')
+ initialTheme=pg.evaluate("async ()=>{const status=await artAssets.ready;window.qaArtAssets=artAssets;game.frame();const family=artManifest.fonts?.heading?.family;return {...status,family:family||null,fontReady:!family||document.fonts.check('20px '+JSON.stringify(family)),available:['character.home','character.win','tile.T00','tile.frame','button.primary'].filter(key=>artAssets.get(key)!==null)}}")
+ report['theme']=initialTheme
+ check('intended page title',pg.title()=='羊了个羊 · 每日三消')
+ check('startup fatal message is empty',not pg.locator('#fatal').inner_text())
+ check('initial theme preload has no failed assets',not initialTheme['failed'])
+ check('heading font is ready before first screenshot',initialTheme['fontReady'])
+ expectedTheme=pg.evaluate("['character.home','character.win','tile.T00','tile.frame','button.primary'].filter(key=>artManifest.assets[key])")
+ check('initial supplied character, tile and frame assets are available',set(expectedTheme)<=set(initialTheme['available']))
+ def theme_frame():
+    return pg.evaluate("""()=>{
+      const ctx=document.querySelector('canvas').getContext('2d'),draw=ctx.drawImage,fill=ctx.fillText,family=artManifest.fonts?.heading?.family;let imageDraws=0,headingUsed=false;
+      ctx.drawImage=function(...args){imageDraws++;return draw.apply(this,args);};
+      ctx.fillText=function(...args){if(family&&this.font.includes(family))headingUsed=true;return fill.apply(this,args);};
+      try{game.frame();}finally{ctx.drawImage=draw;ctx.fillText=fill;}
+      return {imageDraws,headingUsed,family:family||null};
+    }""")
  def shot(name):
-    gameBounds=pg.locator('canvas').bounding_box();pg.screenshot(path=str(OUT/(name+'.png')));report['screenshots'].append({'file':name+'.png','canvas':gameBounds})
+    gameBounds=pg.locator('canvas').bounding_box();regions=pg.evaluate('game.getHitRegions()')
+    check('rendered controls inside canvas '+name,all(r['x']>=-.1 and r['y']>=-.1 and r['x']+r['w']<=gameBounds['width']+.1 and r['y']+r['h']<=gameBounds['height']+.1 for r in regions))
+    pg.screenshot(path=str(OUT/(name+'.png')));report['screenshots'].append({'file':name+'.png','canvas':gameBounds,'scene':pg.evaluate('game.getScene()'),'modal':pg.evaluate('game.getModal()')})
+ def responsive_shots(scene,viewports=None):
+    previous=pg.viewport_size
+    for width,height in viewports or [(320,568),(430,932),(1280,900)]:
+       pg.set_viewport_size({'width':width,'height':height});pg.wait_for_timeout(120);shot('responsive-'+scene+'-'+str(width))
+    pg.set_viewport_size(previous);pg.wait_for_timeout(120)
  def click(id):
     pos=pg.evaluate("id=>{const r=game.getHitRegions().find(r=>r.id===id);if(!r||!r.enabled)throw Error('not actionable:'+id);const c=document.querySelector('canvas').getBoundingClientRect();return {x:c.left+r.x+r.w/2,y:c.top+r.y+r.h/2}}",id)
     pg.mouse.click(pos['x'],pos['y']);pg.wait_for_timeout(28)
  def state():return pg.evaluate('game.getState()')
  def rebind(deal):
-    pg.evaluate("async d=>{game.destroy();const cv=document.querySelector('canvas'),r=cv.getBoundingClientRect();window.game=load('ui/product/app').createFullApp(cv,[d],r.width,r.height,1,{motion:false});await game.ready;await game.qa.start('daily');}",deal)
+    status=pg.evaluate("async d=>{game.destroy();const pack=load('src/product/art-assets').createArtAssets(artManifest),status=await pack.ready;window.qaArtAssets=pack;const cv=document.querySelector('canvas'),r=cv.getBoundingClientRect();window.game=load('ui/product/app').createFullApp(cv,[d],r.width,r.height,1,{motion:false,artAssets:pack,headingFont:artManifest.fonts?.heading?.family});await game.ready;await game.qa.start('daily');return status;}",deal)
+    check('rebound theme preload has no failed assets',not status['failed'])
+    frame=theme_frame()
+    if status['loaded']:check('rebound game draws the supplied theme images',frame['imageDraws']>0)
+    if frame['family']:check('rebound game draws headings in the supplied font',frame['headingUsed'])
  pg.evaluate('game.qa.settings({reducedMotion:true,sound:false,music:false})')
- shot('01-home')
+ shot('01-home');responsive_shots('home')
  for name in ['rank','friends','topic','wardrobe','profile','bullet','club','settings','honor-first','honor-king','honor-fast']:
     click(name);check('home entry '+name,pg.evaluate('game.getModal() !== null'))
     if name in ['rank','friends','topic','wardrobe','settings']:shot('panel-'+name)
     if name=='friends':click('history');check('friend history navigable',pg.evaluate('game.getModal()')=='HISTORY')
     click('close')
  click('bullet');preset=pg.evaluate("game.getHitRegions().find(r=>r.id.startsWith('send-bullet:')).id");click(preset);check('preset bullet persists',len(pg.evaluate('game.getInfo().bullets'))==1)
- shot('02-home-bullet');click('start');shot('03-tutorial')
+ shot('02-home-bullet');click('start');shot('03-tutorial');responsive_shots('tutorial',[(320,568)])
  for i in range(12):click('tile:teach-'+str(i))
- check('12 real tutorial clicks win',pg.evaluate('game.getModal()')=='TUTORIAL_WIN');click('next-daily');check('tutorial continues to daily',len(state()['board']['deal']['cells'])>=270);shot('04-daily')
+ check('12 real tutorial clicks win',pg.evaluate('game.getModal()')=='TUTORIAL_WIN');click('next-daily');check('tutorial continues to daily',len(state()['board']['deal']['cells'])>=270);shot('04-daily');responsive_shots('board')
  # Pin the approved 270-tile deal in a fresh development service, then use only real pointer inputs.
  deal=json.loads((ROOT/'examples/deal-270.json').read_text());receipt=json.loads((ROOT/'examples/deal-270.receipt.json').read_text())
  rebind(deal);s=state();blocked=next((x for x in pg.evaluate('game.getHitRegions()') if x['kind']=='tile' and not x['enabled']),None)
@@ -45,7 +76,7 @@ with sync_playwright() as p:
  for id in receipt['witness']:click('tile:'+id)
  check('270 real pointer picks clear all tiles',state()['board']['status']=='WON' and state()['board']['cleared']==270)
  check('win is validated and added once',pg.evaluate('game.getModal()')=='WIN' and pg.evaluate('game.getInfo().totals.wins')==1)
- report['realPointerWin']={'tiles':270,'seconds':round(time.time()-start,2)};shot('06-win');click('return-home');click('wardrobe');click('equip:cap');check('earned skin can be equipped',pg.evaluate('game.getInfo().profile.skin')=='cap');shot('07-unlocked-wardrobe');click('close')
+ report['realPointerWin']={'tiles':270,'seconds':round(time.time()-start,2)};shot('06-win');responsive_shots('win');click('return-home');click('wardrobe');click('equip:cap');check('earned skin can be equipped',pg.evaluate('game.getInfo().profile.skin')=='cap');shot('07-unlocked-wardrobe');click('close')
  # Explicit synthetic fixture exercises all reserve/revive edges visibly, not an original historical map.
  fixture={'schema':'astra-deal-1','dealId':'visual-revive-fixture','layoutId':'open-test','origin':'SYNTHETIC_NOT_HISTORICAL','slotCapacity':7,'cells':[{'id':'t'+str(i),'type':'T'+str(i%10).zfill(2),'zone':'board','z':0,'rect':{'x':(i%10)*100,'y':(i//10)*100,'w':96,'h':96}} for i in range(30)]}
  rebind(fixture)
@@ -69,7 +100,7 @@ with sync_playwright() as p:
  for viewport in [{'width':320,'height':568},{'width':390,'height':844},{'width':430,'height':932},{'width':1280,'height':900}]:
     pg.set_viewport_size(viewport);pg.wait_for_timeout(120);click('settings');bounds=pg.locator('canvas').bounding_box();regions=pg.evaluate('game.getHitRegions()')
     check('settings bounds '+str(viewport),all(r['x']>=0 and r['y']>=0 and r['x']+r['w']<=bounds['width']+.1 and r['y']+r['h']<=bounds['height']+.1 for r in regions));shot('responsive-'+str(viewport['width']));click('close')
- check('no uncaught browser page errors',not report['pageErrors']);b.close()
+ check('no uncaught browser page errors',not report['pageErrors']);check('no browser console errors',not report['consoleErrors']);b.close()
 report['ok']=True
 (OUT/'browser-qa.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
 print(json.dumps({'ok':True,'checks':len(report['checks']),'screenshots':len(report['screenshots']),'win':report['realPointerWin'],'pageErrors':report['pageErrors']},ensure_ascii=False))

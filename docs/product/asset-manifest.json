@@ -1,7 +1,8 @@
 {
   "art": {
-    "path": "ui/product/art.js",
-    "origin": "new development vector drawing",
+    "path": "assets/theme/manifest.json",
+    "origin": "configured theme images with vector fallback",
+    "fallback": "ui/product/art.js",
     "originalGameAssets": false
   },
   "audio": [
@@ -36,7 +37,16 @@
       "originalGameAudio": false
     }
   ],
-  "fonts": "system fonts only; no font files distributed",
+  "fonts": {
+    "body": "system fonts",
+    "heading": {
+      "family": "ZCOOL KuaiLe",
+      "src": "assets/theme/fonts/ZCOOLKuaiLe-Regular.ttf"
+    },
+    "licenses": [
+      "assets/theme/fonts/OFL.txt"
+    ]
+  },
   "maps": [
     {
       "dealId": "astra-4b0f5d75d17706b3b237e8d9",
@@ -54,5 +64,5 @@
       "origin": "SYNTHETIC_NOT_HISTORICAL"
     }
   ],
-  "date": "2026-09-18"
+  "date": "2026-10-02"
 }

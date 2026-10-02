@@ -1,6 +1,6 @@
 'use strict';
 // Original development vector illustrations. Not extracted Sheep-game assets.
-const P={ink:'#263d27',grass:'#bbec80',deep:'#407433',cream:'#fffdf2',shadow:'#6d963f',yellow:'#fbe575',muted:'#697c56',white:'#ffffff'};
+const P={ink:'#254332',grass:'#f2f6e9',deep:'#577457',cream:'#fffcf3',shadow:'#b5c39f',yellow:'#f6c95e',muted:'#78836e',white:'#ffffff',border:'#bec9ac'};
 function box(c,x,y,w,h,r=10,fill=P.cream,stroke=P.ink,lw=2){r=Math.min(r,w/2,h/2);c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=lw;c.stroke();}}
 function ellipse(c,x,y,rx,ry,fill,stroke=P.ink,lw=2){c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=lw;c.stroke();}}
 function line(c,points,color=P.ink,width=3){c.beginPath();c.moveTo(...points[0]);for(const p of points.slice(1))c.lineTo(...p);c.strokeStyle=color;c.lineWidth=width;c.lineCap='round';c.lineJoin='round';c.stroke();}
@@ -35,6 +35,16 @@ function symbol(c,type,x,y,size=32){let n=Number(String(type).replace(/\D/g,''))
  case 14:ellipse(c,0,-17,6,6,'#e2c565');shape(c,[[-12,-12],[11,-12],[15,8],[20,12],[-20,12],[-14,8]],'#f3d87c');ellipse(c,0,17,5,5,'#bc944c');line(c,[[-16,13],[18,13]],P.ink,3);break;
  }
  c.restore();}
-function tile(c,type,x,y,w,h,active=true){box(c,x,y+4,w,h,5,active?'#8fb75b':'#82936a',P.ink,1.4);box(c,x,y,w,h-1,5,active?P.cream:'#c8d5b4',P.ink,1.4);if(type){c.save();c.globalAlpha=active?1:.45;symbol(c,type,x+w/2,y+(h-1)/2,Math.min(w,h)*.63);c.restore();}}
-function grass(c,w,h){c.fillStyle=P.grass;c.fillRect(0,0,w,h);for(let i=0;i<26;i++){const x=(i*137+19)%w,y=160+(i*113)%(Math.max(70,h-180));line(c,[[x-4,y],[x,y+5],[x+3,y-3]],'rgba(93,141,57,.2)',1.6);}c.fillStyle='#a9dc73';c.beginPath();c.moveTo(0,h);c.lineTo(0,h-35);c.quadraticCurveTo(w*.4,h-85,w,h-25);c.lineTo(w,h);c.fill();}
-module.exports={P,box,ellipse,line,shape,sheep,tomb,symbol,tile,grass};
+function tile(c,type,x,y,w,h,active=true){box(c,x,y+3,w,h,6,active?'#a9b98d':'#aeb9a3',null);box(c,x,y,w,h-1,6,active?P.cream:'#d4dec5',active?'#869873':'#a0af91',1);if(active)line(c,[[x+8,y+2],[x+w-8,y+2]],'#ffffff',1);if(type){c.save();c.globalAlpha*=active?1:.60;symbol(c,type,x+w/2,y+(h-1)/2,Math.min(w,h)*.66);c.restore();}}
+function grass(c,w,h){c.fillStyle=P.grass;c.fillRect(0,0,w,h);}
+function withAssets(pack){
+ if(!pack)return module.exports;
+ const render={...module.exports};
+ render.symbol=(c,type,x,y,size=32)=>{if(!pack.draw(c,'tile.'+type,x-size/2,y-size/2,size,size))symbol(c,type,x,y,size);};
+ render.tile=(c,type,x,y,w,h,active=true)=>{c.save();c.globalAlpha*=active?1:.60;const frame=pack.draw(c,'tile.frame',x,y,w,h,{fit:'stretch'});c.restore();if(!frame)tile(c,null,x,y,w,h,active);c.save();c.globalAlpha*=active?1:.60;if(type)render.symbol(c,type,x+w/2,y+(h-1)/2,Math.min(w,h)*.66);c.restore();};
+ render.sheep=(c,x,y,size=70,skin='plain',phase=0)=>{if(!pack.draw(c,'character.'+skin,x-size/2,y-size*.53+Math.sin(phase)*2,size,size))sheep(c,x,y,size,skin,phase);};
+ render.tomb=(c,x,y,size=60)=>{if(!pack.draw(c,'character.grave',x-size/2,y-size/2,size,size))tomb(c,x,y,size);};
+ render.background=(c,key,w,h)=>pack.draw(c,'background.'+key,0,0,w,h,{fit:'cover'});
+ return render;
+}
+module.exports={P,box,ellipse,line,shape,sheep,tomb,symbol,tile,grass,withAssets,background:()=>false};
