@@ -1,0 +1,8 @@
+{
+  "description":"Developer-only algorithm probe, not original game UI",
+  "projectname":"sheep-algorithm-probe",
+  "appid":"touristappid",
+  "compileType":"game",
+  "setting":{"es6":true,"minified":false,"urlCheck":true},
+  "packOptions":{"ignore":[]}
+}
