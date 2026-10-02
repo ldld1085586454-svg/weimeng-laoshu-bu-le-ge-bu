@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "base": "assets/art",
+  "cards": {
+    "frame": "cards/block_bg.png",
+    "pattern": "cards/block_{id}.png",
+    "ids": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+  },
+  "props": {
+    "remove": "ui/prop_remove.png",
+    "undo": "ui/prop_cancel.png",
+    "shuffle": "ui/prop_random.png",
+    "revive": "ui/prop_life_remove.png",
+    "share": "ui/reward_share.png",
+    "video": "ui/reward_video.png"
+  },
+  "backgrounds": {
+    "board": "backgrounds/board.png",
+    "home": "backgrounds/home_region.png"
+  },
+  "sheep": {
+    "default": "sheep/sheep_default.png",
+    "grave": "sheep/grave_default.png"
+  },
+  "social": {
+    "rank": "social/rank_bg.png",
+    "topicPk": "social/topic_pk_bg.png",
+    "friendFeed": "social/friend_feed_bg.png",
+    "honor": "social/honor_bg.png"
+  }
+}
