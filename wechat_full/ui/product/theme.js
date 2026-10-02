@@ -43,8 +43,8 @@ function boardGeometry(deal,h){
  const cells=deal.cells.filter(c=>c.zone==='board'),use=cells.length?cells:deal.cells;
  const minX=Math.min(...use.map(c=>c.rect.x))-BOARD_CARD_PAD,maxX=Math.max(...use.map(c=>c.rect.x+c.rect.w))+BOARD_CARD_PAD,minY=Math.min(...use.map(c=>c.rect.y))-BOARD_CARD_PAD,maxY=Math.max(...use.map(c=>c.rect.y+c.rect.h))+BOARD_CARD_PAD;
  const top=144,sideY=h-354,bottom=deal.cells.some(c=>c.zone==='side')?sideY-26:h-346;
- const scale=Math.min(354/(maxX-minX),Math.max(64,bottom-top)/((maxY-minY)*1.25));
- const scaleY=scale*1.25,contentH=(maxY-minY)*scaleY,offset=Math.max(0,bottom-top-contentH)*.15;
+ const scale=Math.min(354/(maxX-minX),Math.max(64,bottom-top)/(maxY-minY));
+ const scaleY=scale,contentH=(maxY-minY)*scaleY,offset=Math.max(0,bottom-top-contentH)*.10;
  return {scale,scaleY,tx:(390-(maxX-minX)*scale)/2-minX*scale,ty:top+offset-minY*scaleY,sideY};
 }
 function star(c,x,y,r,fill=P.cream){const points=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,s=i%2?r*.48:r;points.push([x+Math.cos(a)*s,y+Math.sin(a)*s]);}A.shape(c,points,fill,'#a4ad91',1);}

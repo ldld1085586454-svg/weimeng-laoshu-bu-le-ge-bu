@@ -75,8 +75,8 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
   const stacks=new Map();for(const c of cs.filter(c=>c.zone==='side'))if(!b.taken[b.byId[c.id]]){const key=c.stackId||'side';if(!stacks.has(key))stacks.set(key,[]);stacks.get(key).push(c);}
   let si=0;for(const tiles of stacks.values()){
    const front=tiles.find(c=>b.blockers[b.byId[c.id]]===0);if(!front)continue;
-   const x=si++%2?W-83:27,y=g.sideY,w=45,h=46,back=Math.min(4,tiles.length-1);
-   for(let j=back;j>0;j--)Art.tile(ctx,null,x+j*3,y-j*4,w,h,false);
+   const x=si++%2?W-83:27,y=g.sideY,w=45,h=46,back=Math.min(6,tiles.length-1);
+   for(let j=back;j>0;j--)Art.tile(ctx,null,x+j*2,y-j*3,w,h,false);
    Art.tile(ctx,front.type,x,y+(pointer.pressed()==='tile:'+front.id?2:0),w,h);text(tiles.length,x+w+13,y+26,11,P.deep,'center');
    regions.push({id:'tile:'+front.id,tileId:front.id,kind:'tile',zone:'side',x,y,w,h,enabled:true});
   }

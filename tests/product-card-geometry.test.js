@@ -8,12 +8,12 @@ function fixture(columns=3,layered=false){
   cells:Array.from({length:columns*3},(_,i)=>({id:'g'+i,type:'T'+String(i%columns).padStart(2,'0'),zone:'board',z:layered?Math.floor(i/columns):0,
    rect:{x:i%columns*100,y:layered?0:Math.floor(i/columns)*100,w:96,h:96}}))};
 }
-async function boot(t,{deal=fixture(),motion=false}={}){
+async function boot(t,{deal=fixture(),motion=false,mode='daily'}={}){
  let time=Date.UTC(2026,9,2,6),transform={a:1,d:1,e:0,f:0};const frames=[];
  const ctx=new Proxy({measureText:value=>({width:String(value).length*7}),setTransform(a,_b,_c,d,e,f){transform={a,d,e,f};}},{get:(object,key)=>key in object?object[key]:()=>{}});
  const artAssets={draw(_ctx,key,x,y,w,h){if(key==='tile.frame')frames.push({x,y,w,h,screen:{x:x*transform.a+transform.e,y:y*transform.d+transform.f,w:w*transform.a,h:h*transform.d}});return true;},dispose(){}};
  const app=createFullApp({getContext:()=>ctx},[deal],390,844,1,{now:()=>time,motion,artAssets});t.after(()=>app.destroy());
- await app.ready;assert.equal((await app.qa.start('daily')).ok,true);
+ await app.ready;assert.equal((await app.qa.start(mode)).ok,true);
  return {app,frames,advance(ms){time+=ms;frames.length=0;app.frame();}};
 }
 const close=(actual,expected,message,tolerance=1e-5)=>assert.ok(Math.abs(actual-expected)<tolerance,message+' ('+actual+' vs '+expected+')');
@@ -21,15 +21,16 @@ function region(app,id){const r=app.getHitRegions().find(r=>r.id===id);assert.ok
 async function click(app,id){const r=region(app,id);assert.equal(r.enabled,true,'disabled '+id);return app.tap(r.x+r.w/2,r.y+r.h/2);}
 async function earn(app,kind){assert.equal((await click(app,kind)).ok,true);await click(app,'grant');assert.equal(app.getModal(),'PROVIDER');await click(app,'dev-complete');assert.equal(app.getModal(),null);}
 
-test('card geometry: dense board gaps shrink without changing deal, blockers, aspect or hit bounds',async t=>{
- const deal=fixture(),original=JSON.stringify(deal),{app,frames}=await boot(t,{deal}),before=app.getState();
+test('card geometry: dense square boards retain compact gaps, original blockers and matching hit bounds',async t=>{
+ const deal=fixture(8),original=JSON.stringify(deal),{app,frames}=await boot(t,{deal}),before=app.getState();
  for(const [width,height,padding] of [[390,844,{}],[320,568,{}],[375,667,{top:88,bottom:25}],[430,932,{}]]){
   frames.length=0;app.resize(width,height,1,padding);
-  const a=region(app,'tile:g0'),right=region(app,'tile:g1'),below=region(app,'tile:g3'),k=region(app,'move').w/112;
+  const a=region(app,'tile:g0'),right=region(app,'tile:g1'),below=region(app,'tile:g8'),k=region(app,'move').w/112;
   const gapX=(right.x-a.x-a.w)/k,gapY=(below.y-a.y-a.h)/k;
   assert.ok(gapX>0&&gapX<=1,'main board horizontal gap exceeds one logical pixel: '+gapX);
-  assert.ok(gapY>0&&gapY<=1.3,'main board vertical gap is too wide: '+gapY);
-  close(a.h/a.w,1.25,'board card aspect');
+  assert.ok(gapY>0&&gapY<=1,'main board vertical gap exceeds one logical pixel: '+gapY);
+  close(gapX,gapY,'square board spacing must match on both axes');
+  close(a.h/a.w,1,'board card must be square');
   for(const r of app.getHitRegions().filter(r=>r.kind==='tile')){
    assert.ok(r.x>=0&&r.y>=(padding.top||0)&&r.x+r.w<=width&&r.y+r.h<=height-(padding.bottom||0));
    assert.ok(frames.some(frame=>['x','y','w','h'].every(key=>Math.abs(frame.screen[key]-r[key])<1e-5)),'draw and hit bounds differ for '+r.id);
@@ -40,6 +41,23 @@ test('card geometry: dense board gaps shrink without changing deal, blockers, as
   assert.deepEqual(app.getState(),before,'layout must not alter the board or blockers');
  }
  assert.equal(JSON.stringify(deal),original,'display layout mutated the supplied deal');
+});
+
+test('card geometry: actual daily boards and teaching cards stay square above the reserve label',async t=>{
+ for(const [name,deal,mode] of [['270',require('../examples/deal-270.json'),'daily'],['720',require('../examples/deal-720.json'),'daily'],['teaching',fixture(),'tutorial']])await t.test(name,async t=>{
+  const {app}=await boot(t,{deal,mode}),before=app.getState();
+  for(const [width,height,padding] of [[390,844,{}],[320,568,{}],[375,667,{top:88,bottom:25}],[430,932,{}]]){
+   app.resize(width,height,1,padding);const k=region(app,'move').w/112,board=app.getHitRegions().filter(r=>r.zone==='board');
+   assert.equal(board.length,before.board.deal.cells.filter(c=>c.zone==='board').length);
+   for(const r of board){
+    close(r.h/r.w,1,name+' card must be square');
+    assert.ok(r.x>=0&&r.x+r.w<=width&&r.y>=(padding.top||0)+144*k,'card leaves board bounds');
+    assert.ok(r.y+r.h<=height-(padding.bottom||0)-330*k+1e-5,'card crowds the reserve label');
+    assert.equal(r.enabled,before.board.blockers[before.board.byId[r.tileId]]===0,'display changes front-layer legality');
+   }
+   assert.deepEqual(app.getState(),before,'square layout must not change the round');
+  }
+ });
 });
 
 test('card geometry: the expanded fringe selects the visible front layer and then exposes the next',async t=>{
