@@ -1,0 +1,8 @@
+{
+  "description":"v0.9 local play-session and assists development build; no real ads",
+  "projectname":"sheep-play-dev-v09",
+  "appid":"touristappid",
+  "compileType":"game",
+  "setting":{"es6":true,"minified":false,"urlCheck":true},
+  "packOptions":{"ignore":[]}
+}
