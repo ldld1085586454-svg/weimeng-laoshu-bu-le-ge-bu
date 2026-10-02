@@ -1,7 +1,7 @@
 {
   "art": {
     "path": "assets/theme/manifest.json",
-    "origin": "independently generated farm theme with vector fallback",
+    "origin": "configured theme images with vector fallback",
     "fallback": "ui/product/art.js",
     "originalGameAssets": false
   },

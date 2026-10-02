@@ -1,6 +1,8 @@
 'use strict';
 const A=require('./art'),{P}=A;
 const FONT='"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif';
+// Expand only the display footprint; the deal's rectangles still determine blockers.
+const BOARD_CARD_PAD=1.5;
 const easeOut=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
 function icon(c,name,x,y,size=24,color=P.ink){
  c.save();c.translate(x,y);c.scale(size/24,size/24);c.strokeStyle=color;c.fillStyle=color;c.lineWidth=2;c.lineCap='round';c.lineJoin='round';
@@ -35,14 +37,15 @@ function landscape(c,w,h,variant='home'){
  if(variant==='home'){for(const [x,y,s] of [[43,base-span-10,1],[310,base-span*.72-16,.7]]){A.ellipse(c,x,y,24*s,8*s,P.cream,null);A.ellipse(c,x-8*s,y-6*s,12*s,11*s,P.cream,null);A.ellipse(c,x+7*s,y-10*s,13*s,15*s,P.cream,null);}}
  for(let i=0;i<12;i++){const x=24+(i*79)%(w-48),y=base+18+(i*29)%68;A.line(c,[[x-3,y],[x,y+3],[x+3,y-3]],'#becf9f',1.4);}
 }
-function rackGeometry(h){return {x:22,y:h-217,w:(390-44)/7,h:51};}
+function rackGeometry(h){const w=(390-44)/7;return {x:22,y:h-217,w,cardW:w-2,h:51};}
+function boardCardRect(cell,g){const r=cell.rect;return {x:g.tx+(r.x-BOARD_CARD_PAD)*g.scale,y:g.ty+(r.y-BOARD_CARD_PAD)*g.scaleY,w:(r.w+2*BOARD_CARD_PAD)*g.scale,h:(r.h+2*BOARD_CARD_PAD)*g.scaleY};}
 function boardGeometry(deal,h){
  const cells=deal.cells.filter(c=>c.zone==='board'),use=cells.length?cells:deal.cells;
- const minX=Math.min(...use.map(c=>c.rect.x)),maxX=Math.max(...use.map(c=>c.rect.x+c.rect.w)),minY=Math.min(...use.map(c=>c.rect.y)),maxY=Math.max(...use.map(c=>c.rect.y+c.rect.h));
+ const minX=Math.min(...use.map(c=>c.rect.x))-BOARD_CARD_PAD,maxX=Math.max(...use.map(c=>c.rect.x+c.rect.w))+BOARD_CARD_PAD,minY=Math.min(...use.map(c=>c.rect.y))-BOARD_CARD_PAD,maxY=Math.max(...use.map(c=>c.rect.y+c.rect.h))+BOARD_CARD_PAD;
  const top=144,sideY=h-354,bottom=deal.cells.some(c=>c.zone==='side')?sideY-26:h-346;
  const scale=Math.min(354/(maxX-minX),Math.max(64,bottom-top)/((maxY-minY)*1.25));
  const scaleY=scale*1.25,contentH=(maxY-minY)*scaleY,offset=Math.max(0,bottom-top-contentH)*.15;
  return {scale,scaleY,tx:(390-(maxX-minX)*scale)/2-minX*scale,ty:top+offset-minY*scaleY,sideY};
 }
 function star(c,x,y,r,fill=P.cream){const points=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,s=i%2?r*.48:r;points.push([x+Math.cos(a)*s,y+Math.sin(a)*s]);}A.shape(c,points,fill,'#a4ad91',1);}
-module.exports={star,FONT,easeOut,icon,landscape,rackGeometry,boardGeometry};
+module.exports={star,FONT,easeOut,icon,landscape,rackGeometry,boardGeometry,boardCardRect};
