@@ -1,0 +1,9 @@
+history/
+reports/
+*.html
+manifest.sha256.json
+__pycache__/
+
+local-data/
+local_reports/
+*.tmp

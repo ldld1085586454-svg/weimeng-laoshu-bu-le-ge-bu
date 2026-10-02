@@ -1,0 +1,617 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>道具与对局联调 v0.9</title><style>
+html,body{margin:0;width:100%;height:100%;background:#dce4d8;font-family:sans-serif}body{display:flex;justify-content:center;align-items:center}canvas{display:block;width:min(100vw,460px);height:min(100dvh,940px);touch-action:none;box-shadow:0 0 60px #263e361f}
+</style></head><body><canvas id="game" aria-label="道具与对局开发联调"></canvas><script>
+const definitions={"src/content-hash":function(module,exports,require){
+'use strict';
+// Portable SHA-256 for content identity, NOT authentication or an anti-cheat signature.
+// Pure JavaScript: no Node crypto, Buffer, DOM, TextEncoder or wx requirement.
+const K = [
+  0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2,
+];
+const rotate = (x,n) => (x>>>n)|(x<<(32-n));
+function utf8(text) {
+  const bytes=[];
+  for(let i=0;i<text.length;i++) {
+    let c=text.charCodeAt(i);
+    if(c>=0xd800 && c<=0xdbff) {
+      const lo=text.charCodeAt(i+1);
+      if(lo>=0xdc00 && lo<=0xdfff) {c=0x10000+((c-0xd800)<<10)+(lo-0xdc00);i++;}
+      else c=0xfffd;
+    } else if(c>=0xdc00 && c<=0xdfff) c=0xfffd;
+    if(c<0x80) bytes.push(c);
+    else if(c<0x800) bytes.push(0xc0|(c>>6),0x80|(c&63));
+    else if(c<0x10000) bytes.push(0xe0|(c>>12),0x80|((c>>6)&63),0x80|(c&63));
+    else bytes.push(0xf0|(c>>18),0x80|((c>>12)&63),0x80|((c>>6)&63),0x80|(c&63));
+  }
+  return bytes;
+}
+function sha256Hex(text) {
+  if(typeof text!=='string') throw new TypeError('HASH_STRING_REQUIRED');
+  const bytes=utf8(text),length=bytes.length;
+  bytes.push(0x80);
+  while(bytes.length%64!==56) bytes.push(0);
+  const hi=Math.floor(length/0x20000000),lo=(length*8)>>>0;
+  for(const v of [hi,lo]) for(let shift=24;shift>=0;shift-=8) bytes.push((v>>>shift)&255);
+  const h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const w=new Int32Array(64);
+  for(let offset=0;offset<bytes.length;offset+=64) {
+    for(let i=0;i<16;i++) {const p=offset+i*4;w[i]=(bytes[p]<<24)|(bytes[p+1]<<16)|(bytes[p+2]<<8)|bytes[p+3];}
+    for(let i=16;i<64;i++) {
+      const a=w[i-15],b=w[i-2];
+      const s0=rotate(a,7)^rotate(a,18)^(a>>>3),s1=rotate(b,17)^rotate(b,19)^(b>>>10);
+      w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+    }
+    let [a,b,c,d,e,f,g,z]=h;
+    for(let i=0;i<64;i++) {
+      const s1=rotate(e,6)^rotate(e,11)^rotate(e,25),ch=(e&f)^(~e&g);
+      const t1=(z+s1+ch+K[i]+w[i])|0;
+      const s0=rotate(a,2)^rotate(a,13)^rotate(a,22),maj=(a&b)^(a&c)^(b&c),t2=(s0+maj)|0;
+      z=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
+    }
+    for(const [i,v] of [a,b,c,d,e,f,g,z].entries()) h[i]=(h[i]+v)>>>0;
+  }
+  return h.map(v=>v.toString(16).padStart(8,'0')).join('');
+}
+const SNAPSHOT_HASH_PROFILE='ASTRA_CONTENT_V1';
+/** Fixed arrays establish a canonical field order. Cell ARRAY order is significant.
+ * Hash includes only the immutable deal's gameplay data and provenance, not round state.
+ * It deliberately excludes dealId, snapshotHash, unrelated metadata and private receipts.
+ */
+function canonicalSnapshot(deal) {
+  return JSON.stringify([SNAPSHOT_HASH_PROFILE,deal.schema,deal.layoutId,deal.origin===undefined?null:deal.origin,
+    deal.slotCapacity,deal.cells.map(c=>[c.id,c.type,c.zone,c.rect.x,c.rect.y,c.rect.w,c.rect.h,
+      c.zone==='board'?c.z:null,c.zone==='side'?c.stackId:null,c.zone==='side'?c.position:null])]);
+}
+function hashSnapshot(deal) {return sha256Hex(canonicalSnapshot(deal));}
+module.exports={sha256Hex,canonicalSnapshot,hashSnapshot,SNAPSHOT_HASH_PROFILE};
+
+},
+"src/schema":function(module,exports,require){
+'use strict';
+// Shared structural contract only. Replay still computes geometry and triples independently.
+const {hashSnapshot}=require('./content-hash');
+const MAX_CELLS=3000,MAX_COORDINATE=1000000;
+function fail(code) {const error=new TypeError(code);error.code=code;throw error;}
+function nonempty(value) {return typeof value==='string' && value.trim().length>0;}
+function validateLayoutFields(layout) {
+  if(!layout || !nonempty(layout.id) || !Array.isArray(layout.cells) || !layout.cells.length) fail('INVALID_LAYOUT');
+  if(layout.cells.length>MAX_CELLS) fail('LAYOUT_LIMIT');
+  const ids=new Set(),stacks=new Map();
+  for(const c of layout.cells) {
+    if(!c || !nonempty(c.id) || ids.has(c.id)) fail('DUPLICATE_OR_INVALID_ID');
+    ids.add(c.id);
+    if(!c.rect || !['x','y','w','h'].every(k=>Number.isSafeInteger(c.rect[k])) || c.rect.w<=0 || c.rect.h<=0) fail('INVALID_RECT');
+    if(['x','y','w','h'].some(k=>Math.abs(c.rect[k])>MAX_COORDINATE)) fail('COORDINATE_LIMIT');
+    if(c.zone==='board') {
+      if(!Number.isSafeInteger(c.z)) fail('INVALID_LAYER');
+    } else if(c.zone==='side') {
+      if(!nonempty(c.stackId) || !Number.isSafeInteger(c.position) || c.position<0) fail('INVALID_STACK');
+      const positions=stacks.get(c.stackId)||[];positions.push(c.position);stacks.set(c.stackId,positions);
+    } else fail('INVALID_ZONE');
+  }
+  for(const positions of stacks.values()) {
+    positions.sort((a,b)=>a-b);
+    if(positions.some((p,i)=>p!==i)) fail('STACK_GAP_OR_DUPLICATE_POSITION');
+  }
+  return true;
+}
+function validateSnapshotFields(deal) {
+  if(!deal || deal.schema!=='astra-deal-1') fail('INVALID_SNAPSHOT_SCHEMA');
+  if(!nonempty(deal.dealId)) fail('INVALID_DEAL_ID');
+  if(deal.slotCapacity!==7) fail('RUNTIME_REQUIRES_SEVEN_SLOTS');
+  if(deal.origin!==undefined && !nonempty(deal.origin)) fail('INVALID_ORIGIN');
+  validateLayoutFields({id:deal.layoutId,cells:deal.cells});
+  const counts=new Map();
+  for(const c of deal.cells) {
+    if(!nonempty(c.type)) fail('INVALID_TYPE');
+    counts.set(c.type,(counts.get(c.type)||0)+1);
+  }
+  if([...counts.values()].some(n=>n%3!==0)) fail('UNBALANCED_TYPES');
+  if(deal.snapshotHash!==undefined) {
+    if(typeof deal.snapshotHash!=='string' || !/^[0-9a-f]{64}$/.test(deal.snapshotHash)) fail('INVALID_SNAPSHOT_HASH');
+    if(hashSnapshot(deal)!==deal.snapshotHash) fail('SNAPSHOT_HASH_MISMATCH');
+  }
+  return true;
+}
+module.exports={validateLayoutFields,validateSnapshotFields,MAX_CELLS,MAX_COORDINATE};
+
+},
+"src/layout":function(module,exports,require){
+'use strict';
+const {validateLayoutFields}=require('./schema');
+
+/** Positive-area overlap: shadows and edge contact do not block. */
+function overlaps(a, b) {
+  return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+}
+
+function validateLayout(layout) {
+  validateLayoutFields(layout);
+  for(let i=0;i<layout.cells.length;i++) for(let j=i+1;j<layout.cells.length;j++) {
+    const a=layout.cells[i],b=layout.cells[j]; if(!overlaps(a.rect,b.rect)) continue;
+    if(a.zone!==b.zone) throw new TypeError('MIXED_ZONE_INTERSECTION');
+    if(a.zone==='board'&&a.z===b.z) throw new TypeError('AMBIGUOUS_SAME_LAYER_OVERLAP');
+    if(a.zone==='side'&&a.stackId!==b.stackId) throw new TypeError('STACK_INTERSECTION');
+  }
+  return true;
+}
+
+function buildGraph(layout) {
+  validateLayout(layout);
+  const n=layout.cells.length,parents=Array.from({length:n},()=>[]),children=Array.from({length:n},()=>[]);
+  function edge(a,b) {parents[b].push(a); children[a].push(b);}
+  for(let i=0;i<n;i++) for(let j=i+1;j<n;j++) {
+    const a=layout.cells[i],b=layout.cells[j];
+    if(a.zone==='board'&&b.zone==='board'&&overlaps(a.rect,b.rect)) {
+      if(a.z>b.z) edge(i,j); else edge(j,i);
+    } else if(a.zone==='side'&&b.zone==='side'&&a.stackId===b.stackId) {
+      if(a.position===b.position-1) edge(i,j);
+      if(b.position===a.position-1) edge(j,i);
+    }
+  }
+  return {parents,children};
+}
+
+/** Nonhistorical stress layout. Never label these fixtures original 2022 maps. */
+function makeFixtureLayout(n=270) {
+  if(!Number.isSafeInteger(n)||n<3||n%3||n>3000) throw new RangeError('N must be 3..3000 and divisible by 3');
+  const depth=Math.floor(n/18), main=n-2*depth, cells=[];
+  for(let i=0;i<main;i++) {
+    const z=Math.floor(i/40),p=i%40,off=(z%2)*50;
+    cells.push({id:`m${String(i).padStart(4,'0')}`,zone:'board',z,
+      rect:{x:(p%8)*100+off,y:Math.floor(p/8)*100+off,w:96,h:96}});
+  }
+  for(const [k,stackId] of ['left','right'].entries()) for(let p=0;p<depth;p++)
+    cells.push({id:`${stackId}-${String(p).padStart(3,'0')}`,zone:'side',stackId,position:p,
+      rect:{x:k*Math.max(500,depth*4+196)+p*4,y:680,w:96,h:96}});
+  return {id:`synthetic-layer-stack-${n}`,origin:'SYNTHETIC_NOT_HISTORICAL',cells};
+}
+module.exports={overlaps,validateLayout,buildGraph,makeFixtureLayout};
+
+},
+"src/runtime":function(module,exports,require){
+'use strict';
+const {buildGraph}=require('./layout');
+const {validateSnapshotFields}=require('./schema');
+const {hashSnapshot}=require('./content-hash');
+/** Load an initial, full-pool deal. This is NOT a saved-round resume API.
+ * roundId is supplied by the session owner; null means local/unbound, not globally unique.
+ */
+function createRound(deal,options={}) {
+  validateSnapshotFields(deal);
+  const roundId=options.roundId===undefined?null:options.roundId;
+  if(roundId!==null && (typeof roundId!=='string'||!roundId.trim())) throw new TypeError('INVALID_ROUND_ID');
+  const cells=deal.cells.map(c=>({...c,rect:{...c.rect}}));
+  const immutableDeal={...deal,cells,snapshotHash:deal.snapshotHash || hashSnapshot(deal)};
+  const graph=buildGraph({id:deal.layoutId,cells});
+  const byId=Object.create(null);
+  cells.forEach((c,i)=>{byId[c.id]=i;Object.freeze(c.rect);Object.freeze(c);});
+  Object.freeze(cells);Object.freeze(immutableDeal);
+  return {deal:immutableDeal,graph,byId,taken:new Array(cells.length).fill(false),
+    blockers:graph.parents.map(a=>a.length),rack:[],cleared:0,status:'PLAYING',revision:0,shuffleOrdinal:0,
+    originalDealId:deal.dealId,roundId};
+}
+function legalMoves(s) {
+  if(s.status!=='PLAYING') return [];
+  return s.deal.cells.filter((c,i)=>!s.taken[i]&&s.blockers[i]===0).map(c=>c.id).sort();
+}
+function pick(s,id) {
+  function reject(code) {return {ok:false,code,state:s,events:[]};}
+  if(s.status!=='PLAYING') return reject('ROUND_FINISHED');
+  const i=s.byId[id];if(i===undefined) return reject('UNKNOWN_TILE');
+  if(s.taken[i]) return reject('ALREADY_TAKEN');
+  if(s.blockers[i]) return reject('BLOCKED');
+  const taken=s.taken.slice(),blockers=s.blockers.slice(),rack=s.rack.slice(),cell=s.deal.cells[i];
+  taken[i]=true;
+  for(const j of s.graph.children[i]) if(!taken[j]) {blockers[j]--;if(blockers[j]<0) throw new Error('NEGATIVE_BLOCKERS');}
+  let at=-1;for(let j=0;j<rack.length;j++) if(s.deal.cells[s.byId[rack[j]]].type===cell.type) at=j;
+  rack.splice(at<0?rack.length:at+1,0,id);
+  const matching=rack.filter(v=>s.deal.cells[s.byId[v]].type===cell.type);
+  const clear=matching.length===3?matching:[],cleared=s.cleared+clear.length;
+  const finalRack=clear.length?rack.filter(v=>!clear.includes(v)):rack;
+  const status=finalRack.length>=7?'LOST':cleared===s.deal.cells.length&&finalRack.length===0?'WON':'PLAYING';
+  const state={...s,taken,blockers,rack:finalRack,cleared,status,revision:s.revision+1};
+  if(taken.filter(Boolean).length!==cleared+finalRack.length) throw new Error('CARD_CONSERVATION');
+  return {ok:true,code:'PICKED',state,events:[{type:'TAKE',id},...(clear.length?[{type:'CLEAR',ids:clear}]:[]),
+    ...(status!=='PLAYING'?[{type:status}]:[])]};
+}
+/** Working shuffle candidate: non-taken board and side labels only. No rescue guarantee.
+ * Snapshot hash covers immutable layout+labels, NOT rack/taken/revision or authentication.
+ * Caller persists the returned actual mapping, not just a seed or an ordinal.
+ */
+function shuffleRemaining(s,rng) {
+  if(s.status!=='PLAYING') throw new Error('ROUND_FINISHED');
+  if(!rng||typeof rng.shuffle!=='function') throw new TypeError('SHUFFLE_RNG_REQUIRED');
+  const ids=[];s.deal.cells.forEach((c,i)=>{if(!s.taken[i]) ids.push(i);});
+  const original=ids.map(i=>s.deal.cells[i].type),labels=rng.shuffle(original.slice());
+  // The injected RNG may be buggy. It must return a permutation, not new cards.
+  if(!Array.isArray(labels)||labels.length!==original.length) throw new TypeError('INVALID_SHUFFLE_PERMUTATION');
+  const expected=original.slice().sort(),actual=labels.slice().sort();
+  if(actual.some((v,i)=>v!==expected[i])) throw new TypeError('INVALID_SHUFFLE_PERMUTATION');
+  const cells=s.deal.cells.map(c=>({...c,rect:{...c.rect}}));
+  ids.forEach((i,j)=>{cells[i].type=labels[j];});
+  const ordinal=s.shuffleOrdinal+1,originalDealId=s.originalDealId;
+  const deal={...s.deal,cells};
+  deal.snapshotHash=hashSnapshot(deal);
+  deal.dealId=`${originalDealId}#shuffle-${ordinal}-${deal.snapshotHash}`;
+  const fresh=createRound(deal,{roundId:s.roundId});
+  return {...fresh,taken:s.taken.slice(),blockers:s.blockers.slice(),rack:s.rack.slice(),cleared:s.cleared,status:s.status,
+    originalDealId,revision:s.revision+1,shuffleOrdinal:ordinal};
+}
+module.exports={createRound,legalMoves,pick,shuffleRemaining};
+
+},
+"src/play/profile":function(module,exports,require){
+'use strict';
+// Explicit development profile. These boundary choices are NOT verified original rules.
+const PROFILE=Object.freeze({
+  id:'community-working-v03',
+  bufferReturn:'any',                 // R13 / xlegex candidate
+  undoSources:Object.freeze(['board']), // R17 side/buffer remain unbound
+  clearUndoAfterAssist:true,          // R18 conservative development boundary
+  reviveEffect:null,                  // R23 has conflicting historical evidence
+});
+const LIMITS=Object.freeze({move:1,undo:1,shuffle:1,revive:1});
+module.exports={PROFILE,LIMITS};
+
+},
+"src/play/board":function(module,exports,require){
+'use strict';
+// Extension layer. The approved v0.8 algorithm/runtime files remain byte-identical.
+const Base=require('../runtime');
+const {PROFILE}=require('./profile');
+function createPlayRound(deal,roundId) {
+  const state={...Base.createRound(deal,{roundId}),buffer:[],undo:null};
+  checkRound(state);return state;
+}
+function legalTiles(s) {
+  if(s.status!=='PLAYING')return [];
+  return [...Base.legalMoves(s),...s.buffer];
+}
+function rejected(state,code){return {ok:false,code,state,events:[]};}
+function statusOf(s) {
+  return s.rack.length>=7?'LOST':s.cleared===s.deal.cells.length&&s.rack.length===0&&s.buffer.length===0?'WON':'PLAYING';
+}
+/** Defensive invariant. Only trust a board loaded by the snapshot loader or diagnostic replay. */
+function checkRound(s) {
+  const cells=s.deal.cells,n=cells.length;
+  if(s.taken.length!==n||s.blockers.length!==n||s.taken.some(x=>typeof x!=='boolean'))throw new Error('INVALID_TAKEN_MASK');
+  if(!Number.isSafeInteger(s.cleared)||s.cleared<0||s.cleared%3)throw new Error('INVALID_CLEARED_COUNT');
+  if(!Array.isArray(s.buffer)||s.buffer.length>3)throw new Error('INVALID_BUFFER');
+  const ids=[...s.rack,...s.buffer],seen=new Set();
+  for(const id of ids){if(s.byId[id]===undefined||seen.has(id)||!s.taken[s.byId[id]])throw new Error('DUPLICATE_OR_MISPLACED_TILE');seen.add(id);}
+  if(s.taken.filter(Boolean).length!==s.cleared+ids.length)throw new Error('CARD_CONSERVATION');
+  const clearedTypes=new Map(),rackTypes=new Map();
+  for(let i=0;i<n;i++){
+    const parents=s.graph.parents[i];
+    if(!s.taken[i] && s.blockers[i]!==parents.filter(j=>!s.taken[j]).length)throw new Error('BLOCKER_MISMATCH');
+    if(s.taken[i]&&!seen.has(cells[i].id))clearedTypes.set(cells[i].type,(clearedTypes.get(cells[i].type)||0)+1);
+  }
+  if([...clearedTypes.values()].some(x=>x%3))throw new Error('CLEARED_TYPE_CONSERVATION');
+  for(const id of s.rack){const t=cells[s.byId[id]].type;rackTypes.set(t,(rackTypes.get(t)||0)+1);}
+  if([...rackTypes.values()].some(x=>x>=3))throw new Error('UNRESOLVED_TRIPLE');
+  if(s.rack.length>7||s.status!==statusOf(s))throw new Error('INVALID_ROUND_STATUS');
+  return true;
+}
+function pickTile(s,id,profile=PROFILE) {
+  if(s.status!=='PLAYING')return rejected(s,'ROUND_NOT_PLAYING');
+  const i=s.byId[id];if(i===undefined)return rejected(s,'UNKNOWN_TILE');
+  const bi=s.buffer.indexOf(id),fromBuffer=bi>=0;
+  if(!fromBuffer && s.taken[i])return rejected(s,'ALREADY_TAKEN');
+  if(!fromBuffer && s.blockers[i]!==0)return rejected(s,'BLOCKED');
+  if(fromBuffer && profile.bufferReturn!=='any')return rejected(s,'BUFFER_RETURN_RULE_UNBOUND');
+  const cell=s.deal.cells[i],taken=s.taken.slice(),blockers=s.blockers.slice(),buffer=s.buffer.slice(),rack=s.rack.slice();
+  if(fromBuffer)buffer.splice(bi,1);
+  else {taken[i]=true;for(const j of s.graph.children[i])if(!taken[j])blockers[j]--;}
+  let index=-1;for(let j=0;j<rack.length;j++)if(s.deal.cells[s.byId[rack[j]]].type===cell.type)index=j;
+  rack.splice(index<0?rack.length:index+1,0,id);
+  const matching=rack.filter(v=>s.deal.cells[s.byId[v]].type===cell.type),clear=matching.length===3?matching:[];
+  const finalRack=clear.length?rack.filter(v=>!clear.includes(v)):rack;
+  const next={...s,taken,blockers,buffer,rack:finalRack,cleared:s.cleared+clear.length,revision:s.revision+1,
+    undo:clear.length?null:{id,source:fromBuffer?'buffer':cell.zone}};
+  next.status=statusOf(next);checkRound(next);
+  return {ok:true,code:'PICKED',state:next,events:[{type:'TAKE',id,source:fromBuffer?'buffer':cell.zone},
+    ...(clear.length?[{type:'CLEAR',ids:clear}]:[]),...(next.status!=='PLAYING'?[{type:next.status}]:[])]};
+}
+/** null means effect is currently eligible; quota and reward checks belong to session.js. */
+function canAssist(s,kind,profile=PROFILE) {
+  if(kind==='revive')return 'REVIVE_RULE_UNBOUND';
+  if(!['move','undo','shuffle'].includes(kind))return 'UNKNOWN_ASSIST';
+  if(s.status!=='PLAYING')return 'ROUND_NOT_PLAYING';
+  if(kind==='move'){
+    if(s.rack.length<3)return 'NOT_ENOUGH_RACK_TILES';
+    if(s.buffer.length)return 'BUFFER_OCCUPIED';
+  }
+  if(kind==='undo'){
+    if(!s.undo||!s.rack.includes(s.undo.id))return 'NO_UNDO';
+    if(!profile.undoSources.includes(s.undo.source))return 'UNDO_SOURCE_UNBOUND';
+  }
+  if(kind==='shuffle'&&s.taken.every(Boolean))return 'NO_REMAINING_TILES';
+  return null;
+}
+function applyAssist(s,kind,profile=PROFILE,permutation) {
+  const reason=canAssist(s,kind,profile);if(reason)return rejected(s,reason);
+  let state,events=[];
+  if(kind==='move'){
+    const ids=s.rack.slice(0,3);
+    state={...s,rack:s.rack.slice(3),buffer:ids,undo:null,revision:s.revision+1};
+    events=[{type:'MOVE_TO_BUFFER',ids}];
+  }else if(kind==='undo'){
+    const id=s.undo.id,index=s.byId[id],taken=s.taken.slice();taken[index]=false;
+    const blockers=s.graph.parents.map(p=>p.filter(i=>!taken[i]).length);
+    state={...s,taken,blockers,rack:s.rack.filter(v=>v!==id),undo:null,revision:s.revision+1};
+    events=[{type:'UNDO',id}];
+  }else{
+    // Base validates that every label is conserved and recomputes content identity.
+    try {const fresh=Base.shuffleRemaining(s,{shuffle:()=>Array.isArray(permutation)?permutation.slice():permutation});
+      state={...fresh,buffer:s.buffer.slice(),undo:null};
+    }catch(e){return rejected(s,e.message);}
+    events=[{type:'SHUFFLED',snapshotHash:state.deal.snapshotHash,ordinal:state.shuffleOrdinal}];
+  }
+  state.status=statusOf(state);checkRound(state);
+  return {ok:true,code:'ASSIST_APPLIED',state,events};
+}
+module.exports={createPlayRound,legalTiles,pickTile,canAssist,applyAssist,checkRound};
+
+},
+"src/play/session":function(module,exports,require){
+'use strict';
+const Board=require('./board');
+const {PROFILE,LIMITS}=require('./profile');
+const {sha256Hex}=require('../content-hash');
+const VERSION='play-session-v09';
+const MAX_COMMANDS=10000,MAX_BYTES=8*1024*1024;
+function clone(v){return JSON.parse(JSON.stringify(v));}
+function canonical(v){if(v===null||typeof v!=='object')return JSON.stringify(v);if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';return '{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';}
+function nonempty(s){return typeof s==='string'&&s.trim().length>0;}
+function name(s){return nonempty(s)&&s.length<=160;}
+function createSession(deal,options={}) {
+  if(!name(options.roundId))throw new TypeError('ROUND_ID_REQUIRED');
+  if(options.rewardMode!=='development_mock')throw new TypeError('REAL_REWARD_ADAPTER_NOT_IMPLEMENTED');
+  if(options.profileId!==undefined&&options.profileId!==PROFILE.id)throw new TypeError('UNKNOWN_PROFILE');
+  const board=Board.createPlayRound(deal,options.roundId);
+  return {version:VERSION,roundId:options.roundId,profileId:PROFILE.id,rewardMode:options.rewardMode,initialDeal:board.deal,
+    board,revision:0,used:{move:0,undo:0,shuffle:0,revive:0},pending:null,commands:[],
+    receipts:Object.create(null),resolvedRewards:Object.create(null)};
+}
+function validCommand(c) {
+  if(!c||!name(c.id)||!name(c.roundId)||!Number.isSafeInteger(c.expectedRevision)||c.expectedRevision<0)return false;
+  const fields={PICK:['tileId'],REQUEST_ASSIST:['assist'],REWARD_RESULT:['token','result','permutation']};
+  if(!Object.prototype.hasOwnProperty.call(fields,c.type))return false;
+  const allowed=new Set(['id','roundId','expectedRevision','type',...fields[c.type]]);
+  if(Object.keys(c).some(k=>!allowed.has(k)))return false;
+  if(c.type==='PICK'&&!nonempty(c.tileId))return false;
+  if(c.type==='REQUEST_ASSIST'&&!['move','undo','shuffle','revive'].includes(c.assist))return false;
+  if(c.type==='REWARD_RESULT'){
+    if(!name(c.token)||!['completed','cancelled','failed','share_returned'].includes(c.result))return false;
+    if(c.permutation!==undefined&&(!Array.isArray(c.permutation)||c.permutation.length>3000||c.permutation.some(t=>!nonempty(t))))return false;
+  }
+  return true;
+}
+function dispatch(s,command) {
+  const reject=code=>({ok:false,code,session:s,events:[],replayed:false});
+  if(!validCommand(command))return reject('INVALID_COMMAND');
+  const c=clone(command),signature=canonical(c);
+  if(c.roundId!==s.roundId)return reject('WRONG_ROUND');
+  if(Object.prototype.hasOwnProperty.call(s.receipts,c.id)){
+    const receipt=s.receipts[c.id];
+    if(receipt.signature!==signature)return reject('COMMAND_ID_CONFLICT');
+    return {ok:true,code:receipt.code,session:s,events:[],replayed:true};
+  }
+  if(c.expectedRevision!==s.revision)return reject('STALE_REVISION');
+  if(s.commands.length>=MAX_COMMANDS)return reject('SESSION_COMMAND_LIMIT');
+  let board=s.board,used=s.used,pending=s.pending,resolvedRewards=s.resolvedRewards,code,events=[];
+  if(c.type==='PICK'){
+    if(pending)return reject('REWARD_PENDING');
+    const result=Board.pickTile(board,c.tileId,PROFILE);if(!result.ok)return reject(result.code);
+    board=result.state;code=result.code;events=result.events;
+  }else if(c.type==='REQUEST_ASSIST'){
+    if(pending)return reject('REWARD_PENDING');
+    if(used[c.assist]>=LIMITS[c.assist])return reject('ASSIST_EXHAUSTED');
+    const preflight=Board.canAssist(board,c.assist,PROFILE);if(preflight)return reject(preflight);
+    const token=sha256Hex(canonical([VERSION,s.roundId,c.id,s.revision,c.assist]));
+    pending={token,assist:c.assist,roundId:s.roundId,boardRevision:board.revision,mode:s.rewardMode};
+    code='REWARD_REQUESTED';events=[{type:'MOCK_REWARD_REQUESTED',...pending}];
+  }else{
+    if(Object.prototype.hasOwnProperty.call(resolvedRewards,c.token))return reject('REWARD_ALREADY_RESOLVED');
+    if(!pending)return reject('NO_PENDING_REWARD');
+    if(c.token!==pending.token)return reject('WRONG_REWARD_TOKEN');
+    if(pending.roundId!==s.roundId||pending.boardRevision!==board.revision)return reject('REWARD_STATE_CHANGED');
+    if(c.result==='completed'){
+      if(used[pending.assist]>=LIMITS[pending.assist])return reject('ASSIST_EXHAUSTED');
+      if(pending.assist!=='shuffle'&&c.permutation!==undefined)return reject('UNEXPECTED_PERMUTATION');
+      const result=Board.applyAssist(board,pending.assist,PROFILE,c.permutation);
+      if(!result.ok)return reject(result.code);
+      board=result.state;used={...used,[pending.assist]:used[pending.assist]+1};
+      code='REWARD_APPLIED';events=[...result.events,{type:'ASSIST_USED',assist:pending.assist}];
+    }else {if(c.permutation!==undefined)return reject('UNEXPECTED_PERMUTATION');code='REWARD_NOT_GRANTED';events=[{type:'REWARD_NOT_GRANTED',reason:c.result}];}
+    resolvedRewards=Object.assign(Object.create(null),resolvedRewards,{[c.token]:c.result});pending=null;
+  }
+  const receipts=Object.assign(Object.create(null),s.receipts,{[c.id]:{signature,code}});
+  const session={...s,board,used,pending,resolvedRewards,receipts,revision:s.revision+1,commands:[...s.commands,c]};
+  return {ok:true,code,session,events,replayed:false};
+}
+/** Diagnostic fingerprint/checksum, not authorization, anti-cheat, or proof of ad completion. */
+function fingerprint(s) {
+  const b=s.board;
+  return sha256Hex(canonical([VERSION,s.roundId,s.profileId,s.revision,s.used,s.pending,s.resolvedRewards,
+    b.deal.snapshotHash,b.originalDealId,b.revision,b.shuffleOrdinal,b.taken,b.rack,b.buffer,b.cleared,b.status,b.undo]));
+}
+function exportSession(s) {
+  const payload={version:VERSION,profileId:s.profileId,rewardMode:s.rewardMode,roundId:s.roundId,
+    initialDeal:s.initialDeal,commands:s.commands,finalFingerprint:fingerprint(s)};
+  const text=JSON.stringify({payload,checksum:sha256Hex(canonical(payload))});
+  if(text.length>MAX_BYTES)throw new Error('DIAGNOSTIC_LOG_TOO_LARGE');
+  return text;
+}
+function restoreSession(text) {
+  try {
+    if(typeof text!=='string'||text.length>MAX_BYTES)throw new Error('INVALID_DIAGNOSTIC_INPUT');
+    const envelope=JSON.parse(text),p=envelope.payload;
+    if(!p||sha256Hex(canonical(p))!==envelope.checksum)throw new Error('DIAGNOSTIC_CHECKSUM_MISMATCH');
+    if(p.version!==VERSION||p.profileId!==PROFILE.id||!Array.isArray(p.commands)||p.commands.length>MAX_COMMANDS)throw new Error('INVALID_DIAGNOSTIC_SCHEMA');
+    let session=createSession(p.initialDeal,{roundId:p.roundId,rewardMode:p.rewardMode,profileId:p.profileId});
+    for(const c of p.commands){const result=dispatch(session,c);if(!result.ok||result.replayed)throw new Error('DIAGNOSTIC_REPLAY_REJECTED:'+result.code);session=result.session;}
+    if(fingerprint(session)!==p.finalFingerprint)throw new Error('DIAGNOSTIC_STATE_MISMATCH');
+    return {ok:true,code:'RESTORED_FOR_DIAGNOSTICS',session};
+  }catch(e){return {ok:false,code:e.message,session:null};}
+}
+module.exports={createSession,dispatch,fingerprint,exportSession,restoreSession,VERSION};
+
+},
+"src/play/shuffle":function(module,exports,require){
+'use strict';
+// Development-only client permutation. Actual output is logged for deterministic replay.
+// The production random source/channel must be bound explicitly during platform integration.
+function permute(items,nextU32=()=>Math.floor(Math.random()*4294967296)) {
+  if(!Array.isArray(items)||items.length>3000)throw new TypeError('INVALID_SHUFFLE_INPUT');
+  function int(n){const limit=Math.floor(4294967296/n)*n;for(let attempt=0;attempt<1024;attempt++){
+    const x=nextU32();if(!Number.isInteger(x)||x<0||x>=4294967296)throw new Error('INVALID_RANDOM_VALUE');
+    if(x<limit)return x%n;
+  }throw new Error('RANDOM_REJECTION_LIMIT');}
+  const output=items.slice();for(let i=output.length-1;i>0;i--){const j=int(i+1);[output[i],output[j]]=[output[j],output[i]];}
+  return output;
+}
+module.exports={permute};
+
+},
+"ui/play-app":function(module,exports,require){
+'use strict';
+// Shared developer canvas UI, not the original game's art or complete homepage.
+const Session=require('../src/play/session');
+const Board=require('../src/play/board');
+const {PROFILE}=require('../src/play/profile');
+const {permute}=require('../src/play/shuffle');
+const LABELS={move:'移出',undo:'撤回',shuffle:'洗牌',revive:'复活'};
+const REASONS={NOT_ENOUGH_RACK_TILES:'槽内至少有三张才能移出',BUFFER_OCCUPIED:'暂存区仍有牌',NO_UNDO:'没有可撤回的取牌',
+  UNDO_SOURCE_UNBOUND:'侧堆／暂存撤回规则尚未核定',REVIVE_RULE_UNBOUND:'复活效果尚未绑定，不模拟救局',
+  ASSIST_EXHAUSTED:'本局该道具已用完',ROUND_NOT_PLAYING:'本局已结束',REWARD_PENDING:'请先处理领取弹窗',
+  NO_REMAINING_TILES:'没有可洗的棋盘牌',BLOCKED:'该牌仍被遮挡'};
+function createPlayApp(canvas,deal,initialWidth,initialHeight,dpr=1,options={}) {
+  const ctx=canvas.getContext('2d');let width=initialWidth,height=initialHeight,scene='HOME',session=null,regions=[],visible=true,
+    notice='',serial=0,commandSerial=0;
+  const instance=Date.now().toString(36)+'-'+Math.floor(Math.random()*1e9).toString(36);
+  const idFactory=options.idFactory||(()=>instance+'-'+(++serial));
+  const typeList=[...new Set(deal.cells.map(c=>c.type))].sort();
+  const label=type=>String(typeList.indexOf(type)+1);
+  function rect(x,y,w,h,color,stroke){ctx.fillStyle=color;ctx.fillRect(x,y,w,h);if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.strokeRect(x,y,w,h);}}
+  function text(t,x,y,size=14,color='#263e36',align='left'){
+    ctx.font=`${size}px sans-serif`;ctx.fillStyle=color;ctx.textAlign=align;ctx.fillText(t,x,y);
+  }
+  function center(t,y,size=14,color='#263e36'){text(t,width/2,y,size,color,'center');}
+  function button(id,t,x,y,w,h=44,enabled=true,tint='#255b44') {
+    rect(x,y,w,h,enabled?tint:'#dfe5e0');text(t,x+w/2,y+h/2+5,14,enabled?'#fff':'#738379','center');
+    regions.push({id,kind:'button',x,y,w,h,enabled});
+  }
+  function modal(title,lines) {
+    rect(0,0,width,height,'rgba(13,31,22,.48)');const x=18,y=Math.max(70,height/2-170),w=width-36,h=330;
+    rect(x,y,w,h,'#fafbf5','#bdcabc');center(title,y+39,20);lines.forEach((line,i)=>center(line,y+70+i*22,12,'#617265'));return {x,y,w,h};
+  }
+  function draw() {
+    regions=[];ctx.setTransform(dpr,0,0,dpr,0,0);rect(0,0,width,height,'#f2f5ec');
+    text('DEV / v0.9',18,31,11,'#486956');text('候选规则 · 模拟领取',width-18,31,11,'#6a786c','right');
+    if(scene==='HOME') {
+      center('道具与对局联调',height*.27,27);center('算法基线 v0.8 · 本轮新增交互流程',height*.27+35,13,'#637567');
+      center(`${deal.cells.length} 张合成测试牌`,height*.27+78,17);
+      button('start','开始测试',32,height*.5,width-64,52);
+      center('移出前三张 · 撤回 · 洗牌',height*.5+89,14);
+      center('非原作美术；没有接入真实广告。',height-104,12,'#637567');
+      center('完整首页、社交与复活仍在后续范围内。',height-80,11,'#637567');return;
+    }
+    const s=session.board;
+    center('单人对局',70,23);center(`已消除 ${s.cleared}/${s.deal.cells.length}  ·  槽位 ${s.rack.length}/7`,98,13,'#627569');
+    const cs=s.deal.cells,minX=Math.min(...cs.map(c=>c.rect.x)),maxX=Math.max(...cs.map(c=>c.rect.x+c.rect.w)),
+      minY=Math.min(...cs.map(c=>c.rect.y)),maxY=Math.max(...cs.map(c=>c.rect.y+c.rect.h));
+    const areaH=Math.max(100,height-442),scale=Math.min((width-32)/(maxX-minX),areaH/(maxY-minY)),
+      tx=(width-(maxX-minX)*scale)/2-minX*scale,ty=130-minY*scale;
+    const drawOrder=cs.slice().sort((a,b)=>a.zone!==b.zone?(a.zone==='board'?-1:1):a.zone==='board'?a.z-b.z:b.position-a.position);
+    for(const c of drawOrder){if(s.taken[s.byId[c.id]])continue;
+      const x=tx+c.rect.x*scale,y=ty+c.rect.y*scale,w=c.rect.w*scale,h=c.rect.h*scale,
+        active=s.blockers[s.byId[c.id]]===0;
+      rect(x,y+2,w,h,'#9bab97');rect(x,y,w,h,active?'#fffef4':'#c6cfc2','#7e977d');
+      text(active?label(c.type):'·',x+w/2,y+h*.66,Math.max(9,w*.45),active?'#294b35':'#8a9786','center');
+      regions.push({id:'tile:'+c.id,tileId:c.id,zone:c.zone,kind:'tile',x,y,w,h,enabled:active});
+    }
+    const bufferY=height-272,rackY=height-204,cardW=Math.min(44,(width-48)/7),gap=5;
+    text('暂存区',18,bufferY-9,12,'#667b68');
+    if(!s.buffer.length)text('移出后仍需取回消除',93,bufferY-9,11,'#849181');
+    for(let i=0;i<3;i++){
+      const x=18+i*(cardW+gap),id=s.buffer[i];rect(x,bufferY,cardW,40,id?'#fffef4':'#e3e9dc','#bdcbb5');
+      if(id){text(label(s.deal.cells[s.byId[id]].type),x+cardW/2,bufferY+27,19,'#294b35','center');
+        regions.push({id:'tile:'+id,tileId:id,kind:'tile',zone:'buffer',x,y:bufferY,w:cardW,h:40,enabled:true});}
+    }
+    text('主槽',18,rackY-9,12,'#667b68');const rw=(width-36-6*5)/7;
+    for(let i=0;i<7;i++){const x=18+i*(rw+5),id=s.rack[i];rect(x,rackY,rw,43,id?'#fffef4':'#dce5d3','#9db196');
+      if(id)text(label(s.deal.cells[s.byId[id]].type),x+rw/2,rackY+28,19,'#294b35','center');}
+    const bw=(width-52)/3;
+    for(const [i,kind] of ['move','undo','shuffle'].entries())button(kind,`${LABELS[kind]}  ${1-session.used[kind]}/1`,18+i*(bw+8),height-143,bw,44,
+      session.used[kind]===0&&!Board.canAssist(s,kind,PROFILE));
+    center(notice||'点击未被遮挡的牌，三张相同即可消除',height-77,11,'#526b56');
+    center('暂存取回等边界为候选规则；本页仅供开发验收',height-55,10,'#758272');
+    button('restart','重新测试',18,height-40,(width-44)/2,28,true,'#728873');
+    button('home','返回测试首页',26+(width-44)/2,height-40,(width-44)/2,28,true,'#728873');
+    if(s.status!=='PLAYING'){
+      scene='RESULT';regions=[];
+      const box=modal(s.status==='WON'?'本局已全部消除':'本局已失败',s.status==='WON'?['主区、侧堆、主槽与暂存均已处理完。','这是合成关卡的实际运行结果。']:['七格已满，且没有形成三消。','复活效果未核定，本版不伪造救局。']);
+      if(s.status==='LOST')button('revive','复活 · 规则待核',box.x+18,box.y+130,box.w-36,38,false);
+      button('restart','重新测试',box.x+18,box.y+188,box.w-36,44);
+      button('home','返回测试首页',box.x+18,box.y+246,box.w-36,40,true,'#758973');
+    }
+    if(session.pending){regions=[];const p=session.pending,box=modal(`领取${LABELS[p.assist]} · 模拟器`,[
+      '这里不会播放或请求真实广告。','只有“模拟完成”才会提交道具变化。']);
+      const half=(box.w-48)/2;
+      button('mock-completed','模拟完成',box.x+18,box.y+120,half,44);
+      button('mock-cancelled','模拟取消',box.x+30+half,box.y+120,half,44,true,'#738872');
+      button('mock-failed','模拟失败',box.x+18,box.y+180,half,44,true,'#738872');
+      button('mock-share_returned','分享返回',box.x+30+half,box.y+180,half,44,true,'#738872');
+      center('取消、失败、分享返回均不发奖。',box.y+264,11,'#657566');
+    }
+  }
+  function send(type,extra={}) {
+    const result=Session.dispatch(session,{id:'ui-'+(++commandSerial),roundId:session.roundId,expectedRevision:session.revision,type,...extra});
+    session=result.session;notice=result.ok?'':(REASONS[result.code]||result.code);draw();return result;
+  }
+  function restart(){session=Session.createSession(deal,{roundId:idFactory(),rewardMode:'development_mock'});scene='PLAY';notice='';draw();}
+  function finishMock(result){const p=session.pending;if(!p)return;
+    const extra={token:p.token,result};
+    if(result==='completed'&&p.assist==='shuffle')extra.permutation=permute(session.board.deal.cells.filter((c,i)=>!session.board.taken[i]).map(c=>c.type),options.nextU32);
+    return send('REWARD_RESULT',extra);
+  }
+  function tap(x,y) {
+    if(!visible||!Number.isFinite(x)||!Number.isFinite(y))return;
+    let region=null;for(let i=regions.length-1;i>=0;i--){const r=regions[i];if(x>=r.x&&x<r.x+r.w&&y>=r.y&&y<r.y+r.h){region=r;break;}}
+    if(!region)return;
+    if(region.kind==='tile'){if(session&&!session.pending&&scene==='PLAY')send('PICK',{tileId:region.tileId});return;}
+    const id=region.id;
+    if(id==='start'||id==='restart'){restart();return;}
+    if(id==='home'){scene='HOME';session=null;notice='';draw();return;}
+    if(id.startsWith('mock-')){finishMock(id.slice(5));return;}
+    send('REQUEST_ASSIST',{assist:id});
+  }
+  function resize(w,h,ratio=dpr){width=Math.max(240,w);height=Math.max(480,h);dpr=Math.min(4,Math.max(1,ratio));canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);draw();}
+  function setVisible(value){visible=!!value;if(visible)draw();}
+  resize(width,height,dpr);
+  return {tap,resize,restart,setVisible,destroy:()=>setVisible(false),getScene:()=>scene,getSession:()=>session,
+    getHitRegions:()=>regions.map(r=>({...r})),pickForQA:id=>send('PICK',{tileId:id}),
+    exportDiagnostic:()=>session?Session.exportSession(session):null};
+}
+module.exports={createPlayApp};
+
+}},cache={};
+function load(id){if(cache[id])return cache[id].exports;const mod={exports:{}};cache[id]=mod;if(!definitions[id])throw Error('MODULE_NOT_BUNDLED:'+id);definitions[id](mod,mod.exports,k=>{if(!k.startsWith('.'))throw Error('NO_EXTERNAL_DEPENDENCY:'+k);const parts=id.split('/');parts.pop();for(const part of k.replace(/\.js$/,'').split('/')){if(part==='..')parts.pop();else if(part!=='.')parts.push(part);}return load(parts.join('/'));});return mod.exports;}
+const deal={"schema":"astra-deal-1","dealId":"astra-4b0f5d75d17706b3b237e8d9","layoutId":"synthetic-layer-stack-270","origin":"SYNTHETIC_NOT_HISTORICAL","slotCapacity":7,"cells":[{"id":"m0000","zone":"board","z":0,"rect":{"x":0,"y":0,"w":96,"h":96},"type":"T10"},{"id":"m0001","zone":"board","z":0,"rect":{"x":100,"y":0,"w":96,"h":96},"type":"T04"},{"id":"m0002","zone":"board","z":0,"rect":{"x":200,"y":0,"w":96,"h":96},"type":"T08"},{"id":"m0003","zone":"board","z":0,"rect":{"x":300,"y":0,"w":96,"h":96},"type":"T02"},{"id":"m0004","zone":"board","z":0,"rect":{"x":400,"y":0,"w":96,"h":96},"type":"T12"},{"id":"m0005","zone":"board","z":0,"rect":{"x":500,"y":0,"w":96,"h":96},"type":"T09"},{"id":"m0006","zone":"board","z":0,"rect":{"x":600,"y":0,"w":96,"h":96},"type":"T04"},{"id":"m0007","zone":"board","z":0,"rect":{"x":700,"y":0,"w":96,"h":96},"type":"T10"},{"id":"m0008","zone":"board","z":0,"rect":{"x":0,"y":100,"w":96,"h":96},"type":"T05"},{"id":"m0009","zone":"board","z":0,"rect":{"x":100,"y":100,"w":96,"h":96},"type":"T12"},{"id":"m0010","zone":"board","z":0,"rect":{"x":200,"y":100,"w":96,"h":96},"type":"T05"},{"id":"m0011","zone":"board","z":0,"rect":{"x":300,"y":100,"w":96,"h":96},"type":"T14"},{"id":"m0012","zone":"board","z":0,"rect":{"x":400,"y":100,"w":96,"h":96},"type":"T07"},{"id":"m0013","zone":"board","z":0,"rect":{"x":500,"y":100,"w":96,"h":96},"type":"T09"},{"id":"m0014","zone":"board","z":0,"rect":{"x":600,"y":100,"w":96,"h":96},"type":"T10"},{"id":"m0015","zone":"board","z":0,"rect":{"x":700,"y":100,"w":96,"h":96},"type":"T13"},{"id":"m0016","zone":"board","z":0,"rect":{"x":0,"y":200,"w":96,"h":96},"type":"T12"},{"id":"m0017","zone":"board","z":0,"rect":{"x":100,"y":200,"w":96,"h":96},"type":"T08"},{"id":"m0018","zone":"board","z":0,"rect":{"x":200,"y":200,"w":96,"h":96},"type":"T02"},{"id":"m0019","zone":"board","z":0,"rect":{"x":300,"y":200,"w":96,"h":96},"type":"T02"},{"id":"m0020","zone":"board","z":0,"rect":{"x":400,"y":200,"w":96,"h":96},"type":"T01"},{"id":"m0021","zone":"board","z":0,"rect":{"x":500,"y":200,"w":96,"h":96},"type":"T13"},{"id":"m0022","zone":"board","z":0,"rect":{"x":600,"y":200,"w":96,"h":96},"type":"T04"},{"id":"m0023","zone":"board","z":0,"rect":{"x":700,"y":200,"w":96,"h":96},"type":"T13"},{"id":"m0024","zone":"board","z":0,"rect":{"x":0,"y":300,"w":96,"h":96},"type":"T11"},{"id":"m0025","zone":"board","z":0,"rect":{"x":100,"y":300,"w":96,"h":96},"type":"T06"},{"id":"m0026","zone":"board","z":0,"rect":{"x":200,"y":300,"w":96,"h":96},"type":"T07"},{"id":"m0027","zone":"board","z":0,"rect":{"x":300,"y":300,"w":96,"h":96},"type":"T01"},{"id":"m0028","zone":"board","z":0,"rect":{"x":400,"y":300,"w":96,"h":96},"type":"T09"},{"id":"m0029","zone":"board","z":0,"rect":{"x":500,"y":300,"w":96,"h":96},"type":"T04"},{"id":"m0030","zone":"board","z":0,"rect":{"x":600,"y":300,"w":96,"h":96},"type":"T07"},{"id":"m0031","zone":"board","z":0,"rect":{"x":700,"y":300,"w":96,"h":96},"type":"T13"},{"id":"m0032","zone":"board","z":0,"rect":{"x":0,"y":400,"w":96,"h":96},"type":"T09"},{"id":"m0033","zone":"board","z":0,"rect":{"x":100,"y":400,"w":96,"h":96},"type":"T04"},{"id":"m0034","zone":"board","z":0,"rect":{"x":200,"y":400,"w":96,"h":96},"type":"T04"},{"id":"m0035","zone":"board","z":0,"rect":{"x":300,"y":400,"w":96,"h":96},"type":"T13"},{"id":"m0036","zone":"board","z":0,"rect":{"x":400,"y":400,"w":96,"h":96},"type":"T01"},{"id":"m0037","zone":"board","z":0,"rect":{"x":500,"y":400,"w":96,"h":96},"type":"T07"},{"id":"m0038","zone":"board","z":0,"rect":{"x":600,"y":400,"w":96,"h":96},"type":"T13"},{"id":"m0039","zone":"board","z":0,"rect":{"x":700,"y":400,"w":96,"h":96},"type":"T09"},{"id":"m0040","zone":"board","z":1,"rect":{"x":50,"y":50,"w":96,"h":96},"type":"T03"},{"id":"m0041","zone":"board","z":1,"rect":{"x":150,"y":50,"w":96,"h":96},"type":"T01"},{"id":"m0042","zone":"board","z":1,"rect":{"x":250,"y":50,"w":96,"h":96},"type":"T02"},{"id":"m0043","zone":"board","z":1,"rect":{"x":350,"y":50,"w":96,"h":96},"type":"T13"},{"id":"m0044","zone":"board","z":1,"rect":{"x":450,"y":50,"w":96,"h":96},"type":"T03"},{"id":"m0045","zone":"board","z":1,"rect":{"x":550,"y":50,"w":96,"h":96},"type":"T04"},{"id":"m0046","zone":"board","z":1,"rect":{"x":650,"y":50,"w":96,"h":96},"type":"T04"},{"id":"m0047","zone":"board","z":1,"rect":{"x":750,"y":50,"w":96,"h":96},"type":"T02"},{"id":"m0048","zone":"board","z":1,"rect":{"x":50,"y":150,"w":96,"h":96},"type":"T13"},{"id":"m0049","zone":"board","z":1,"rect":{"x":150,"y":150,"w":96,"h":96},"type":"T08"},{"id":"m0050","zone":"board","z":1,"rect":{"x":250,"y":150,"w":96,"h":96},"type":"T12"},{"id":"m0051","zone":"board","z":1,"rect":{"x":350,"y":150,"w":96,"h":96},"type":"T14"},{"id":"m0052","zone":"board","z":1,"rect":{"x":450,"y":150,"w":96,"h":96},"type":"T07"},{"id":"m0053","zone":"board","z":1,"rect":{"x":550,"y":150,"w":96,"h":96},"type":"T07"},{"id":"m0054","zone":"board","z":1,"rect":{"x":650,"y":150,"w":96,"h":96},"type":"T09"},{"id":"m0055","zone":"board","z":1,"rect":{"x":750,"y":150,"w":96,"h":96},"type":"T12"},{"id":"m0056","zone":"board","z":1,"rect":{"x":50,"y":250,"w":96,"h":96},"type":"T00"},{"id":"m0057","zone":"board","z":1,"rect":{"x":150,"y":250,"w":96,"h":96},"type":"T06"},{"id":"m0058","zone":"board","z":1,"rect":{"x":250,"y":250,"w":96,"h":96},"type":"T06"},{"id":"m0059","zone":"board","z":1,"rect":{"x":350,"y":250,"w":96,"h":96},"type":"T11"},{"id":"m0060","zone":"board","z":1,"rect":{"x":450,"y":250,"w":96,"h":96},"type":"T07"},{"id":"m0061","zone":"board","z":1,"rect":{"x":550,"y":250,"w":96,"h":96},"type":"T02"},{"id":"m0062","zone":"board","z":1,"rect":{"x":650,"y":250,"w":96,"h":96},"type":"T09"},{"id":"m0063","zone":"board","z":1,"rect":{"x":750,"y":250,"w":96,"h":96},"type":"T09"},{"id":"m0064","zone":"board","z":1,"rect":{"x":50,"y":350,"w":96,"h":96},"type":"T08"},{"id":"m0065","zone":"board","z":1,"rect":{"x":150,"y":350,"w":96,"h":96},"type":"T01"},{"id":"m0066","zone":"board","z":1,"rect":{"x":250,"y":350,"w":96,"h":96},"type":"T12"},{"id":"m0067","zone":"board","z":1,"rect":{"x":350,"y":350,"w":96,"h":96},"type":"T04"},{"id":"m0068","zone":"board","z":1,"rect":{"x":450,"y":350,"w":96,"h":96},"type":"T13"},{"id":"m0069","zone":"board","z":1,"rect":{"x":550,"y":350,"w":96,"h":96},"type":"T09"},{"id":"m0070","zone":"board","z":1,"rect":{"x":650,"y":350,"w":96,"h":96},"type":"T02"},{"id":"m0071","zone":"board","z":1,"rect":{"x":750,"y":350,"w":96,"h":96},"type":"T02"},{"id":"m0072","zone":"board","z":1,"rect":{"x":50,"y":450,"w":96,"h":96},"type":"T14"},{"id":"m0073","zone":"board","z":1,"rect":{"x":150,"y":450,"w":96,"h":96},"type":"T08"},{"id":"m0074","zone":"board","z":1,"rect":{"x":250,"y":450,"w":96,"h":96},"type":"T08"},{"id":"m0075","zone":"board","z":1,"rect":{"x":350,"y":450,"w":96,"h":96},"type":"T01"},{"id":"m0076","zone":"board","z":1,"rect":{"x":450,"y":450,"w":96,"h":96},"type":"T10"},{"id":"m0077","zone":"board","z":1,"rect":{"x":550,"y":450,"w":96,"h":96},"type":"T07"},{"id":"m0078","zone":"board","z":1,"rect":{"x":650,"y":450,"w":96,"h":96},"type":"T13"},{"id":"m0079","zone":"board","z":1,"rect":{"x":750,"y":450,"w":96,"h":96},"type":"T00"},{"id":"m0080","zone":"board","z":2,"rect":{"x":0,"y":0,"w":96,"h":96},"type":"T00"},{"id":"m0081","zone":"board","z":2,"rect":{"x":100,"y":0,"w":96,"h":96},"type":"T02"},{"id":"m0082","zone":"board","z":2,"rect":{"x":200,"y":0,"w":96,"h":96},"type":"T12"},{"id":"m0083","zone":"board","z":2,"rect":{"x":300,"y":0,"w":96,"h":96},"type":"T10"},{"id":"m0084","zone":"board","z":2,"rect":{"x":400,"y":0,"w":96,"h":96},"type":"T12"},{"id":"m0085","zone":"board","z":2,"rect":{"x":500,"y":0,"w":96,"h":96},"type":"T05"},{"id":"m0086","zone":"board","z":2,"rect":{"x":600,"y":0,"w":96,"h":96},"type":"T04"},{"id":"m0087","zone":"board","z":2,"rect":{"x":700,"y":0,"w":96,"h":96},"type":"T08"},{"id":"m0088","zone":"board","z":2,"rect":{"x":0,"y":100,"w":96,"h":96},"type":"T03"},{"id":"m0089","zone":"board","z":2,"rect":{"x":100,"y":100,"w":96,"h":96},"type":"T13"},{"id":"m0090","zone":"board","z":2,"rect":{"x":200,"y":100,"w":96,"h":96},"type":"T09"},{"id":"m0091","zone":"board","z":2,"rect":{"x":300,"y":100,"w":96,"h":96},"type":"T11"},{"id":"m0092","zone":"board","z":2,"rect":{"x":400,"y":100,"w":96,"h":96},"type":"T06"},{"id":"m0093","zone":"board","z":2,"rect":{"x":500,"y":100,"w":96,"h":96},"type":"T00"},{"id":"m0094","zone":"board","z":2,"rect":{"x":600,"y":100,"w":96,"h":96},"type":"T06"},{"id":"m0095","zone":"board","z":2,"rect":{"x":700,"y":100,"w":96,"h":96},"type":"T14"},{"id":"m0096","zone":"board","z":2,"rect":{"x":0,"y":200,"w":96,"h":96},"type":"T08"},{"id":"m0097","zone":"board","z":2,"rect":{"x":100,"y":200,"w":96,"h":96},"type":"T08"},{"id":"m0098","zone":"board","z":2,"rect":{"x":200,"y":200,"w":96,"h":96},"type":"T06"},{"id":"m0099","zone":"board","z":2,"rect":{"x":300,"y":200,"w":96,"h":96},"type":"T11"},{"id":"m0100","zone":"board","z":2,"rect":{"x":400,"y":200,"w":96,"h":96},"type":"T03"},{"id":"m0101","zone":"board","z":2,"rect":{"x":500,"y":200,"w":96,"h":96},"type":"T12"},{"id":"m0102","zone":"board","z":2,"rect":{"x":600,"y":200,"w":96,"h":96},"type":"T14"},{"id":"m0103","zone":"board","z":2,"rect":{"x":700,"y":200,"w":96,"h":96},"type":"T01"},{"id":"m0104","zone":"board","z":2,"rect":{"x":0,"y":300,"w":96,"h":96},"type":"T10"},{"id":"m0105","zone":"board","z":2,"rect":{"x":100,"y":300,"w":96,"h":96},"type":"T03"},{"id":"m0106","zone":"board","z":2,"rect":{"x":200,"y":300,"w":96,"h":96},"type":"T00"},{"id":"m0107","zone":"board","z":2,"rect":{"x":300,"y":300,"w":96,"h":96},"type":"T00"},{"id":"m0108","zone":"board","z":2,"rect":{"x":400,"y":300,"w":96,"h":96},"type":"T11"},{"id":"m0109","zone":"board","z":2,"rect":{"x":500,"y":300,"w":96,"h":96},"type":"T07"},{"id":"m0110","zone":"board","z":2,"rect":{"x":600,"y":300,"w":96,"h":96},"type":"T07"},{"id":"m0111","zone":"board","z":2,"rect":{"x":700,"y":300,"w":96,"h":96},"type":"T03"},{"id":"m0112","zone":"board","z":2,"rect":{"x":0,"y":400,"w":96,"h":96},"type":"T00"},{"id":"m0113","zone":"board","z":2,"rect":{"x":100,"y":400,"w":96,"h":96},"type":"T09"},{"id":"m0114","zone":"board","z":2,"rect":{"x":200,"y":400,"w":96,"h":96},"type":"T00"},{"id":"m0115","zone":"board","z":2,"rect":{"x":300,"y":400,"w":96,"h":96},"type":"T08"},{"id":"m0116","zone":"board","z":2,"rect":{"x":400,"y":400,"w":96,"h":96},"type":"T04"},{"id":"m0117","zone":"board","z":2,"rect":{"x":500,"y":400,"w":96,"h":96},"type":"T13"},{"id":"m0118","zone":"board","z":2,"rect":{"x":600,"y":400,"w":96,"h":96},"type":"T07"},{"id":"m0119","zone":"board","z":2,"rect":{"x":700,"y":400,"w":96,"h":96},"type":"T12"},{"id":"m0120","zone":"board","z":3,"rect":{"x":50,"y":50,"w":96,"h":96},"type":"T10"},{"id":"m0121","zone":"board","z":3,"rect":{"x":150,"y":50,"w":96,"h":96},"type":"T14"},{"id":"m0122","zone":"board","z":3,"rect":{"x":250,"y":50,"w":96,"h":96},"type":"T05"},{"id":"m0123","zone":"board","z":3,"rect":{"x":350,"y":50,"w":96,"h":96},"type":"T09"},{"id":"m0124","zone":"board","z":3,"rect":{"x":450,"y":50,"w":96,"h":96},"type":"T05"},{"id":"m0125","zone":"board","z":3,"rect":{"x":550,"y":50,"w":96,"h":96},"type":"T01"},{"id":"m0126","zone":"board","z":3,"rect":{"x":650,"y":50,"w":96,"h":96},"type":"T11"},{"id":"m0127","zone":"board","z":3,"rect":{"x":750,"y":50,"w":96,"h":96},"type":"T03"},{"id":"m0128","zone":"board","z":3,"rect":{"x":50,"y":150,"w":96,"h":96},"type":"T03"},{"id":"m0129","zone":"board","z":3,"rect":{"x":150,"y":150,"w":96,"h":96},"type":"T14"},{"id":"m0130","zone":"board","z":3,"rect":{"x":250,"y":150,"w":96,"h":96},"type":"T00"},{"id":"m0131","zone":"board","z":3,"rect":{"x":350,"y":150,"w":96,"h":96},"type":"T12"},{"id":"m0132","zone":"board","z":3,"rect":{"x":450,"y":150,"w":96,"h":96},"type":"T08"},{"id":"m0133","zone":"board","z":3,"rect":{"x":550,"y":150,"w":96,"h":96},"type":"T03"},{"id":"m0134","zone":"board","z":3,"rect":{"x":650,"y":150,"w":96,"h":96},"type":"T05"},{"id":"m0135","zone":"board","z":3,"rect":{"x":750,"y":150,"w":96,"h":96},"type":"T05"},{"id":"m0136","zone":"board","z":3,"rect":{"x":50,"y":250,"w":96,"h":96},"type":"T03"},{"id":"m0137","zone":"board","z":3,"rect":{"x":150,"y":250,"w":96,"h":96},"type":"T01"},{"id":"m0138","zone":"board","z":3,"rect":{"x":250,"y":250,"w":96,"h":96},"type":"T01"},{"id":"m0139","zone":"board","z":3,"rect":{"x":350,"y":250,"w":96,"h":96},"type":"T11"},{"id":"m0140","zone":"board","z":3,"rect":{"x":450,"y":250,"w":96,"h":96},"type":"T08"},{"id":"m0141","zone":"board","z":3,"rect":{"x":550,"y":250,"w":96,"h":96},"type":"T10"},{"id":"m0142","zone":"board","z":3,"rect":{"x":650,"y":250,"w":96,"h":96},"type":"T03"},{"id":"m0143","zone":"board","z":3,"rect":{"x":750,"y":250,"w":96,"h":96},"type":"T10"},{"id":"m0144","zone":"board","z":3,"rect":{"x":50,"y":350,"w":96,"h":96},"type":"T00"},{"id":"m0145","zone":"board","z":3,"rect":{"x":150,"y":350,"w":96,"h":96},"type":"T08"},{"id":"m0146","zone":"board","z":3,"rect":{"x":250,"y":350,"w":96,"h":96},"type":"T03"},{"id":"m0147","zone":"board","z":3,"rect":{"x":350,"y":350,"w":96,"h":96},"type":"T10"},{"id":"m0148","zone":"board","z":3,"rect":{"x":450,"y":350,"w":96,"h":96},"type":"T06"},{"id":"m0149","zone":"board","z":3,"rect":{"x":550,"y":350,"w":96,"h":96},"type":"T02"},{"id":"m0150","zone":"board","z":3,"rect":{"x":650,"y":350,"w":96,"h":96},"type":"T08"},{"id":"m0151","zone":"board","z":3,"rect":{"x":750,"y":350,"w":96,"h":96},"type":"T01"},{"id":"m0152","zone":"board","z":3,"rect":{"x":50,"y":450,"w":96,"h":96},"type":"T11"},{"id":"m0153","zone":"board","z":3,"rect":{"x":150,"y":450,"w":96,"h":96},"type":"T11"},{"id":"m0154","zone":"board","z":3,"rect":{"x":250,"y":450,"w":96,"h":96},"type":"T02"},{"id":"m0155","zone":"board","z":3,"rect":{"x":350,"y":450,"w":96,"h":96},"type":"T01"},{"id":"m0156","zone":"board","z":3,"rect":{"x":450,"y":450,"w":96,"h":96},"type":"T09"},{"id":"m0157","zone":"board","z":3,"rect":{"x":550,"y":450,"w":96,"h":96},"type":"T02"},{"id":"m0158","zone":"board","z":3,"rect":{"x":650,"y":450,"w":96,"h":96},"type":"T10"},{"id":"m0159","zone":"board","z":3,"rect":{"x":750,"y":450,"w":96,"h":96},"type":"T03"},{"id":"m0160","zone":"board","z":4,"rect":{"x":0,"y":0,"w":96,"h":96},"type":"T05"},{"id":"m0161","zone":"board","z":4,"rect":{"x":100,"y":0,"w":96,"h":96},"type":"T00"},{"id":"m0162","zone":"board","z":4,"rect":{"x":200,"y":0,"w":96,"h":96},"type":"T13"},{"id":"m0163","zone":"board","z":4,"rect":{"x":300,"y":0,"w":96,"h":96},"type":"T06"},{"id":"m0164","zone":"board","z":4,"rect":{"x":400,"y":0,"w":96,"h":96},"type":"T14"},{"id":"m0165","zone":"board","z":4,"rect":{"x":500,"y":0,"w":96,"h":96},"type":"T00"},{"id":"m0166","zone":"board","z":4,"rect":{"x":600,"y":0,"w":96,"h":96},"type":"T12"},{"id":"m0167","zone":"board","z":4,"rect":{"x":700,"y":0,"w":96,"h":96},"type":"T00"},{"id":"m0168","zone":"board","z":4,"rect":{"x":0,"y":100,"w":96,"h":96},"type":"T00"},{"id":"m0169","zone":"board","z":4,"rect":{"x":100,"y":100,"w":96,"h":96},"type":"T10"},{"id":"m0170","zone":"board","z":4,"rect":{"x":200,"y":100,"w":96,"h":96},"type":"T04"},{"id":"m0171","zone":"board","z":4,"rect":{"x":300,"y":100,"w":96,"h":96},"type":"T10"},{"id":"m0172","zone":"board","z":4,"rect":{"x":400,"y":100,"w":96,"h":96},"type":"T11"},{"id":"m0173","zone":"board","z":4,"rect":{"x":500,"y":100,"w":96,"h":96},"type":"T03"},{"id":"m0174","zone":"board","z":4,"rect":{"x":600,"y":100,"w":96,"h":96},"type":"T03"},{"id":"m0175","zone":"board","z":4,"rect":{"x":700,"y":100,"w":96,"h":96},"type":"T00"},{"id":"m0176","zone":"board","z":4,"rect":{"x":0,"y":200,"w":96,"h":96},"type":"T07"},{"id":"m0177","zone":"board","z":4,"rect":{"x":100,"y":200,"w":96,"h":96},"type":"T10"},{"id":"m0178","zone":"board","z":4,"rect":{"x":200,"y":200,"w":96,"h":96},"type":"T08"},{"id":"m0179","zone":"board","z":4,"rect":{"x":300,"y":200,"w":96,"h":96},"type":"T01"},{"id":"m0180","zone":"board","z":4,"rect":{"x":400,"y":200,"w":96,"h":96},"type":"T11"},{"id":"m0181","zone":"board","z":4,"rect":{"x":500,"y":200,"w":96,"h":96},"type":"T07"},{"id":"m0182","zone":"board","z":4,"rect":{"x":600,"y":200,"w":96,"h":96},"type":"T05"},{"id":"m0183","zone":"board","z":4,"rect":{"x":700,"y":200,"w":96,"h":96},"type":"T04"},{"id":"m0184","zone":"board","z":4,"rect":{"x":0,"y":300,"w":96,"h":96},"type":"T08"},{"id":"m0185","zone":"board","z":4,"rect":{"x":100,"y":300,"w":96,"h":96},"type":"T02"},{"id":"m0186","zone":"board","z":4,"rect":{"x":200,"y":300,"w":96,"h":96},"type":"T14"},{"id":"m0187","zone":"board","z":4,"rect":{"x":300,"y":300,"w":96,"h":96},"type":"T14"},{"id":"m0188","zone":"board","z":4,"rect":{"x":400,"y":300,"w":96,"h":96},"type":"T00"},{"id":"m0189","zone":"board","z":4,"rect":{"x":500,"y":300,"w":96,"h":96},"type":"T10"},{"id":"m0190","zone":"board","z":4,"rect":{"x":600,"y":300,"w":96,"h":96},"type":"T14"},{"id":"m0191","zone":"board","z":4,"rect":{"x":700,"y":300,"w":96,"h":96},"type":"T12"},{"id":"m0192","zone":"board","z":4,"rect":{"x":0,"y":400,"w":96,"h":96},"type":"T03"},{"id":"m0193","zone":"board","z":4,"rect":{"x":100,"y":400,"w":96,"h":96},"type":"T09"},{"id":"m0194","zone":"board","z":4,"rect":{"x":200,"y":400,"w":96,"h":96},"type":"T14"},{"id":"m0195","zone":"board","z":4,"rect":{"x":300,"y":400,"w":96,"h":96},"type":"T06"},{"id":"m0196","zone":"board","z":4,"rect":{"x":400,"y":400,"w":96,"h":96},"type":"T02"},{"id":"m0197","zone":"board","z":4,"rect":{"x":500,"y":400,"w":96,"h":96},"type":"T12"},{"id":"m0198","zone":"board","z":4,"rect":{"x":600,"y":400,"w":96,"h":96},"type":"T06"},{"id":"m0199","zone":"board","z":4,"rect":{"x":700,"y":400,"w":96,"h":96},"type":"T06"},{"id":"m0200","zone":"board","z":5,"rect":{"x":50,"y":50,"w":96,"h":96},"type":"T11"},{"id":"m0201","zone":"board","z":5,"rect":{"x":150,"y":50,"w":96,"h":96},"type":"T10"},{"id":"m0202","zone":"board","z":5,"rect":{"x":250,"y":50,"w":96,"h":96},"type":"T08"},{"id":"m0203","zone":"board","z":5,"rect":{"x":350,"y":50,"w":96,"h":96},"type":"T11"},{"id":"m0204","zone":"board","z":5,"rect":{"x":450,"y":50,"w":96,"h":96},"type":"T12"},{"id":"m0205","zone":"board","z":5,"rect":{"x":550,"y":50,"w":96,"h":96},"type":"T07"},{"id":"m0206","zone":"board","z":5,"rect":{"x":650,"y":50,"w":96,"h":96},"type":"T11"},{"id":"m0207","zone":"board","z":5,"rect":{"x":750,"y":50,"w":96,"h":96},"type":"T04"},{"id":"m0208","zone":"board","z":5,"rect":{"x":50,"y":150,"w":96,"h":96},"type":"T14"},{"id":"m0209","zone":"board","z":5,"rect":{"x":150,"y":150,"w":96,"h":96},"type":"T11"},{"id":"m0210","zone":"board","z":5,"rect":{"x":250,"y":150,"w":96,"h":96},"type":"T11"},{"id":"m0211","zone":"board","z":5,"rect":{"x":350,"y":150,"w":96,"h":96},"type":"T02"},{"id":"m0212","zone":"board","z":5,"rect":{"x":450,"y":150,"w":96,"h":96},"type":"T04"},{"id":"m0213","zone":"board","z":5,"rect":{"x":550,"y":150,"w":96,"h":96},"type":"T07"},{"id":"m0214","zone":"board","z":5,"rect":{"x":650,"y":150,"w":96,"h":96},"type":"T14"},{"id":"m0215","zone":"board","z":5,"rect":{"x":750,"y":150,"w":96,"h":96},"type":"T12"},{"id":"m0216","zone":"board","z":5,"rect":{"x":50,"y":250,"w":96,"h":96},"type":"T06"},{"id":"m0217","zone":"board","z":5,"rect":{"x":150,"y":250,"w":96,"h":96},"type":"T04"},{"id":"m0218","zone":"board","z":5,"rect":{"x":250,"y":250,"w":96,"h":96},"type":"T11"},{"id":"m0219","zone":"board","z":5,"rect":{"x":350,"y":250,"w":96,"h":96},"type":"T12"},{"id":"m0220","zone":"board","z":5,"rect":{"x":450,"y":250,"w":96,"h":96},"type":"T14"},{"id":"m0221","zone":"board","z":5,"rect":{"x":550,"y":250,"w":96,"h":96},"type":"T11"},{"id":"m0222","zone":"board","z":5,"rect":{"x":650,"y":250,"w":96,"h":96},"type":"T01"},{"id":"m0223","zone":"board","z":5,"rect":{"x":750,"y":250,"w":96,"h":96},"type":"T01"},{"id":"m0224","zone":"board","z":5,"rect":{"x":50,"y":350,"w":96,"h":96},"type":"T07"},{"id":"m0225","zone":"board","z":5,"rect":{"x":150,"y":350,"w":96,"h":96},"type":"T06"},{"id":"m0226","zone":"board","z":5,"rect":{"x":250,"y":350,"w":96,"h":96},"type":"T05"},{"id":"m0227","zone":"board","z":5,"rect":{"x":350,"y":350,"w":96,"h":96},"type":"T07"},{"id":"m0228","zone":"board","z":5,"rect":{"x":450,"y":350,"w":96,"h":96},"type":"T14"},{"id":"m0229","zone":"board","z":5,"rect":{"x":550,"y":350,"w":96,"h":96},"type":"T05"},{"id":"m0230","zone":"board","z":5,"rect":{"x":650,"y":350,"w":96,"h":96},"type":"T02"},{"id":"m0231","zone":"board","z":5,"rect":{"x":750,"y":350,"w":96,"h":96},"type":"T05"},{"id":"m0232","zone":"board","z":5,"rect":{"x":50,"y":450,"w":96,"h":96},"type":"T03"},{"id":"m0233","zone":"board","z":5,"rect":{"x":150,"y":450,"w":96,"h":96},"type":"T00"},{"id":"m0234","zone":"board","z":5,"rect":{"x":250,"y":450,"w":96,"h":96},"type":"T13"},{"id":"m0235","zone":"board","z":5,"rect":{"x":350,"y":450,"w":96,"h":96},"type":"T04"},{"id":"m0236","zone":"board","z":5,"rect":{"x":450,"y":450,"w":96,"h":96},"type":"T06"},{"id":"m0237","zone":"board","z":5,"rect":{"x":550,"y":450,"w":96,"h":96},"type":"T09"},{"id":"m0238","zone":"board","z":5,"rect":{"x":650,"y":450,"w":96,"h":96},"type":"T01"},{"id":"m0239","zone":"board","z":5,"rect":{"x":750,"y":450,"w":96,"h":96},"type":"T06"},{"id":"left-000","zone":"side","stackId":"left","position":0,"rect":{"x":0,"y":680,"w":96,"h":96},"type":"T05"},{"id":"left-001","zone":"side","stackId":"left","position":1,"rect":{"x":4,"y":680,"w":96,"h":96},"type":"T05"},{"id":"left-002","zone":"side","stackId":"left","position":2,"rect":{"x":8,"y":680,"w":96,"h":96},"type":"T02"},{"id":"left-003","zone":"side","stackId":"left","position":3,"rect":{"x":12,"y":680,"w":96,"h":96},"type":"T05"},{"id":"left-004","zone":"side","stackId":"left","position":4,"rect":{"x":16,"y":680,"w":96,"h":96},"type":"T12"},{"id":"left-005","zone":"side","stackId":"left","position":5,"rect":{"x":20,"y":680,"w":96,"h":96},"type":"T03"},{"id":"left-006","zone":"side","stackId":"left","position":6,"rect":{"x":24,"y":680,"w":96,"h":96},"type":"T01"},{"id":"left-007","zone":"side","stackId":"left","position":7,"rect":{"x":28,"y":680,"w":96,"h":96},"type":"T05"},{"id":"left-008","zone":"side","stackId":"left","position":8,"rect":{"x":32,"y":680,"w":96,"h":96},"type":"T05"},{"id":"left-009","zone":"side","stackId":"left","position":9,"rect":{"x":36,"y":680,"w":96,"h":96},"type":"T02"},{"id":"left-010","zone":"side","stackId":"left","position":10,"rect":{"x":40,"y":680,"w":96,"h":96},"type":"T08"},{"id":"left-011","zone":"side","stackId":"left","position":11,"rect":{"x":44,"y":680,"w":96,"h":96},"type":"T09"},{"id":"left-012","zone":"side","stackId":"left","position":12,"rect":{"x":48,"y":680,"w":96,"h":96},"type":"T04"},{"id":"left-013","zone":"side","stackId":"left","position":13,"rect":{"x":52,"y":680,"w":96,"h":96},"type":"T01"},{"id":"left-014","zone":"side","stackId":"left","position":14,"rect":{"x":56,"y":680,"w":96,"h":96},"type":"T07"},{"id":"right-000","zone":"side","stackId":"right","position":0,"rect":{"x":500,"y":680,"w":96,"h":96},"type":"T13"},{"id":"right-001","zone":"side","stackId":"right","position":1,"rect":{"x":504,"y":680,"w":96,"h":96},"type":"T06"},{"id":"right-002","zone":"side","stackId":"right","position":2,"rect":{"x":508,"y":680,"w":96,"h":96},"type":"T09"},{"id":"right-003","zone":"side","stackId":"right","position":3,"rect":{"x":512,"y":680,"w":96,"h":96},"type":"T14"},{"id":"right-004","zone":"side","stackId":"right","position":4,"rect":{"x":516,"y":680,"w":96,"h":96},"type":"T13"},{"id":"right-005","zone":"side","stackId":"right","position":5,"rect":{"x":520,"y":680,"w":96,"h":96},"type":"T10"},{"id":"right-006","zone":"side","stackId":"right","position":6,"rect":{"x":524,"y":680,"w":96,"h":96},"type":"T13"},{"id":"right-007","zone":"side","stackId":"right","position":7,"rect":{"x":528,"y":680,"w":96,"h":96},"type":"T06"},{"id":"right-008","zone":"side","stackId":"right","position":8,"rect":{"x":532,"y":680,"w":96,"h":96},"type":"T09"},{"id":"right-009","zone":"side","stackId":"right","position":9,"rect":{"x":536,"y":680,"w":96,"h":96},"type":"T10"},{"id":"right-010","zone":"side","stackId":"right","position":10,"rect":{"x":540,"y":680,"w":96,"h":96},"type":"T00"},{"id":"right-011","zone":"side","stackId":"right","position":11,"rect":{"x":544,"y":680,"w":96,"h":96},"type":"T06"},{"id":"right-012","zone":"side","stackId":"right","position":12,"rect":{"x":548,"y":680,"w":96,"h":96},"type":"T13"},{"id":"right-013","zone":"side","stackId":"right","position":13,"rect":{"x":552,"y":680,"w":96,"h":96},"type":"T05"},{"id":"right-014","zone":"side","stackId":"right","position":14,"rect":{"x":556,"y":680,"w":96,"h":96},"type":"T14"}],"snapshotHash":"d145a338d31405eee133bef072a5d5c1c48b42a6551932cb91480677e5d5281e"};
+const canvas=document.getElementById('game');let bounds=canvas.getBoundingClientRect();
+window.game=load('ui/play-app').createPlayApp(canvas,deal,bounds.width,bounds.height,window.devicePixelRatio||1);
+canvas.addEventListener('pointerdown',e=>{if(e.isPrimary===false)return;const b=canvas.getBoundingClientRect();game.tap(e.clientX-b.left,e.clientY-b.top);});
+window.addEventListener('resize',()=>{const b=canvas.getBoundingClientRect();game.resize(b.width,b.height,window.devicePixelRatio||1);});
+document.addEventListener('visibilitychange',()=>game.setVisible(!document.hidden));
+// Diagnostic export is intentionally a QA API, not an original-game gameplay button.
+window.exportPlayDiagnostic=()=>{const t=game.exportDiagnostic();if(!t)return;const url=URL.createObjectURL(new Blob([t],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='play-diagnostic.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+</script></body></html>

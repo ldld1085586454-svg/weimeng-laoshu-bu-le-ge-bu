@@ -1,0 +1,168 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>商业化流程演示 v0.10</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6f1;color:#22392e;font:15px/1.65 system-ui,-apple-system,sans-serif}header,main{max-width:1100px;margin:auto;padding:24px}header{padding-bottom:10px}.eyebrow{letter-spacing:.12em;font-size:12px;color:#526c5c}h1{font-size:clamp(23px,5vw,34px);margin:7px 0}h2{font-size:23px;line-height:1.4;margin:12px 0}p{margin:8px 0}.muted{color:#607065}.badge,.warning{background:#fff2d7;color:#72521b;border-radius:9px;padding:10px 13px}.badge{display:inline-block;font-size:12px}nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}button{font:inherit;border:0;border-radius:10px;padding:11px 15px;background:#285d41;color:white;cursor:pointer}button.secondary,nav button{background:#e3e9df;color:#2e4738}nav button.active{background:#285d41;color:white}button:hover{filter:brightness(.96)}button:focus-visible{outline:3px solid #b38b43;outline-offset:3px}.grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px}.card{background:white;border:1px solid #dce3d9;border-radius:16px;padding:22px;margin-bottom:16px}.offers{display:grid;gap:10px}.offer{text-align:left;padding:14px}.offer small{display:block;opacity:.84;margin-top:3px}.offer.unbound{background:#eee7d9;color:#705735}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{border-radius:10px;padding:11px;background:#f1f5ee;min-width:0}.metric strong{display:block;font-size:24px;font-weight:650}.metric span{font-size:12px;color:#607065}.log-row{border-bottom:1px solid #ebefe7;padding:9px 0;display:flex;justify-content:space-between;gap:9px;font-size:12px;flex-wrap:wrap}code{overflow-wrap:anywhere}#notice{margin:0 0 18px;padding:12px 15px;background:#e8eee3;border-radius:10px}.finance{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}label{display:block;font-size:13px}input,select{display:block;font:inherit;width:100%;border:1px solid #bdcbb7;border-radius:8px;padding:10px;background:white;color:inherit}.gate{display:grid;grid-template-columns:44px minmax(0,1fr) 86px;gap:9px;padding:14px 0;border-bottom:1px solid #e5eadf}.gate small{color:#806236}footer{font-size:12px;color:#607065;padding:10px 0 25px}#financial-result{grid-template-columns:repeat(4,minmax(0,1fr))}[hidden]{display:none!important}@media(max-width:700px){header,main{padding:17px}.grid{grid-template-columns:1fr}.offers{grid-template-columns:1fr 1fr}.card{padding:17px}.finance{grid-template-columns:1fr 1fr}#financial-result{grid-template-columns:1fr 1fr}.metric strong{font-size:22px}button{padding:10px 11px;font-size:14px}.gate{grid-template-columns:36px minmax(0,1fr)}.gate small{grid-column:2}nav{gap:6px}}
+</style></head><body><header><div class="eyebrow">2022 微信版还原项目 / 商业化验证</div><h1>从一次领取，到一笔可核对的收入</h1><p class="muted">玩家免费挑战；观看机会、奖励作用和平台结算分别验收。</p><span class="badge">模拟环境 · 不连接微信广告 · 不产生收入 · 非正式游戏界面</span><nav><button data-tab="flow" class="active">领取流程</button><button data-tab="finance">收入核对</button><button data-tab="release">上线门槛</button></nav></header><main>
+<section data-view="flow"><p id="notice" role="status"></p><div class="grid"><aside><div class="card"><div class="eyebrow">四个原有业务触点</div><div class="offers" style="margin-top:14px"><button id="offer-move" class="offer ">移出<small>移出槽内前三张</small><small id="quota-move"></small></button><button id="offer-undo" class="offer ">撤回<small>候选：最近主区取牌</small><small id="quota-undo"></small></button><button id="offer-shuffle" class="offer ">洗牌<small>重排，不承诺通关</small><small id="quota-shuffle"></small></button><button id="offer-revive" class="offer unbound">复活<small>效果未绑定，先拦截</small><small id="quota-revive"></small></button></div><button id="new-round" class="secondary" style="margin-top:15px;width:100%">新模拟对局</button></div><div class="card"><p class="muted">本演示只执行业务状态模型，不改变v0.9棋盘。原可玩工程随完整包保留。</p><button id="export" class="secondary">导出模拟记录</button></div></aside><article><div id="flow-panel" class="card"></div><div class="card"><h2>同一笔机会，六个独立节点</h2><div id="metrics" class="metrics"></div><p id="pending" class="muted"></p><p id="revenue-status" class="warning"></p></div><div class="card"><div class="eyebrow">最近9条模拟事件</div><div id="event-log"></div></div></article></div></section>
+<section data-view="finance" hidden><div class="card"><h2>平台金额单独输入，不从播放次数造收入</h2><p class="warning">预填数字全部是算术示例，不是项目经营数据。清空字段表示资料缺失，不是零。</p><div class="finance" style="margin:18px 0"><label>平台有效展示（次）<input id="platformImpressions" value="3000" inputmode="decimal"></label><label>平台预估净收入（元）<input id="estimatedNetFen" value="60" inputmode="decimal"></label><label>已结算净收入（元）<input id="settledNetFen" value="50" inputmode="decimal"></label><label>现金到账（元）<input id="cashReceivedFen" value="40" inputmode="decimal"></label><label>对应投放成本（元）<input id="paidTrafficFen" value="10" inputmode="decimal"></label><label>对应可变成本（元）<input id="variableCostFen" value="5" inputmode="decimal"></label><label>报表完整性<select id="coverage"><option value="partial">尚未完整（示例）</option><option value="final">完整期间（示例）</option></select></label></div><div id="financial-result" class="metrics"></div><p id="financial-note" class="muted"></p></div></section>
+<section data-view="release" hidden><div class="card"><h2>生产开关关闭；还有12项真实发行门槛</h2><p class="muted">本页不以本地测试代替平台资格、真实广告、后端事务或原作复活规则。以下未核事项不自动填“通过”。</p><div id="gates"></div></div></section>
+<footer>v0.10 商业规格与模拟验证。原算法与对局基线不变；没有增加充值、货币、体力、会员或强制插屏。</footer></main><script>window.CommerceModel=(()=>{const module={exports:{}};'use strict';
+/* Commercial workflow reference model, NOT a production backend or ad-authenticity proof.
+ * It records completion evidence separately from application and monetary settlement.
+ * No generation, tile, gameplay or existing session code is changed by this module.
+ */
+const copy=v=>JSON.parse(JSON.stringify(v));
+const stable=v=>v===null||typeof v!=='object'?JSON.stringify(v):Array.isArray(v)?'['+v.map(stable).join(',')+']':'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',')+'}';
+const id=v=>typeof v==='string'&&v.trim().length>0&&v.length<=180;
+const has=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+const ratio=(n,d)=>d>0?n/d:null;
+function decideOffer(ctx,cfg) {
+  const deny=reason=>({allowed:false,reason});
+  if(!ctx||!cfg||!id(ctx.placement)||!has(cfg.placements||{},ctx.placement))return deny('UNKNOWN_PLACEMENT');
+  if(!id(ctx.roundId)||!Number.isSafeInteger(ctx.boardRevision)||ctx.boardRevision<0||!Number.isSafeInteger(ctx.used)||ctx.used<0)return deny('INVALID_CONTEXT');
+  const p=cfg.placements[ctx.placement];
+  if(!p.effectBound)return deny('EFFECT_UNBOUND');
+  if(ctx.used>=p.maxPerRound)return deny('ROUND_LIMIT');
+  if(ctx.phase!==p.phase)return deny('WRONG_PHASE');
+  if(ctx.effectReady!==true)return deny('EFFECT_NOT_APPLICABLE');
+  if(!['simulation','production'].includes(ctx.mode))return deny('UNKNOWN_MODE');
+  if(ctx.mode==='production') {
+    if(!cfg.productionEnabled||!id(p.adUnitId)||!id(ctx.appId)||!Object.values(cfg.releaseApprovals||{}).length||Object.values(cfg.releaseApprovals).some(v=>v!==true))return deny('PRODUCTION_GATE_CLOSED');
+    // Policy cap is optional, separate from provider-side limits, and never guessed.
+    if(cfg.dailyProductCap!==null&&(!Number.isSafeInteger(ctx.dailyGrants)||ctx.dailyGrants>=cfg.dailyProductCap))return deny('DAY_LIMIT_OR_UNKNOWN');
+  }
+  return {allowed:true,reason:'ELIGIBLE',placement:ctx.placement,maxPerRound:p.maxPerRound,configVersion:cfg.version};
+}
+function createFlow(input) {
+  if(!input||!['id','roundId','placement','configVersion'].every(k=>id(input[k]))||!/^\d{4}-\d{2}-\d{2}$/.test(input.dayKey)||!Number.isSafeInteger(input.boardRevision)||input.boardRevision<0)throw TypeError('INVALID_FLOW');
+  return {...copy(input),state:'OFFERED',events:[],receipts:{},recoveryReason:null};
+}
+function advance(flow,event) {
+  if(!event||!id(event.id)||!id(event.kind)||!Number.isFinite(event.at)||event.at<0)throw TypeError('INVALID_EVENT');
+  const e=copy(event),signature=stable(e);
+  if(has(flow.receipts,e.id)) {
+    if(flow.receipts[e.id]!==signature)throw Error('EVENT_ID_CONFLICT');
+    return {flow,replayed:true};
+  }
+  const s=flow.state,k=e.kind;
+  let next=null,recoveryReason=null;
+  const oneOf=(...states)=>states.includes(s);
+  if(k==='ACCEPT'&&s==='OFFERED')next='LOADING';
+  if(k==='DECLINE'&&s==='OFFERED')next='CANCELLED';
+  if(k==='AD_READY'&&s==='LOADING')next='READY';
+  // SHOW is a client-observed successful presentation, not a billed impression.
+  if(k==='SHOW'&&s==='READY')next='SHOWING';
+  if(k==='AD_FAILED'&&oneOf('LOADING','READY','SHOWING'))next='FAILED';
+  if(k==='AD_CLOSE'&&s==='SHOWING')next=e.isEnded===true?'EARNED_PENDING':e.isEnded===false?'CANCELLED':'UNVERIFIED';
+  if(k==='SHARE_RETURN'&&oneOf('OFFERED','LOADING','READY','SHOWING'))next='UNVERIFIED';
+  if(k==='GRANT_FAILED'&&oneOf('EARNED_PENDING','RECOVERY_REQUIRED')){next='RECOVERY_REQUIRED';recoveryReason='APPLY_OR_NETWORK_FAILED';}
+  if(k==='GRANT_COMMITTED'&&oneOf('EARNED_PENDING','RECOVERY_REQUIRED')){
+    const match=e.roundId===flow.roundId&&e.beforeRevision===flow.boardRevision;
+    next=match?'APPLIED':'RECOVERY_REQUIRED';recoveryReason=match?null:'ORIGINAL_ROUND_OR_REVISION_MISMATCH';
+  }
+  if(k==='PLAY_RESUMED'&&s==='APPLIED'&&e.roundId===flow.roundId)next='RESUMED';
+  if(next===null)throw Error('INVALID_TRANSITION:'+s+'->'+k);
+  const receipts=Object.assign(Object.create(null),flow.receipts,{[e.id]:signature});
+  return {replayed:false,flow:{...flow,state:next,recoveryReason,receipts,events:[...flow.events,{...e,toState:next}]}};
+}
+function summarizeFlows(flows) {
+  if(!Array.isArray(flows))throw TypeError('INVALID_FLOWS');
+  const seen=new Set(),m={offers:0,optedIn:0,clientPresented:0,observedComplete:0,grants:0,resumed:0,failedAttempts:0,pendingGrants:0,unverified:0,revenueCny:null};
+  for(const f of flows){
+    if(seen.has(f.id))throw Error('DUPLICATE_FLOW');seen.add(f.id);m.offers++;
+    const contains=(k,s)=>f.events.some(e=>e.kind===k&&(!s||e.toState===s));
+    if(contains('ACCEPT'))m.optedIn++;
+    if(contains('SHOW'))m.clientPresented++;
+    if(contains('AD_CLOSE','EARNED_PENDING'))m.observedComplete++;
+    if(contains('GRANT_COMMITTED','APPLIED'))m.grants++;
+    if(contains('PLAY_RESUMED','RESUMED'))m.resumed++;
+    if(f.state==='FAILED')m.failedAttempts++;
+    if(['EARNED_PENDING','RECOVERY_REQUIRED'].includes(f.state))m.pendingGrants++;
+    if(f.state==='UNVERIFIED')m.unverified++;
+  }
+  return {...m,optInRate:ratio(m.optedIn,m.offers),clientPresentationRate:ratio(m.clientPresented,m.optedIn),completionRate:ratio(m.observedComplete,m.clientPresented),grantRate:ratio(m.grants,m.observedComplete),resumeRate:ratio(m.resumed,m.grants)};
+}
+function reconcile(report) {
+  if(!report||report.currency!=='CNY')throw TypeError('EXPLICIT_CNY_CURRENCY_REQUIRED');
+  if(report.timezone!=='Asia/Shanghai')throw TypeError('EXPLICIT_REPORT_TIMEZONE_REQUIRED');
+  if(!['partial','final'].includes(report.status))throw TypeError('EXPLICIT_COVERAGE_STATUS_REQUIRED');
+  const money=['estimatedNetFen','settledNetFen','cashReceivedFen','paidTrafficFen','variableCostFen'];
+  for(const k of money)if(report[k]!=null&&(!Number.isSafeInteger(report[k])||(['paidTrafficFen','variableCostFen'].includes(k)&&report[k]<0)))throw TypeError('INTEGER_FEN_REQUIRED:'+k);
+  if(report.platformImpressions!=null&&(!Number.isSafeInteger(report.platformImpressions)||report.platformImpressions<0))throw TypeError('INVALID_PLATFORM_IMPRESSIONS');
+  const cny=k=>report[k]==null?null:report[k]/100;
+  const r={...copy(report),estimatedNetCny:cny('estimatedNetFen'),settledNetCny:cny('settledNetFen'),cashReceivedCny:cny('cashReceivedFen')};
+  r.ecpmNetCny=report.platformImpressions>0&&r.estimatedNetCny!==null?r.estimatedNetCny*1000/report.platformImpressions:null;
+  r.settledContributionCny=report.settledNetFen!=null&&report.paidTrafficFen!=null&&report.variableCostFen!=null?(report.settledNetFen-report.paidTrafficFen-report.variableCostFen)/100:null;
+  r.note='Net means developer-side report amount; no second share deduction. Contribution excludes fixed cost/tax not included in input. Cash is not revenue addition.';
+  return r;
+}
+module.exports={decideOffer,createFlow,advance,summarizeFlows,reconcile};
+;return module.exports;})();window.COMMERCE_CONFIG={"version":"commerce-v010","target":"2022-09 WeChat historical behavior","stage":"specification_and_simulation","purchaseEnabled":false,"adFormats":["rewarded_video"],"productionEnabled":false,"dailyProductCap":null,"providerDailyCapKnown":false,"shareRewardEnabled":false,"shareRewardNote":"Historical route retained in specification; current approval and reliable completion semantics unverified. onShow is never completion.","disableFallbackSharePage":true,"placements":{"move":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"historical-basic/community-boundaries","adUnitId":null},"undo":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"community-boundaries","adUnitId":null},"shuffle":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"community-boundaries","adUnitId":null},"revive":{"maxPerRound":1,"phase":"LOST","effectBound":false,"evidence":"historical-entry/effect-unresolved","adUnitId":null}},"releaseApprovals":{"platformAccess":false,"rewardTerms":false,"privacy":false,"realDevice":false,"backendIdempotency":false,"historicalProfile":false},"notes":["One-per-round limits are inherited working profile, not verified daily allowance.","Four business placements do not imply four billable impressions per round.","Net platform revenue must not be multiplied by revenue share again.","Existing v0.8 algorithms and v0.9 gameplay remain unchanged."]};window.RELEASE_GATES=[{"id":"G01","requirement":"合法自有AppID与发行主体/素材权利范围","status":"not_verified","blocks_public_release":true},{"id":"G02","requirement":"当前广告准入与可用adUnitId","status":"not_verified","blocks_public_release":true},{"id":"G03","requirement":"当前分享/广告组件回退规则核查","status":"not_verified","blocks_public_release":true},{"id":"G04","requirement":"复活效果及与暂存/次数关系绑定","status":"not_verified","blocks_public_release":true},{"id":"G05","requirement":"真实广告完整/提前关闭/失败/缺回调真机测试","status":"not_verified","blocks_public_release":true},{"id":"G06","requirement":"后端权益幂等与故障恢复","status":"not_verified","blocks_public_release":true},{"id":"G07","requirement":"原局结束/跨局权益冲突处理","status":"not_verified","blocks_public_release":true},{"id":"G08","requirement":"结果验证与真实地区/话题/荣誉计分","status":"not_verified","blocks_public_release":true},{"id":"G09","requirement":"隐私告知授权及数据最小化","status":"not_verified","blocks_public_release":true},{"id":"G10","requirement":"平台报表首轮核对与净额口径","status":"not_verified","blocks_public_release":true},{"id":"G11","requirement":"Android/iOS微信真机体验验收","status":"not_verified","blocks_public_release":true},{"id":"G12","requirement":"生产构建删除mock领奖与开发按钮","status":"not_verified","blocks_public_release":true}];</script><script>'use strict';
+(function(){
+ const M=window.CommerceModel,C=window.COMMERCE_CONFIG,G=window.RELEASE_GATES;
+ const $=id=>document.getElementById(id);
+ let flows=[],current=null,serial=0,round=1,used={move:0,undo:0,shuffle:0,revive:0},lastEvent=null,notice='选择一个业务触点，逐步检查领取与兑现。';
+ const names={move:'移出',undo:'撤回',shuffle:'洗牌',revive:'复活'};
+ const states={OFFERED:'等待自愿选择',LOADING:'等待广告加载',READY:'广告已就绪',SHOWING:'展示中（客户端观察）',EARNED_PENDING:'已取得机会，待兑现',RECOVERY_REQUIRED:'兑现待恢复',APPLIED:'道具作用已提交',RESUMED:'已继续操作',FAILED:'广告未成功',CANCELLED:'本次未领取',UNVERIFIED:'结果不能确认'};
+ function el(tag,text,cls){const e=document.createElement(tag);if(text!==null)e.textContent=text;if(cls)e.className=cls;return e;}
+ function button(text,id,fn,secondary=false){const b=el('button',text,secondary?'secondary':'');b.dataset.action=id;b.addEventListener('click',fn);return b;}
+ function choose(kind){
+  const pre=M.decideOffer({placement:kind,roundId:'r'+round,boardRevision:5,used:used[kind],effectReady:true,phase:kind==='revive'?'LOST':'PLAYING',mode:'simulation'},C);
+  if(!pre.allowed){notice=pre.reason==='EFFECT_UNBOUND'?'复活入口属原作范围，但效果未绑定：在请求广告之前拦截，不模拟一个不存在的救局。':'本局已用完；需要开始新的模拟对局。';render();return;}
+  if(current&&!['RESUMED','FAILED','CANCELLED','UNVERIFIED'].includes(current.state)){notice='先处理当前领取。已完成观看的待兑现记录不能直接丢弃。';render();return;}
+  current=M.createFlow({id:'f'+(++serial),roundId:'r'+round,placement:kind,boardRevision:5,dayKey:'2026-09-18',configVersion:C.version});flows.push(current);lastEvent=null;notice='这是业务场景模拟，不执行正式牌局，也不播放真实广告。';render();
+ }
+ function emit(kind,extra={}){
+  if(!current)return;
+  const before=current.state,e={id:current.id+'-e'+(current.events.length+1),kind,at:1000+current.events.length,...extra};
+  try{current=M.advance(current,e).flow;flows[flows.findIndex(f=>f.id===current.id)]=current;lastEvent=e;
+   if(before!=='APPLIED'&&current.state==='APPLIED')used[current.placement]++;
+   notice=current.state==='RECOVERY_REQUIRED'?'已经完成观看：重试原局兑现，不需要再看一条广告。':'完成证据、道具作用和平台收入分别记录。';
+  }catch(err){notice=err.message;}render();
+ }
+ function repeat(){if(!current||!lastEvent)return;const before=JSON.stringify(current);const r=M.advance(current,lastEvent);notice=r.replayed&&JSON.stringify(r.flow)===before?'重复事件已确认：不再作用、不重复记数。':'状态发生变化，请检查。';render();}
+ function render(){
+  $('notice').textContent=notice;
+  for(const kind of Object.keys(names))$('quota-'+kind).textContent=kind==='revive'?'未绑定':`本模拟局剩余 ${1-used[kind]}/1`;
+  const panel=$('flow-panel');panel.replaceChildren();
+  if(!current){panel.append(el('h2','先检查一个触点'),el('p','左侧选择移出、撤回或洗牌。复活会在广告之前明确拦截。','muted'));}
+  else{
+   panel.append(el('div',`${current.id} · ${current.roundId} · ${names[current.placement]}`,'eyebrow'),el('h2',states[current.state]),el('p','此处“成功”都是模拟事件；不等于微信真机、服务端事务或现金结算通过。','muted'));
+   const actions=el('div',null,'actions'),add=(title,id,k,extra={},secondary=false)=>actions.append(button(title,id,()=>emit(k,extra),secondary));
+   switch(current.state){
+    case 'OFFERED':add('观看视频并使用（模拟）','accept','ACCEPT');add('不使用','decline','DECLINE',{},true);break;
+    case 'LOADING':add('模拟加载成功','loaded','AD_READY');add('模拟无可用广告','no-ad','AD_FAILED',{reason:'NO_FILL_SIMULATED'},true);add('模拟加载失败','load-error','AD_FAILED',{reason:'NETWORK_SIMULATED'},true);break;
+    case 'READY':add('模拟展示成功','show','SHOW');add('模拟展示失败','show-error','AD_FAILED',{},true);break;
+    case 'SHOWING':add('模拟完整观看','complete','AD_CLOSE',{isEnded:true});add('提前关闭','early-close','AD_CLOSE',{isEnded:false},true);add('缺少完成标志','unknown','AD_CLOSE',{},true);add('普通分享返回','share-return','SHARE_RETURN',{},true);break;
+    case 'EARNED_PENDING':add('模拟作用提交成功','grant','GRANT_COMMITTED',{roundId:current.roundId,beforeRevision:5});add('模拟发奖网络失败','grant-error','GRANT_FAILED',{},true);add('模拟原局已更换','stale-round','GRANT_COMMITTED',{roundId:'other-round',beforeRevision:5},true);break;
+    case 'RECOVERY_REQUIRED':add('模拟恢复原局并重试兑现','retry-grant','GRANT_COMMITTED',{roundId:current.roundId,beforeRevision:5});panel.append(el('p','不补到另一局、不要求再看广告。真实恢复与数据库事务仍是后续接入任务。','warning'));break;
+    case 'APPLIED':add('模拟返回原局并有效取牌','resume','PLAY_RESUMED',{roundId:current.roundId});break;
+    default:panel.append(el('p','可开始另一个业务触点，或开启新的模拟对局。','muted'));
+   }
+   if(lastEvent)actions.append(button('重放上一回调：检查防重复','repeat',repeat,true));
+   panel.append(actions);
+  }
+  const m=M.summarizeFlows(flows);$('metrics').replaceChildren();
+  for(const [key,label] of [['offers','机会'],['optedIn','主动选择'],['clientPresented','展示观察'],['observedComplete','完成证据'],['grants','作用到账'],['resumed','有效继续']]){const a=el('div',null,'metric');a.append(el('strong',String(m[key])),el('span',label));$('metrics').append(a);}
+  $('revenue-status').textContent='实际平台收入：未接入，不显示0元或预估盈利';
+  $('pending').textContent=`待兑现 ${m.pendingGrants} 笔 · 未核定 ${m.unverified} 笔`;
+  const log=$('event-log');log.replaceChildren();
+  const events=flows.flatMap(f=>f.events.map(e=>({f:f.id,...e})));
+  for(const e of events.slice(-9).reverse()){const row=el('div',null,'log-row');row.append(el('code',e.f+' / '+e.kind),el('span',states[e.toState]||e.toState));log.append(row);}
+  if(!events.length)log.append(el('p','暂无模拟事件。','muted'));
+ }
+ for(const k of Object.keys(names))$('offer-'+k).addEventListener('click',()=>choose(k));
+ $('new-round').addEventListener('click',()=>{if(current&&['LOADING','READY','SHOWING','EARNED_PENDING','RECOVERY_REQUIRED','APPLIED'].includes(current.state)){notice='当前流程未结清。先结束或恢复兑现；不能用重开清除待兑现记录。';render();return;}round++;used={move:0,undo:0,shuffle:0,revive:0};current=null;lastEvent=null;notice='已创建新的模拟对局。此前流程仍留在本次演示日志。';render();});
+ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-view]').forEach(p=>p.hidden=p.dataset.view!==b.dataset.tab);document.querySelectorAll('[data-tab]').forEach(p=>p.classList.toggle('active',p===b));}));
+ const fields=['platformImpressions','estimatedNetFen','settledNetFen','cashReceivedFen','paidTrafficFen','variableCostFen'];
+ function report(){try{const input={currency:'CNY',timezone:'Asia/Shanghai',status:$('coverage').value,sourceReportId:'SIMULATED_MANUAL_INPUT',asOf:'2026-09-18 (DEMO)'};
+  for(const k of fields){const t=$(k).value.trim();if(t==='')input[k]=null;else{if(!/^\d+(\.\d{1,2})?$/.test(t))throw Error('金额最多两位小数；留空表示缺少数据。');const v=Number(t);input[k]=k==='platformImpressions'?v:Math.round(v*100);}}
+  const r=M.reconcile(input),out=$('financial-result');out.replaceChildren();
+  for(const [k,l] of [['ecpmNetCny','净eCPM（演算）'],['estimatedNetCny','预估净收入'],['settledContributionCny','结算口径贡献'],['cashReceivedCny','实际到账输入']]){const a=el('div',null,'metric');a.append(el('strong',r[k]===null?'未提供':'¥'+r[k].toFixed(2)),el('span',l));out.append(a);}
+  $('financial-note').textContent='以上全部为手工假设输入，不是本项目收入。已结算贡献不包含未输入的固定成本/税费；现金不与收入相加。数据状态：'+(r.status==='partial'?'未完整':'示例完整');
+ }catch(e){$('financial-note').textContent=e.message;}}
+ for(const k of fields)$(k).addEventListener('input',report);$('coverage').addEventListener('change',report);
+ const gates=$('gates');for(const g of G){const a=el('div',null,'gate');a.append(el('strong',g.id),el('span',g.requirement),el('small','待真实验收'));gates.append(a);}
+ $('export').addEventListener('click',()=>{const data={mode:'SIMULATION_ONLY',flows,summary:M.summarizeFlows(flows),config:C,actualPlatformRevenue:null};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download='commercial-simulation.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ window.commercialLab={choose,emit,getState:()=>current,getSummary:()=>M.summarizeFlows(flows)};
+ render();report();
+})();
+</script></body></html>

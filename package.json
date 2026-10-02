@@ -1,0 +1,34 @@
+{
+  "name": "sheep-game-development",
+  "version": "0.12.0-dev.1",
+  "private": true,
+  "description": "Unified 2022-style development reconstruction: playable rounds, rewards, social, native WeChat adapter and loopback server; not production.",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node tools/run-tests.js",
+    "generate": "node tools/generate.js",
+    "benchmark": "node tools/benchmark.js",
+    "verify": "node tools/verify.js",
+    "probe": "node tools/build-probe.js",
+    "review:stress": "node tools/review-stress.js",
+    "check": "node tools/check.js",
+    "check:full": "node tools/check.js --full",
+    "integrity": "node tools/verify-package.js",
+    "play:build": "node tools/build-play.js",
+    "play:stress": "node tools/play-stress.js",
+    "serve": "node tools/serve-play.js",
+    "commerce:test": "node --test tests/commerce.test.js",
+    "commerce:build": "node tools/build-commerce.js",
+    "integration:build": "node tools/build-integration.js",
+    "integration:test": "node --test tests/integration-round.test.js tests/integration-controller.test.js tests/integration-provider.test.js tests/integration-ui.test.js",
+    "integration:serve": "node tools/serve-integration.js",
+    "full:build": "node tools/build-full.js",
+    "full:check": "node tools/check-full.js",
+    "full:serve": "node tools/start-full.js",
+    "full:stress": "node tools/full-stress.js",
+    "full:release-gate": "node tools/release-gate-full.js"
+  }
+}
