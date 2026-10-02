@@ -1,0 +1,19 @@
+﻿repo,tree_entries,mp3_count,dj2_full_resource,notes
+qierkang/yang-game,218,8,no,reference community build; known 8 audio
+bkkkker/yxj,214,8,no,independent Sep16 snapshot; same logical resources
+zhudaoruyi/yanglegeyang,211,8,no,same 8 native MP3
+adesign4all/sheep-sheep,211,8,no,same 8 native MP3
+kaokaohot/ylgy,216,8,no,same 8 native MP3
+yixinagqingyuan/yang-le-ge-yang,264,8,no,same 8 native MP3
+gulihua10010/sheep,278,8,no,same 8 native MP3
+1649439175/yanglegeyang,298,8,no,same 8 native MP3
+liujiawei54/ylgy,218,8,no,same 8 native MP3
+SeniraPuthor/yanglegeyang,211,8,no,same 8 native MP3
+z729063706/Sheep_as_Sheep_Pro,213,8,no,same 8 native MP3
+matrix3d/a-sheep,385,10,no,captured official CDN cache; duplicates; 7 known unique cached audio
+ajsong/cocos2d-js,34,5,no,renamed copies; hashes match known audio
+heart0001/cocos2d-js,34,5,no,renamed copies; hashes match known audio
+oldyue/klee,279,26,no,modified/replaced bytes under original UUID names; NOT authentic evidence
+oldyue/chicken,274,20,no,modified audio bytes; extra moveOut import metadata only
+QianGu-Vae/ylgyxs,262,9,no,8 known + unrelated extra song
+P1kaj1uu/Wechat-Sheep-And-Sheep,177,0,remote,WeChat 1.1.4 shell; remote resources/main not embedded

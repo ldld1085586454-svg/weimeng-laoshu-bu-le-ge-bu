@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "package": "羊了个羊_美术资源与规格包_v0.9",
+  "evidence_class": "C",
+  "provenance_note": "2022-09-15/16 community build snapshots. Not claimed as official original delivery. Binary redistribution remains disabled; paths/hashes/index metadata are provided for verification and user-authorized local extraction.",
+  "snapshots": [
+    {
+      "repository": "qierkang/yang-game",
+      "commit": "11fe37888add6f44f688f798ede3c6fd612eedc5",
+      "commit_time": "2022-09-15T13:55:24Z"
+    },
+    {
+      "repository": "bkkkker/yxj",
+      "commit": "bd57224f372ca7809d80c57305f35cf27eb631e7",
+      "commit_time": "2022-09-16T10:28:41Z",
+      "role": "cross-check mirror"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "assets/main/config.0df91.json",
+      "git_blob_sha": "21cef424728f6899e0a0865d7810e7549e7dd655"
+    },
+    {
+      "path": "assets/main/import/0e/0e316345c.92451.json",
+      "git_blob_sha": "2c8bf292f632f0c9e855705d44f74cd0f3c577fd",
+      "purpose": "main UI serialized pack; 134 SpriteFrames indexed"
+    },
+    {
+      "path": "assets/resources/config.8b75c.json",
+      "git_blob_sha": "69c58bdb3976b601755512c9b472e4f66f174848"
+    },
+    {
+      "path": "assets/main/native/14/14280553b.cc313.png",
+      "git_blob_sha": "22cfef2b9680341de1b82c4fc1cad94565419576",
+      "bytes": 315690,
+      "dimensions": [
+        789,
+        2048
+      ],
+      "purpose": "primary UI atlas; contains gameplay prop icons"
+    },
+    {
+      "path": "assets/main/native/15/159878452.961d9.png",
+      "git_blob_sha": "61b4bf5fc0d0d5788b283b2304c2749426941f1e",
+      "bytes": 279748,
+      "dimensions": [
+        635,
+        1592
+      ],
+      "purpose": "topic PK atlas"
+    },
+    {
+      "path": "assets/main/native/1b/1b5f49aa9.8f1f9.png",
+      "git_blob_sha": "f36cd97b087aa5e6fa76524d7fd34e227c328638",
+      "bytes": 189563,
+      "dimensions": [
+        501,
+        940
+      ],
+      "purpose": "social/bullet/location atlas"
+    },
+    {
+      "path": "assets/main/native/1f/1f3fbc33c.9933b.png",
+      "git_blob_sha": "8e4d0c0fdae84091dfa53aa588f436f4240a81b6",
+      "bytes": 107999,
+      "dimensions": [
+        126,
+        654
+      ],
+      "purpose": "coin/number atlas"
+    },
+    {
+      "path": "assets/resources/native/1b/1bb1ee4cb.e456b.png",
+      "git_blob_sha": "93763d79c40b8e85e9e7d6de4922d8ece33dc835",
+      "bytes": 534795,
+      "dimensions": [
+        1011,
+        1017
+      ],
+      "purpose": "block atlas"
+    },
+    {
+      "path": "assets/resources/native/12/128b0bdde.4bc94.png",
+      "git_blob_sha": "cb16e5bff20fa2672051ca9b6e495b96f39f3f77",
+      "bytes": 188946,
+      "dimensions": [
+        345,
+        1022
+      ],
+      "purpose": "rewardIcon atlas"
+    },
+    {
+      "path": "assets/resources/native/15/159df0053.c126a.png",
+      "git_blob_sha": "c85203eba5b06dd0b84b848d4c755db2a924c420",
+      "bytes": 39508,
+      "dimensions": [
+        277,
+        1018
+      ],
+      "purpose": "rank atlas"
+    },
+    {
+      "path": "assets/resources/native/86/8676e8a2-739e-45c5-b84b-2865fff6dfff.2c094.png",
+      "git_blob_sha": "531530e3d47660086f247f1e9a66eb362e71c4b4",
+      "bytes": 582890,
+      "dimensions": [
+        1047,
+        1047
+      ],
+      "purpose": "Sheeps Spine texture"
+    },
+    {
+      "path": "assets/resources/native/77/77d900af-7d1b-4833-830a-aa834d69ac9d.5f033.png",
+      "git_blob_sha": "c6da15273c1f9e39d80f85275508c4ab9b887c72",
+      "bytes": 110297,
+      "dimensions": [
+        519,
+        519
+      ],
+      "purpose": "Dead1 Spine texture"
+    },
+    {
+      "path": "assets/resources/native/40/40962d94-4e79-4582-b35f-28688210343e.6943b.png",
+      "git_blob_sha": "5892043d22ad1804f575bcadaa9af18a25548d5a",
+      "bytes": 27928,
+      "dimensions": [
+        314,
+        314
+      ],
+      "purpose": "Finish1 Spine texture"
+    },
+    {
+      "path": "assets/resources/native/ca/ca9ead85-a02b-4b4d-bdf4-80614045b1e7.3ef61.png",
+      "git_blob_sha": "5261e13cb7a1b77623ed53e6aa0f8862597ebaca",
+      "bytes": 241415,
+      "dimensions": [
+        697,
+        697
+      ],
+      "purpose": "ThemeSheeps Spine texture"
+    }
+  ],
+  "resolved_gameplay_props": {
+    "prop_remove": {
+      "spriteframe": "Skill_ShiftOut1",
+      "atlas": "14280553b",
+      "rect": [
+        485,
+        1024,
+        115,
+        133
+      ],
+      "original_size": [
+        115,
+        133
+      ],
+      "rotated": true
+    },
+    "prop_undo": {
+      "spriteframe": "Skill_Revocation1",
+      "atlas": "14280553b",
+      "rect": [
+        474,
+        1145,
+        113,
+        125
+      ],
+      "original_size": [
+        113,
+        125
+      ],
+      "rotated": true
+    },
+    "prop_random": {
+      "spriteframe": "Skill_Random1",
+      "atlas": "14280553b",
+      "rect": [
+        485,
+        780,
+        114,
+        135
+      ],
+      "original_size": [
+        114,
+        135
+      ],
+      "rotated": true
+    }
+  },
+  "unresolved": [
+    "rewardIcon/prop_random reward/acquisition SpriteFrame metadata is still missing; do not conflate it with Skill_Random1 gameplay icon.",
+    "18 declared audio keys have no native file in the two known public 2022 snapshots.",
+    "sheep/DJ2 import JSON is absent from known snapshots.",
+    "Exact day-by-day first-week skin unlock availability remains unverified."
+  ]
+}

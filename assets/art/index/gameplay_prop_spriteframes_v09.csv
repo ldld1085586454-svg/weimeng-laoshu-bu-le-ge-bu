@@ -1,0 +1,4 @@
+asset_key,source_name,texture_alias,atlas_path,rect,original_size,rotated,evidence_status
+prop_remove,Skill_ShiftOut1,14280553b,assets/main/native/14/14280553b.cc313.png,"485,1024,115,133","115,133",1,C_verified_in_2022_09_15_community_build
+prop_undo,Skill_Revocation1,14280553b,assets/main/native/14/14280553b.cc313.png,"474,1145,113,125","113,125",1,C_verified_in_2022_09_15_community_build
+prop_random,Skill_Random1,14280553b,assets/main/native/14/14280553b.cc313.png,"485,780,114,135","114,135",1,C_verified_in_2022_09_15_community_build

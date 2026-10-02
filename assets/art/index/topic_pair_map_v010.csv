@@ -1,0 +1,8 @@
+﻿left_clothesId,right_clothesId,left_name,right_name,pair_name,evidence
+8,9,僵尸羊,道士羊,僵尸vs道士,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+10,11,狼人羊,吸血鬼羊,狼人vs吸血鬼,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+12,13,黑羊,白羊,黑羊vs白羊,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+41,42,五仁羊,莲蓉羊,五仁vs莲蓉,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+43,44,学生羊,老师羊,学生vs老师,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+45,46,嫦娥羊,玉兔羊,嫦娥vs玉兔,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event
+47,48,学童羊,夫子羊,学童vs夫子,C: minified dressing getName(clothesId); Sep15 player post H supports 狼人vs吸血鬼 event

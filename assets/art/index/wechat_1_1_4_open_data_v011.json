@@ -1,0 +1,21 @@
+{
+  "source_repo": "P1kaj1uu/Wechat-Sheep-And-Sheep",
+  "commit": "c844695dcb3f0c022f1f70f7ee7f36d6903c85bc",
+  "commit_date_utc": "2022-09-16T07:38:08Z",
+  "wechat_server": "https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_1_4/",
+  "bundle_versions": {
+    "resources": "f9a28",
+    "main": "0d1b0",
+    "start-scene": "658bb"
+  },
+  "open_data": {
+    "friend_rank_key": "friendRank",
+    "today_rank_key": "todayRank",
+    "api_reads": "wx.getFriendCloudStorage",
+    "api_writes": "wx.setUserCloudStorage",
+    "rank_length": 200,
+    "today_visual_rule": "state==win => sheep_sheep; otherwise DeadN selected from failure/moonCount thresholds",
+    "dead_thresholds": "<10 Dead1; <20 Dead2; <40 Dead3; <60 Dead4; <100 Dead5; <140 Dead6; <180 Dead7; else Dead8",
+    "today_filter": "moonCount > 0 and cloud update_time is today"
+  }
+}

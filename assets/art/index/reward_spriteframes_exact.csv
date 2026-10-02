@@ -1,0 +1,11 @@
+resource_name,atlas_alias,x,y,w,h,original_w,original_h,rotated,status,source_path
+prop_life_remove,128b0bdde,3,3,197,183,197,183,1,verified_spriteframe,assets/resources/import/41/41edc758-de35-45c4-b235-7b66d2145838.49e88.json
+prop_nolimit,128b0bdde,3,206,195,188,195,188,1,verified_spriteframe,assets/resources/import/07/07e81361-fb03-4e0c-8ada-e955d75afe8b.6ef99.json
+prop_remove,128b0bdde,195,407,140,163,140,163,0,verified_spriteframe,assets/resources/import/cf/cf9f5f84-8535-44d5-9934-ba78f9de3ea6.2c29f.json
+prop_cancel,128b0bdde,197,183,128,142,128,142,0,verified_spriteframe,assets/resources/import/27/2776b152-9f15-4c8e-b644-3902c5c1369c.0f6da.json
+reward_share_white,128b0bdde,58,958,42,44,42,44,1,verified_spriteframe,assets/resources/import/9f/9fd63957-027b-4bbe-8e0b-06c114cadd14.c90f7.json
+reward_share_black,128b0bdde,300,967,42,44,42,44,0,verified_spriteframe,assets/resources/import/6f/6f461c52-c13f-4804-94a5-b28359c9b66e.ef858.json
+prop_random,128b0bdde,,,,,,,resource_key_only,not indexed as standalone SpriteFrame in public GitHub code search
+prop_life_one,128b0bdde,,,,,,,resource_key_only,not indexed as standalone SpriteFrame in public GitHub code search
+reward_video_block,128b0bdde,,,,,,,resource_key_only,not indexed as standalone SpriteFrame in public GitHub code search
+reward_video_white,128b0bdde,,,,,,,resource_key_only,not indexed as standalone SpriteFrame in public GitHub code search

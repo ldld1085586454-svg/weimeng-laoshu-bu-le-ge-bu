@@ -1,0 +1,11 @@
+resource_name,atlas_alias,x,y,w,h,original_w,original_h,rotated,status,source_path
+rank_icon_woman,159df0053,3,349,340,105,340,105,1,verified_spriteframe,assets/resources/import/4d/4d3d64b8-f212-4c5b-a8d8-dbd34bc88d8e.1ac08.json
+rank_point_ble_little,159df0053,114,3,197,154,197,154,1,verified_spriteframe,assets/resources/import/b7/b7833af7-4e99-497e-ae60-17f98ffab687.51d75.json
+rank_point_bg,159df0053,114,206,195,160,195,160,1,verified_spriteframe,assets/resources/import/6a/6a2c771a-4bb9-48e2-a8c4-ce144725e2d7.761f6.json
+rank_icon_default_wx,159df0053,114,586,55,55,55,55,0,verified_spriteframe,assets/resources/import/7d/7d611ae5-c05a-4633-a9be-bf62c425e7f4.b6c3a.json
+rank_icon_man,159df0053,3,3,340,105,340,105,1,verified_spriteframe,assets/resources/import/28/285b4e09-a292-461c-b4ca-ab27f2402841.b797b.json
+rank_icon_bubble,159df0053,114,407,144,173,144,204,0,verified_spriteframe,assets/resources/import/db/dbe6baaa-1410-4764-8b0d-807ed90d21a8.50500.json
+rank_point_blue,159df0053,3,695,197,154,197,154,1,verified_spriteframe,assets/resources/import/18/18991d2d-3b6b-4717-9a34-74fcf5b213cd.91001.json
+rank_point_sige_black,159df0053,150,898,110,116,110,116,1,verified_spriteframe,assets/resources/import/fd/fd2321ed-e4fc-4fe7-b79b-e60618a956ba.00721.json
+rank_point_sige_blue,159df0053,3,898,141,117,141,117,0,verified_spriteframe,assets/resources/import/52/52c08e4c-ac7a-4799-b567-c77e1dacc494.fbb28.json
+rank_icon_default,159df0053,175,586,55,55,55,55,0,verified_spriteframe,assets/resources/import/ba/ba14f293-1e8c-4df1-8d69-ac096bf48161.e952e.json

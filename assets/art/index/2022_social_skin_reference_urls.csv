@@ -1,0 +1,11 @@
+date,module,description,page_url,image_url,evidence_level,notes
+2022-09-15,home_social,"羊群首页：话题PK/朋友圈/换装/弹幕/省份排名",https://www.easemob.com/news/9268,https://www.easemob.com/data/upload/ueditor/20220915/63228def0d05a.gif,H_screenshot,"可用于首页布局参考"
+2022-09-15,regional_rank,"地区排行榜与地域对抗报道",https://finance.sina.com.cn/tech/csj/2022-09-15/doc-imqqsmrn9249359.shtml,,H_article,"通关为地区增加一只羊"
+2022-09-15,game_social,"地域排名、成就称号、话题PK",https://finance.sina.com.cn/tech/internet/2022-09-15/doc-imqqsmrn9128244.shtml,,H_article,"三类激励机制"
+2022-09-16,skins,"换装界面截图显示 4/4 页",https://www.9game.cn/yanglegeyang/7029767.html,https://media.9game.cn/gamebase/ieu-gdc-pre-process/images/20220916/14/30/a0d2f7704e84d4e6e23b89263535ac3a.png,H_screenshot,"证明当时已有多页换装；不自动等同于社区48皮肤清单"
+2022-09-16,honors,"最强王者/秋名山羊神/全国领头羊及皮肤存在",https://finance.sina.com.cn/chanjing/gsnews/2022-09-16/doc-imqqsmrn9388287.shtml,,H_article,"称号规则需注意不同报道表述差异"
+2022-09-15~17,friend_rank,"好友历史排行榜截图",https://www.liulanqi.net/article/60526.html,https://imgo.liulanqi.net/img2022/9/17/9/2022091737737065.jpg,C_screenshot,"来源是脚本教程页，界面截图可参考，不作为数值真实性依据"
+2022-09-15,profile_result,"已加入羊群/耗时/再次挑战/省份排名",https://www.gaoyuanqi.cn/python-requests-ylgy/,https://qcloudtest-1256114061.cos.ap-guangzhou.myqcloud.com/hexo/python-requests-ylgy/01.jpg,C_screenshot,"页面来自技术博客，界面结构参考"
+2022-09,shuffle_popup,"洗牌道具视频与分享两种获取按钮截图",https://www.bianews.com/news/details?id=169364,https://img2.bianews.com/image/bianews/news/img/1698245228859.png,C_screenshot,"文章发布时间较晚，截图用于UI比对"
+2022-09,undo_popup,"撤回道具弹窗",https://www.9game.cn/yanglegeyang/7025551.html,https://media.9game.cn/gamebase/ieu-gdc-pre-process/images/20220915/9/25/61d7d87e6c558aea53755f1bc214e98c.png,H_screenshot,"可用于撤回图标与弹窗排版"
+2022-09,remove_revive,"移出道具与复活弹窗并排截图",https://egameinsider.com/p/wowxdkce2130/,https://s1.egameinsider.com/egsed4092ff24403e21c5a1405276.webp,C_screenshot,"用于验证复活文案‘复活并使用移出道具’"

@@ -1,0 +1,13 @@
+{
+  "source": "2022-09-15 community minified assets/main/index.0df91.js",
+  "base_catalog_count": 48,
+  "page_size": 12,
+  "page_count": 4,
+  "runtime_order": [
+    "bubbleSort: unlock=true before false",
+    "bubbleIdSort: within comparable unlock group ascending clothesId"
+  ],
+  "display_order_warning": "Historical screenshots after unlock can differ from base config order.",
+  "historical_confirmation": "2022-09-16 9game screenshot visibly shows 4 / 4",
+  "historical_url": "https://www.9game.cn/yanglegeyang/7029767.html"
+}

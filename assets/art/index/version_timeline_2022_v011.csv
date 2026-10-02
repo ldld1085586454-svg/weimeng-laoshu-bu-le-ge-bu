@@ -1,0 +1,4 @@
+﻿date_or_capture,build,source,server_path,bundle_versions,evidence,notes
+2022-09-16,WeChat 1.1.4,P1kaj1uu/Wechat-Sheep-And-Sheep,sheep_wx_1_1_4,resources=f9a28; main=0d1b0; start-scene=658bb,C/H-like package snapshot,Repo commits on 2022-09-16; remote bundles not embedded
+2022-09-22 19:55 +08:00,WeChat 1.2.4 cached session,matrix3d/a-sheep gamecaches,sheep_wx_1_2_4,resources=fea9f; main=ac8a6,C strong cache evidence,cacheList lastTime 1663847712xxx-1663847753xxx
+2022-09-15 repo snapshot / server path 1.2.8,H5/community 1.2.8-style build,qierkang/yang-game,sheep_1_2_8,resources=8b75c; main=0df91,C community build,Do not treat all 1.2.8 labels/assets as exact Sep-13/15 WeChat state

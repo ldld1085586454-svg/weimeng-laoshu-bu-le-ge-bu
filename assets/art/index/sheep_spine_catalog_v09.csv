@@ -1,0 +1,13 @@
+resource,import_path,atlas_texture,atlas_size,skins_summary,animations,status
+sheep/Alpaca01,assets/resources/import/15/15f6dc6f-e8c3-40bf-82ec-180d45318a51.d7bbf.json,Alpaca01.png,318x318,default,"Stage1|animation",C_verified_bundle
+sheep/Alpaca02,assets/resources/import/25/2599581c-d5af-4ad6-9370-c9567859cc88.e651b.json,Alpaca02.png,335x335,default,"Stage1|animation",C_verified_bundle
+sheep/Turnarounds,assets/resources/import/28/28e1a3e0-1b67-4d2c-8a7f-726b50c777ce.12656.json,Turnarounds.png,202x202,default,Interlude,C_verified_bundle
+sheep/Theme,assets/resources/import/52/52e53a21-5852-4862-8a2b-56e69edfab53.8af1d.json,Theme.png,983x983,default,"1Dead1_1..1Dead7_2|0Flag|0Spotlight",C_verified_bundle
+sheep/Dead1,assets/resources/import/55/55b163f6-b71c-43a2-bffb-8d9e92284dbc.ab7de.json,Dead1.png,519x519,default,Dead1..Dead11,C_verified_bundle
+sheep/BG,assets/resources/import/7b/7b2d6f4d-e93d-486e-84d5-356b16041ea1.a776a.json,BG.png,1016x1016,default,"Stage1|Stage2",C_verified_bundle
+sheep/DJ1,assets/resources/import/7b/7b6fc817-fcab-4595-a7bc-aa7c9d7597f9.d9fdb.json,DJ1.png,553x553,"default|00|The01|The02|The03","Jump2|Stage0|Stage1",C_verified_bundle
+sheep/Sheeps,assets/resources/import/7e/7efbd02a-b404-4f1d-86bf-ef95698f63b9.a1dcb.json,Sheeps.png,1047x1047,"default|skin_00..skin_33","Drop1|Jump1|Jump2|Jump3|Run|Unlock1",C_verified_bundle
+sheep/UI,assets/resources/import/b6/b6410210-d9fd-41be-8d2b-d5496e7ffd21.1ebda.json,UI.png,405x405,default,"1Hand1|2Grass|2Grass2|3Ray1|4Ray1|4Ray2",C_verified_bundle
+sheep/ThemeSheeps,assets/resources/import/ec/ec4e2578-1927-45be-a5b2-6c07fddf1425.c4dcf.json,ThemeSheeps.png,697x697,"default|00|The01A..The07B","Drop1|Jump1|Jump2|Jump3|Run|Unlock1",C_verified_bundle
+sheep/Finish1,assets/resources/import/fc/fc880b82-f277-4b92-bb5a-4cfd93abb0fb.fd1f0.json,Finish1.png,314x314,default,"Finish1|Finish2|Finish3|Run",C_verified_bundle
+sheep/DJ2,,DJ2.png,,unknown,unknown,C_resource_key_only_import_missing

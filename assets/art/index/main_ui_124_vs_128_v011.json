@@ -1,0 +1,29 @@
+{
+  "wechat_1_2_4": {
+    "spriteframe_count_in_cached_main_import": 66,
+    "source_cache": "matrix3d/a-sheep gamecaches/main/16638477130142.json",
+    "social_symbols_present": [
+      "topicChoosePop",
+      "topicJoinedPop",
+      "TodayRankPop",
+      "FriendRankPop",
+      "PersonalPop",
+      "BulletScreen",
+      "今日朋友圈",
+      "历史排行榜",
+      "好友历史排行榜",
+      "换装"
+    ]
+  },
+  "h5_1_2_8": {
+    "spriteframe_count_in_main_import": 134,
+    "source": "qierkang/yang-game assets/main/import/0e/0e316345c.92451.json"
+  },
+  "comparison": {
+    "common_names": 66,
+    "only_1_2_4": 0,
+    "only_1_2_8": 68,
+    "common_with_frame_geometry_changed": 43,
+    "interpretation": "1.2.4 cached import already has core topic/friend/wardrobe symbols; 1.2.8 adds many UI frames and repacks common frames. Do not copy 1.2.8 atlas coordinates into 1.2.4."
+  }
+}

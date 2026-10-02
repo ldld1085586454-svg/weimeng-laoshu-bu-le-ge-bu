@@ -1,0 +1,27 @@
+﻿resource_key,native_version,native_file_status,native_path,git_blob_sha,size_bytes,interpretation
+audio/music/topic_cycle,24f68,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Coin2,78216,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/random,0ec5a,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Open1,a8cad,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Open2,70db5,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Unlock_Furniture,ce53a,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Clothe_Upgrade,a660d,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/clickBlock,05b18,present_in_2022_09_15_repo_tree,assets/resources/native/77/7707a34c-69ce-4387-bb34-2aeb87bfc465.05b18.mp3,64da1870f478464648b5c193f26c6e2d59389d6f,13688,binary exists in the community snapshot; provenance still community
+audio/sound/fish-fly,9c9d7,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/moveOut,bc433,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Unlock_Cat,1617c,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/pop-fly-end,ce67c,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/music/topic_begin,55101,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/blockRandom,f1e7e,present_in_2022_09_15_repo_tree,assets/resources/native/a4/a4bdaba7-b4bc-41e3-871d-b76b2b0fcd25.f1e7e.mp3,e7f2ca9a0abfce329edc1ff4f8f4e10e6e8d2cb3,62429,binary exists in the community snapshot; provenance still community
+audio/music/game_cycle,1d4ee,present_in_2022_09_15_repo_tree,assets/resources/native/a4/a4fcfcfb-d829-4d13-9d2d-2d6c1ea5a5cd.1d4ee.mp3,87a16407d64d233f0eab3c2ac05e52b7cd6fe60a,637154,binary exists in the community snapshot; provenance still community
+audio/sound/Words2,e4bcb,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/music/main_music,5b35e,present_in_2022_09_15_repo_tree,assets/resources/native/af/af08da0b-da84-4f1a-b262-7358e067110c.5b35e.mp3,5d9daa244506d5a73af64db66b2342ca5fc9ee5d,569170,binary exists in the community snapshot; provenance still community
+audio/sound/reward-emitter,a7aaa,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/levelInit,a8ef0,present_in_2022_09_15_repo_tree,assets/resources/native/b5/b5383548-6622-497b-a127-560c50380573.a8ef0.mp3,d87f388d7be50f165fcbf3b872efaabc358fcbe5,18476,binary exists in the community snapshot; provenance still community
+audio/music/game_begin,6557b,present_in_2022_09_15_repo_tree,assets/resources/native/ba/baf4b4e8-d38c-453a-9129-fecd42dded85.6557b.mp3,7db6ee04c6eada636d8a87294d7133318ccb80d6,980202,binary exists in the community snapshot; provenance still community
+audio/sound/main-click,12df3,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Words1,d8710,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/Coin1,ae6ac,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/coin-fly,08cec,declared_but_native_file_not_in_repo_tree,,,,do not label as found
+audio/sound/crush,1acc0,present_in_2022_09_15_repo_tree,assets/resources/native/f2/f24cd81f-d3a6-4f36-ae7c-4e4b769c856c.1acc0.mp3,022d509d1429db763fcca13e0b6b053e94ebf6b8,8834,binary exists in the community snapshot; provenance still community
+audio/sound/transitFont,1ce42,present_in_2022_09_15_repo_tree,assets/resources/native/fc/fc856c7d-2af0-40bf-a4a4-ccb026dc3550.1ce42.mp3,496118135a62e90718d27a7d3130b37a42ad8995,10988,binary exists in the community snapshot; provenance still community

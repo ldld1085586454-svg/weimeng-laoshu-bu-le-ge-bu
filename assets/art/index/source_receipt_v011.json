@@ -1,0 +1,44 @@
+{
+  "version": "v0.11",
+  "created": "2026-09-19",
+  "evidence_policy": "No ambiguous third-party binary art/audio redistributed; derived indexes and local extraction tools only.",
+  "sources": [
+    {
+      "repo": "qierkang/yang-game",
+      "commit": "11fe37888add6f44f688f798ede3c6fd612eedc5",
+      "role": "1.2.8-style community/H5 bundle + 10-commit history"
+    },
+    {
+      "repo": "matrix3d/a-sheep",
+      "commit": "6fb908d1c7d7a9b2a095a168fc64ac46ddabd7b9",
+      "role": "captured WeChat 1.2.4 cache + original CDN URL map"
+    },
+    {
+      "repo": "P1kaj1uu/Wechat-Sheep-And-Sheep",
+      "commit": "c844695dcb3f0c022f1f70f7ee7f36d6903c85bc",
+      "role": "WeChat 1.1.4 shell and open-data project"
+    },
+    {
+      "web": "TapTap 2022-09-15 player post",
+      "role": "狼人/吸血鬼 topic mode historical corroboration"
+    },
+    {
+      "web": "Liam Notes 2022-09",
+      "role": "9/13-9/14 羊友圈 and topic PK contemporary description"
+    },
+    {
+      "web": "9game 2022-09-16 screenshot",
+      "role": "wardrobe 4/4 visual evidence"
+    }
+  ],
+  "new_indexes": [
+    "version_timeline_2022_v011.csv",
+    "official_cache_1_2_4_relevant_map_v011.csv",
+    "dj2_versions_by_build_v011.csv",
+    "clothes_names_124_vs_128_v011.csv",
+    "qierkang_commit_resource_timeline_v011.csv",
+    "mirror_audit_v011.csv",
+    "main_ui_124_vs_128_v011.json",
+    "wechat_1_1_4_open_data_v011.json"
+  ]
+}

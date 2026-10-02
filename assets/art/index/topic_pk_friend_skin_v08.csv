@@ -1,0 +1,8 @@
+date,module,page_url,image_url,evidence,status,notes
+2022-09-15,home_social,https://www.woshipm.com/it/5603300.html,https://image.woshipm.com/wp-files/2022/09/tpO2F3upxPfWEOS6wOng.png,H_screenshot,usable_reference,"首页可见今日话题PK/朋友圈/换装/弹幕/省份排名；截图同时展示羊群主界面"
+2022-09-16,skin_page_4,https://www.9game.cn/yanglegeyang/7029767.html,https://media.9game.cn/gamebase/ieu-gdc-pre-process/images/20220916/14/30/a0d2f7704e84d4e6e23b89263535ac3a.png,H_screenshot,usable_reference,"换装弹窗明确显示4/4；证明多页皮肤已存在，不证明社区48项全部已对玩家开放"
+2022-09-17,friend_rank,https://www.liulanqi.net/article/60526.html,https://imgo.liulanqi.net/img2022/9/17/9/2022091737737065.jpg,C_screenshot,layout_reference,"好友历史排行榜布局可参考；页面涉及脚本刷分，榜单数值不可作为原作数值证据"
+2022-09-21,topic_pk_entry,https://www.18183.com/zqnews/202209/4149828.html,,H_article,flow_reference,"主页今日话题PK入口；每日主题变化"
+2022-09-19,topic_pk_skin_reward,https://www.18183.com/zqnews/202209/4143966.html,,H_article,flow_reference,"话题PK通关可获得所加入阵营皮肤；需与具体日期UI截图结合"
+2022-10,topic_team_selection,https://www.cocos.com/en/post/the-hottest-game-in-china-today-might-not-be-what-you-think,https://download.cocos.com/CocosWww/2022/09/image-45.png,C_screenshot,secondary_reference,"阵营选择/活动介绍页结构；发布时间和截图日期需单独判断，不反推首周具体主题"
+2022-10-14,topic_join_flow,https://jingyan.baidu.com/article/47a29f2460524181142399e0.html,,C_article,secondary_reference,"从首页今日话题进入，在选择羊队页点击加入对抗"
