@@ -1,0 +1,58 @@
+[
+  {
+    "id": "H01",
+    "url": "https://www.chinanews.com.cn/life/2022/09-19/9855485.shtml",
+    "date": "2022-09-19",
+    "scope": "制作人采访：视频、自愿、不设横幅；不包含精确后台收入/次数",
+    "read": "本轮网页正文"
+  },
+  {
+    "id": "H02",
+    "url": "https://www.huxiu.com/article/662726.html",
+    "date": "2022-09-16",
+    "scope": "同期体验，道具与复活、额度和分享线索；精确条件未知",
+    "read": "既有v0.3审读；本轮网页仅返回头部，未把受限正文冒充重新完整读取"
+  },
+  {
+    "id": "H03",
+    "url": "https://m.eeo.com.cn/2022/0916/558161.shtml",
+    "date": "2022-09-16",
+    "scope": "原研究中无道具现金内购、收入不确定",
+    "read": "沿用已提供研究，不是本轮新取得后台数据"
+  },
+  {
+    "id": "P01",
+    "url": "https://raw.githubusercontent.com/wechat-miniprogram/minigame-api-typings/master/types/wx/lib.wx.api.d.ts",
+    "accessed": "2026-09-18",
+    "scope": "L1379-1390: adUnitId,disableFallbackSharePage,multiton；L7061-7065 isEnded",
+    "read": "官方类型全文可取、指定段落复核；不是最新平台政策完整证明"
+  },
+  {
+    "id": "P02",
+    "url": "https://raw.githubusercontent.com/wechat-miniprogram/minigame-api-typings/master/types/wx/lib.wx.api.d.ts",
+    "accessed": "2026-09-18",
+    "scope": "L7551-7570: ShareAppMessageOption，不含完成回调；query为进入来源",
+    "read": "官方类型段落"
+  },
+  {
+    "id": "P03",
+    "url": "https://finance.sina.com.cn/roll/2026-01-15/doc-inhhkrvt3306866.shtml",
+    "date": "2026-01-15",
+    "scope": "腾讯广告发布多日收入/用户增长/ROI工具说明；未采用文中爆款流水为本项目预期",
+    "read": "发布者腾讯广告，新浪承载"
+  },
+  {
+    "id": "U01",
+    "url": "https://developers.weixin.qq.com/minigame/dev/guide/open-ability/ad/rewarded-video-ad.html",
+    "accessed": "2026-09-18",
+    "scope": "本轮访问失败，不据此声称当前广告审核/准入全核实",
+    "read": "failed"
+  },
+  {
+    "id": "U02",
+    "url": "https://developers.weixin.qq.com/minigame/product/",
+    "accessed": "2026-09-18",
+    "scope": "本轮访问失败；分享奖励条款/开通阈值/分成留为平台核验门槛",
+    "read": "failed"
+  }
+]
