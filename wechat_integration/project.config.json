@@ -1,0 +1,14 @@
+{
+  "description": "v0.11 integrated actual round plus candidate reward flow; simulation default, not production",
+  "projectname": "sheep-integration-v011",
+  "appid": "touristappid",
+  "compileType": "game",
+  "setting": {
+    "es6": true,
+    "minified": false,
+    "urlCheck": true
+  },
+  "packOptions": {
+    "ignore": []
+  }
+}
