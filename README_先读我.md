@@ -5,7 +5,7 @@
 
 ## 打开与运行
 
-Windows 电脑直接打开 `全模块游戏_双击打开.html`，使用本机开发数据。浏览器限制本地文件时，安装 Node.js 22 或以上，双击 **`启动全模块预览.cmd`**。脚本启动 `127.0.0.1:8770`，并尝试打开浏览器；保持该命令窗口运行。数据写入 `local-data/social.json`，不会连接原作服务器。也可运行 `npm run full:serve`。
+Windows 电脑直接打开 `全模块游戏_双击打开.html`，使用本机开发数据。开发时安装 Node.js 22 或以上，在工程目录运行 **`npm start`**，或双击 **`启动全模块预览.cmd`**。启动会先从当前源码构建网页与微信工程，再启动 `127.0.0.1:8770`；Windows 脚本还会尝试打开浏览器，保持该命令窗口运行。改源码后重新启动即可看到更新。数据写入 `local-data/social.json`，不会连接原作服务器。原命令 `npm run full:serve` 继续可用；仅构建使用 `npm run build`，无需安装 npm 运行依赖。
 
 **本机模式与 HTTP 服务模式是两个分开的开发数据环境，不会把测试成绩冒充同步成功。** 新建身份默认为“本地玩家 / 广东羊队”，不是读取或推断你的真实地理位置。相同开发服务的不同浏览器身份可共享地区/话题统计。
 
@@ -21,11 +21,11 @@ Windows 电脑直接打开 `全模块游戏_双击打开.html`，使用本机开
 
 ## 验收与文件
 
-双击 `验收全模块.cmd`，或运行 `npm run full:check`。使用 Node 自带测试器，无需安装 npm 依赖。运行 `npm run full:stress` 会把新的压力测试报告写到 `local_reports/`。
+双击 `验收全模块.cmd`，或运行 `npm run full:check`。使用 Node 自带测试器，无需安装 npm 依赖。运行 `npm run full:stress` 会把新的压力测试报告写到 `local_reports/`；浏览器验收使用 `python tools/full-browser-qa.py`（需已有 Playwright/Chromium），默认报告目录为 `local_reports/product/`，历史 `reports/` 不属于公开源码交付。
 
 - `docs/product/全模块交付与验收_v0.12.md`：本版模块、测试和未验收项。
 - `docs/product/微信与服务端接入.md`：配置、调用契约与接入边界。
-- `reports/product/`：本次实际测试日志和21张浏览器截图。
+- `local_reports/product/`：运行浏览器验收后生成的新报告与截图；历史 `reports/product/` 已由公开上传流程省略。
 - `src/product/`、`ui/product/`：本版业务与界面源码。
 - `services/`、`templates/wechat-full/`：开发服务、原生微信模板。
 - `examples/`、旧 `src/`、`history/`：已批准的内核、关卡、研究证据和历史交付。

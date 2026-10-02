@@ -1,1 +1,13 @@
-{"description":"2022 gameplay reconstruction development build; not production","miniprogramRoot":"./","compileType":"game","appid":"touristappid","projectname":"sheep-full-v012","setting":{"es6":true,"minified":false,"urlCheck":true},"condition":{}}
+{
+  "description": "2022 gameplay reconstruction development build; not production",
+  "miniprogramRoot": "./",
+  "compileType": "game",
+  "appid": "touristappid",
+  "projectname": "sheep-full-v012",
+  "setting": {
+    "es6": true,
+    "minified": false,
+    "urlCheck": true
+  },
+  "condition": {}
+}
