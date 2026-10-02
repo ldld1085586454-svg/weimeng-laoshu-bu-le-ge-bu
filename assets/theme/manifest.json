@@ -242,12 +242,12 @@
       }
     },
     "tile.frame": {
-      "src": "assets/theme/classic-tile.png",
+      "src": "assets/theme/components.png",
       "rect": {
-        "x": 160,
-        "y": 174,
-        "w": 935,
-        "h": 925
+        "x": 93,
+        "y": 703,
+        "w": 406,
+        "h": 404
       }
     },
     "button.primary": {

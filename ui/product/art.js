@@ -35,17 +35,13 @@ function symbol(c,type,x,y,size=32){let n=Number(String(type).replace(/\D/g,''))
  case 14:ellipse(c,0,-17,6,6,'#e2c565');shape(c,[[-12,-12],[11,-12],[15,8],[20,12],[-20,12],[-14,8]],'#f3d87c');ellipse(c,0,17,5,5,'#bc944c');line(c,[[-16,13],[18,13]],P.ink,3);break;
  }
  c.restore();}
-// A short bottom lip makes a flat square tile; artwork occupies the front face.
-function tileMetrics(w,h){const depth=Math.min(3,h*.06);return {depth,r:Math.min(3,w*.065,h*.065),size:Math.min(w,h-depth)*.90};}
-function covered(c,x,y,w,h,r){box(c,x,y,w,h,r,'rgba(46,61,36,.30)',null);}
-function tile(c,type,x,y,w,h,active=true){const m=tileMetrics(w,h);box(c,x,y,w,h,m.r,'#b5c39a','#596544',.8);box(c,x,y,w,h-m.depth,m.r,'#fffef1','#65704f',.8);if(type)symbol(c,type,x+w/2,y+(h-m.depth)/2,m.size);if(!active)covered(c,x,y,w,h,m.r);}
-
+function tile(c,type,x,y,w,h,active=true){box(c,x,y+3,w,h,6,active?'#a9b98d':'#aeb9a3',null);box(c,x,y,w,h-1,6,active?P.cream:'#d4dec5',active?'#869873':'#a0af91',1);if(active)line(c,[[x+8,y+2],[x+w-8,y+2]],'#ffffff',1);if(type){c.save();c.globalAlpha*=active?1:.60;symbol(c,type,x+w/2,y+(h-1)/2,Math.min(w,h)*.66);c.restore();}}
 function grass(c,w,h){c.fillStyle=P.grass;c.fillRect(0,0,w,h);}
 function withAssets(pack){
  if(!pack)return module.exports;
  const render={...module.exports};
  render.symbol=(c,type,x,y,size=32)=>{if(!pack.draw(c,'tile.'+type,x-size/2,y-size/2,size,size))symbol(c,type,x,y,size);};
- render.tile=(c,type,x,y,w,h,active=true)=>{const m=tileMetrics(w,h),frame=pack.draw(c,'tile.frame',x,y,w,h,{fit:'stretch'});if(!frame)tile(c,null,x,y,w,h,true);if(type)render.symbol(c,type,x+w/2,y+(h-m.depth)/2,m.size);if(!active){c.save();covered(c,x,y,w,h,m.r);c.restore();}};
+ render.tile=(c,type,x,y,w,h,active=true)=>{c.save();c.globalAlpha*=active?1:.60;const frame=pack.draw(c,'tile.frame',x,y,w,h,{fit:'stretch'});c.restore();if(!frame)tile(c,null,x,y,w,h,active);c.save();c.globalAlpha*=active?1:.60;if(type)render.symbol(c,type,x+w/2,y+(h-1)/2,Math.min(w,h)*.66);c.restore();};
  render.sheep=(c,x,y,size=70,skin='plain',phase=0)=>{if(!pack.draw(c,'character.'+skin,x-size/2,y-size*.53+Math.sin(phase)*2,size,size))sheep(c,x,y,size,skin,phase);};
  render.tomb=(c,x,y,size=60)=>{if(!pack.draw(c,'character.grave',x-size/2,y-size/2,size,size))tomb(c,x,y,size);};
  render.background=(c,key,w,h)=>pack.draw(c,'background.'+key,0,0,w,h,{fit:'cover'});
