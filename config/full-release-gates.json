@@ -1,0 +1,13 @@
+{
+  "version": "0.12",
+  "mode": "development",
+  "publicReleaseAllowed": false,
+  "required": [
+    {"id": "HISTORICAL_PROFILE", "status": "UNVERIFIED", "description": "2022历史规则边界、关卡布局与社交细则逐项核实"},
+    {"id": "ART_AUDIO_RELEASE", "status": "UNVERIFIED", "description": "确定可发布的名称、美术和音频；本版是开发替代素材"},
+    {"id": "OWN_APPID_ADUNIT", "status": "UNVERIFIED", "description": "自己的微信主体、AppID、广告位与必要平台配置"},
+    {"id": "NATIVE_DEVICE", "status": "UNVERIFIED", "description": "微信开发者工具、iOS和Android真机完整流程验证"},
+    {"id": "PRIVACY_PLATFORM", "status": "UNVERIFIED", "description": "实际数据处理、隐私声明与平台分享及广告要求复核"},
+    {"id": "PRODUCTION_SERVICE", "status": "UNVERIFIED", "description": "生产认证、持久化事务、反作弊、限流、服务端奖励凭证、备份与部署"}
+  ]
+}

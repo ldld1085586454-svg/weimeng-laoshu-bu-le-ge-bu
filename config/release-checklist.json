@@ -1,0 +1,74 @@
+[
+  {
+    "id": "G01",
+    "requirement": "合法自有AppID与发行主体/素材权利范围",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G02",
+    "requirement": "当前广告准入与可用adUnitId",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G03",
+    "requirement": "当前分享/广告组件回退规则核查",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G04",
+    "requirement": "复活效果及与暂存/次数关系绑定",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G05",
+    "requirement": "真实广告完整/提前关闭/失败/缺回调真机测试",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G06",
+    "requirement": "后端权益幂等与故障恢复",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G07",
+    "requirement": "原局结束/跨局权益冲突处理",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G08",
+    "requirement": "结果验证与真实地区/话题/荣誉计分",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G09",
+    "requirement": "隐私告知授权及数据最小化",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G10",
+    "requirement": "平台报表首轮核对与净额口径",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G11",
+    "requirement": "Android/iOS微信真机体验验收",
+    "status": "not_verified",
+    "blocks_public_release": true
+  },
+  {
+    "id": "G12",
+    "requirement": "生产构建删除mock领奖与开发按钮",
+    "status": "not_verified",
+    "blocks_public_release": true
+  }
+]

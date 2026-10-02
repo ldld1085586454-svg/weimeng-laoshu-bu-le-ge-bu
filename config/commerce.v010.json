@@ -1,0 +1,21 @@
+{
+  "version":"commerce-v010",
+  "target":"2022-09 WeChat historical behavior",
+  "stage":"specification_and_simulation",
+  "purchaseEnabled":false,
+  "adFormats":["rewarded_video"],
+  "productionEnabled":false,
+  "dailyProductCap":null,
+  "providerDailyCapKnown":false,
+  "shareRewardEnabled":false,
+  "shareRewardNote":"Historical route retained in specification; current approval and reliable completion semantics unverified. onShow is never completion.",
+  "disableFallbackSharePage":true,
+  "placements":{
+    "move":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"historical-basic/community-boundaries","adUnitId":null},
+    "undo":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"community-boundaries","adUnitId":null},
+    "shuffle":{"maxPerRound":1,"phase":"PLAYING","effectBound":true,"evidence":"community-boundaries","adUnitId":null},
+    "revive":{"maxPerRound":1,"phase":"LOST","effectBound":false,"evidence":"historical-entry/effect-unresolved","adUnitId":null}
+  },
+  "releaseApprovals":{"platformAccess":false,"rewardTerms":false,"privacy":false,"realDevice":false,"backendIdempotency":false,"historicalProfile":false},
+  "notes":["One-per-round limits are inherited working profile, not verified daily allowance.","Four business placements do not imply four billable impressions per round.","Net platform revenue must not be multiplied by revenue share again.","Existing v0.8 algorithms and v0.9 gameplay remain unchanged."]
+}
