@@ -1,0 +1,10 @@
+{
+  "design_baseline": ["Conversation-approved v0.5 ASTRA_DEAL_V1", "v0.6 independent verification and observation separation"],
+  "external_reference": [{
+    "url": "https://github.com/wechat-miniprogram/minigame-demo",
+    "kind": "Official WeChat example repository",
+    "scope": "Read directory structure and game entry; no code/assets/fonts copied",
+    "accessed": "2026-09-18"
+  }],
+  "provenance": "New implementation of the user-authorized replacement algorithm. Not original Sheep game source."
+}

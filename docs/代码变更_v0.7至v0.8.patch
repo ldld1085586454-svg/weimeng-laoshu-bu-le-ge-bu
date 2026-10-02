@@ -1,0 +1,856 @@
+--- v0.7/package.json
++++ v0.8/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "sheep-algorithm-engine",
+-  "version": "0.7.0",
++  "version": "0.8.0",
+   "private": true,
+   "description": "Self-developed tile-matching algorithm, not original game source",
+   "type": "commonjs",
+@@ -8,10 +8,14 @@
+     "node": ">=22"
+   },
+   "scripts": {
+-    "test": "node --test tests/engine.test.js tests/crosscheck.test.js tests/probe.test.js",
++    "test": "node tools/run-tests.js",
+     "generate": "node tools/generate.js",
+     "benchmark": "node tools/benchmark.js",
+     "verify": "node tools/verify.js",
+-    "probe": "node tools/build-probe.js"
++    "probe": "node tools/build-probe.js",
++    "review:stress": "node tools/review-stress.js",
++    "check": "node tools/check.js",
++    "check:full": "node tools/check.js --full",
++    "integrity": "node tools/verify-package.js"
+   }
+ }
+--- v0.7/src/content-hash.js
++++ v0.8/src/content-hash.js
+@@ -0,0 +1,69 @@
++'use strict';
++// Portable SHA-256 for content identity, NOT authentication or an anti-cheat signature.
++// Pure JavaScript: no Node crypto, Buffer, DOM, TextEncoder or wx requirement.
++const K = [
++  0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
++  0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
++  0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
++  0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
++  0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
++  0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
++  0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
++  0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2,
++];
++const rotate = (x,n) => (x>>>n)|(x<<(32-n));
++function utf8(text) {
++  const bytes=[];
++  for(let i=0;i<text.length;i++) {
++    let c=text.charCodeAt(i);
++    if(c>=0xd800 && c<=0xdbff) {
++      const lo=text.charCodeAt(i+1);
++      if(lo>=0xdc00 && lo<=0xdfff) {c=0x10000+((c-0xd800)<<10)+(lo-0xdc00);i++;}
++      else c=0xfffd;
++    } else if(c>=0xdc00 && c<=0xdfff) c=0xfffd;
++    if(c<0x80) bytes.push(c);
++    else if(c<0x800) bytes.push(0xc0|(c>>6),0x80|(c&63));
++    else if(c<0x10000) bytes.push(0xe0|(c>>12),0x80|((c>>6)&63),0x80|(c&63));
++    else bytes.push(0xf0|(c>>18),0x80|((c>>12)&63),0x80|((c>>6)&63),0x80|(c&63));
++  }
++  return bytes;
++}
++function sha256Hex(text) {
++  if(typeof text!=='string') throw new TypeError('HASH_STRING_REQUIRED');
++  const bytes=utf8(text),length=bytes.length;
++  bytes.push(0x80);
++  while(bytes.length%64!==56) bytes.push(0);
++  const hi=Math.floor(length/0x20000000),lo=(length*8)>>>0;
++  for(const v of [hi,lo]) for(let shift=24;shift>=0;shift-=8) bytes.push((v>>>shift)&255);
++  const h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
++  const w=new Int32Array(64);
++  for(let offset=0;offset<bytes.length;offset+=64) {
++    for(let i=0;i<16;i++) {const p=offset+i*4;w[i]=(bytes[p]<<24)|(bytes[p+1]<<16)|(bytes[p+2]<<8)|bytes[p+3];}
++    for(let i=16;i<64;i++) {
++      const a=w[i-15],b=w[i-2];
++      const s0=rotate(a,7)^rotate(a,18)^(a>>>3),s1=rotate(b,17)^rotate(b,19)^(b>>>10);
++      w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
++    }
++    let [a,b,c,d,e,f,g,z]=h;
++    for(let i=0;i<64;i++) {
++      const s1=rotate(e,6)^rotate(e,11)^rotate(e,25),ch=(e&f)^(~e&g);
++      const t1=(z+s1+ch+K[i]+w[i])|0;
++      const s0=rotate(a,2)^rotate(a,13)^rotate(a,22),maj=(a&b)^(a&c)^(b&c),t2=(s0+maj)|0;
++      z=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0;
++    }
++    for(const [i,v] of [a,b,c,d,e,f,g,z].entries()) h[i]=(h[i]+v)>>>0;
++  }
++  return h.map(v=>v.toString(16).padStart(8,'0')).join('');
++}
++const SNAPSHOT_HASH_PROFILE='ASTRA_CONTENT_V1';
++/** Fixed arrays establish a canonical field order. Cell ARRAY order is significant.
++ * Hash includes only the immutable deal's gameplay data and provenance, not round state.
++ * It deliberately excludes dealId, snapshotHash, unrelated metadata and private receipts.
++ */
++function canonicalSnapshot(deal) {
++  return JSON.stringify([SNAPSHOT_HASH_PROFILE,deal.schema,deal.layoutId,deal.origin===undefined?null:deal.origin,
++    deal.slotCapacity,deal.cells.map(c=>[c.id,c.type,c.zone,c.rect.x,c.rect.y,c.rect.w,c.rect.h,
++      c.zone==='board'?c.z:null,c.zone==='side'?c.stackId:null,c.zone==='side'?c.position:null])]);
++}
++function hashSnapshot(deal) {return sha256Hex(canonicalSnapshot(deal));}
++module.exports={sha256Hex,canonicalSnapshot,hashSnapshot,SNAPSHOT_HASH_PROFILE};
+--- v0.7/src/generator.js
++++ v0.8/src/generator.js
+@@ -2,6 +2,7 @@
+ const {buildGraph}=require('./layout');
+ const {createRandom,hashJSON}=require('./random');
+ const {replay}=require('./replay');
++const {hashSnapshot}=require('./content-hash');
+ const ALGORITHM='ASTRA_DEAL_V1.1';
+ 
+ function generateDeal(options) {
+@@ -56,6 +57,7 @@
+   // Identity binds the final, mutated snapshot. Receipt and seed remain separate.
+   const contentHash=hashJSON({schema:deal.schema,layoutId:deal.layoutId,origin:deal.origin,slotCapacity:7,cells});
+   deal.dealId=`astra-${contentHash.slice(0,24)}`;
++  deal.snapshotHash=hashSnapshot(deal);
+   return {deal,receipt:{algorithm:ALGORITHM,randomVersion:routeRng.version,seed,candidateId,targetOccupancy,
+     layoutHash:hashJSON(layout),quotas:{...quotas},dealHash:hashJSON(deal),witness,verification,
+     mutation:{attempted:mutationAttempts,nontrivial:changed,accepted}}};
+--- v0.7/src/index.js
++++ v0.8/src/index.js
+@@ -1,5 +1,5 @@
+ 'use strict';
+ // Offline aggregate. For WeChat gameplay import runtime.js only, not this file.
+-module.exports={...require('./layout'),...require('./random'),...require('./replay'),
++module.exports={...require('./schema'),...require('./content-hash'),...require('./release'),...require('./layout'),...require('./random'),...require('./replay'),
+   ...require('./runtime'),...require('./generator'),...require('./solver'),
+   ...require('./policies'),...require('./analysis')};
+--- v0.7/src/layout.js
++++ v0.8/src/layout.js
+@@ -1,4 +1,5 @@
+ 'use strict';
++const {validateLayoutFields}=require('./schema');
+ 
+ /** Positive-area overlap: shadows and edge contact do not block. */
+ function overlaps(a, b) {
+@@ -6,27 +7,7 @@
+ }
+ 
+ function validateLayout(layout) {
+-  if (!layout || typeof layout.id !== 'string' || !Array.isArray(layout.cells) || !layout.cells.length)
+-    throw new TypeError('INVALID_LAYOUT: nonempty cells and string id required');
+-  if (layout.cells.length > 3000) throw new RangeError('LAYOUT_LIMIT: maximum 3000 slots per call');
+-  const ids=new Set(), stacks=new Map();
+-  for(const c of layout.cells) {
+-    if(!c || typeof c.id!=='string' || !c.id || ids.has(c.id)) throw new TypeError('DUPLICATE_OR_INVALID_ID');
+-    ids.add(c.id);
+-    if(!c.rect || !['x','y','w','h'].every(k=>Number.isSafeInteger(c.rect[k])) || c.rect.w<=0 || c.rect.h<=0)
+-      throw new TypeError('INVALID_RECT');
+-    if(['x','y','w','h'].some(k=>Math.abs(c.rect[k])>1000000)) throw new RangeError('COORDINATE_LIMIT');
+-    if(c.zone==='board') {
+-      if(!Number.isSafeInteger(c.z)) throw new TypeError('INVALID_LAYER');
+-    } else if(c.zone==='side') {
+-      if(typeof c.stackId!=='string' || !c.stackId || !Number.isSafeInteger(c.position) || c.position<0)
+-        throw new TypeError('INVALID_STACK');
+-      const p=stacks.get(c.stackId)||[]; p.push(c.position); stacks.set(c.stackId,p);
+-    } else throw new TypeError('INVALID_ZONE');
+-  }
+-  for(const p of stacks.values()) {
+-    p.sort((a,b)=>a-b); if(p.some((v,i)=>v!==i)) throw new TypeError('STACK_GAP_OR_DUPLICATE_POSITION');
+-  }
++  validateLayoutFields(layout);
+   for(let i=0;i<layout.cells.length;i++) for(let j=i+1;j<layout.cells.length;j++) {
+     const a=layout.cells[i],b=layout.cells[j]; if(!overlaps(a.rect,b.rect)) continue;
+     if(a.zone!==b.zone) throw new TypeError('MIXED_ZONE_INTERSECTION');
+--- v0.7/src/release.js
++++ v0.8/src/release.js
+@@ -0,0 +1,20 @@
++'use strict';
++// Offline publication gate for this algorithm subpackage, NOT whole-game release approval.
++const {createRound}=require('./runtime');
++const {replay}=require('./replay');
++const {hashJSON}=require('./random');
++function verifyRelease(deal,receipt) {
++  try {
++    const round=createRound(deal);
++    if(!receipt||typeof receipt!=='object'||!Array.isArray(receipt.witness)||
++      typeof receipt.dealHash!=='string'||!/^[0-9a-f]{64}$/.test(receipt.dealHash))
++      return {ok:false,code:'INVALID_GENERATION_RECEIPT'};
++    if(hashJSON(deal)!==receipt.dealHash) return {ok:false,code:'DEAL_HASH_MISMATCH'};
++    const verification=replay(deal,receipt.witness);
++    if(!verification.ok) return {ok:false,code:verification.code,verification};
++    return {ok:true,code:'READY_FOR_ALGORITHM_RUNTIME',snapshotHash:round.deal.snapshotHash,verification};
++  } catch(error) {
++    return {ok:false,code:error.code||error.message.split(':')[0],message:error.message};
++  }
++}
++module.exports={verifyRelease};
+--- v0.7/src/replay.js
++++ v0.8/src/replay.js
+@@ -2,9 +2,11 @@
+ /* Deliberately does NOT import runtime, layout, graph or generator.
+  * Uses direct geometry checks and list-based triples, not generation counters.
+  */
++const {validateSnapshotFields}=require('./schema');
+ function replay(deal,witness,options={}) {
+   const fail=(code,step=-1,tileId=null)=>({ok:false,code,step,tileId});
+-  if(!deal||!Array.isArray(deal.cells)||!Array.isArray(witness)) return fail('INVALID_INPUT');
++  if(!Array.isArray(witness)) return fail('INVALID_INPUT');
++  try {validateSnapshotFields(deal);} catch(error) {return fail(error.code || 'INVALID_SNAPSHOT');}
+   const capacity=options.capacity===undefined?deal.slotCapacity:options.capacity;
+   if(!Number.isSafeInteger(capacity)||capacity<1) return fail('INVALID_CAPACITY');
+   const cells=deal.cells,n=cells.length,index=new Map(),counts=new Map(),stacks=new Map();
+--- v0.7/src/runtime.js
++++ v0.8/src/runtime.js
+@@ -1,14 +1,23 @@
+ 'use strict';
+ const {buildGraph}=require('./layout');
+-function createRound(deal) {
+-  if(!deal||deal.slotCapacity!==7) throw new TypeError('RUNTIME_REQUIRES_SEVEN_SLOTS');
++const {validateSnapshotFields}=require('./schema');
++const {hashSnapshot}=require('./content-hash');
++/** Load an initial, full-pool deal. This is NOT a saved-round resume API.
++ * roundId is supplied by the session owner; null means local/unbound, not globally unique.
++ */
++function createRound(deal,options={}) {
++  validateSnapshotFields(deal);
++  const roundId=options.roundId===undefined?null:options.roundId;
++  if(roundId!==null && (typeof roundId!=='string'||!roundId.trim())) throw new TypeError('INVALID_ROUND_ID');
+   const cells=deal.cells.map(c=>({...c,rect:{...c.rect}}));
+-  for(const c of cells) if(typeof c.type!=='string'||!c.type) throw new TypeError('INVALID_TYPE');
+-  const immutableDeal={...deal,cells}, graph=buildGraph({id:deal.layoutId,cells});
+-  const byId=Object.create(null); cells.forEach((c,i)=>{byId[c.id]=i; Object.freeze(c.rect);Object.freeze(c);});
+-  Object.freeze(cells); Object.freeze(immutableDeal);
++  const immutableDeal={...deal,cells,snapshotHash:deal.snapshotHash || hashSnapshot(deal)};
++  const graph=buildGraph({id:deal.layoutId,cells});
++  const byId=Object.create(null);
++  cells.forEach((c,i)=>{byId[c.id]=i;Object.freeze(c.rect);Object.freeze(c);});
++  Object.freeze(cells);Object.freeze(immutableDeal);
+   return {deal:immutableDeal,graph,byId,taken:new Array(cells.length).fill(false),
+-    blockers:graph.parents.map(a=>a.length),rack:[],cleared:0,status:'PLAYING',revision:0,shuffleOrdinal:0};
++    blockers:graph.parents.map(a=>a.length),rack:[],cleared:0,status:'PLAYING',revision:0,shuffleOrdinal:0,
++    originalDealId:deal.dealId,roundId};
+ }
+ function legalMoves(s) {
+   if(s.status!=='PLAYING') return [];
+@@ -17,13 +26,13 @@
+ function pick(s,id) {
+   function reject(code) {return {ok:false,code,state:s,events:[]};}
+   if(s.status!=='PLAYING') return reject('ROUND_FINISHED');
+-  const i=s.byId[id]; if(i===undefined) return reject('UNKNOWN_TILE');
++  const i=s.byId[id];if(i===undefined) return reject('UNKNOWN_TILE');
+   if(s.taken[i]) return reject('ALREADY_TAKEN');
+   if(s.blockers[i]) return reject('BLOCKED');
+   const taken=s.taken.slice(),blockers=s.blockers.slice(),rack=s.rack.slice(),cell=s.deal.cells[i];
+   taken[i]=true;
+-  for(const j of s.graph.children[i]) if(!taken[j]) {blockers[j]--; if(blockers[j]<0) throw new Error('NEGATIVE_BLOCKERS');}
+-  let at=-1; for(let j=0;j<rack.length;j++) if(s.deal.cells[s.byId[rack[j]]].type===cell.type) at=j;
++  for(const j of s.graph.children[i]) if(!taken[j]) {blockers[j]--;if(blockers[j]<0) throw new Error('NEGATIVE_BLOCKERS');}
++  let at=-1;for(let j=0;j<rack.length;j++) if(s.deal.cells[s.byId[rack[j]]].type===cell.type) at=j;
+   rack.splice(at<0?rack.length:at+1,0,id);
+   const matching=rack.filter(v=>s.deal.cells[s.byId[v]].type===cell.type);
+   const clear=matching.length===3?matching:[],cleared=s.cleared+clear.length;
+@@ -34,17 +43,27 @@
+   return {ok:true,code:'PICKED',state,events:[{type:'TAKE',id},...(clear.length?[{type:'CLEAR',ids:clear}]:[]),
+     ...(status!=='PLAYING'?[{type:status}]:[])]};
+ }
+-/** Working shuffle candidate: non-taken board and side labels only, no rescue guarantee. */
++/** Working shuffle candidate: non-taken board and side labels only. No rescue guarantee.
++ * Snapshot hash covers immutable layout+labels, NOT rack/taken/revision or authentication.
++ * Caller persists the returned actual mapping, not just a seed or an ordinal.
++ */
+ function shuffleRemaining(s,rng) {
+   if(s.status!=='PLAYING') throw new Error('ROUND_FINISHED');
+   if(!rng||typeof rng.shuffle!=='function') throw new TypeError('SHUFFLE_RNG_REQUIRED');
+-  const ids=[]; s.deal.cells.forEach((c,i)=>{if(!s.taken[i]) ids.push(i);});
+-  const labels=rng.shuffle(ids.map(i=>s.deal.cells[i].type));
++  const ids=[];s.deal.cells.forEach((c,i)=>{if(!s.taken[i]) ids.push(i);});
++  const original=ids.map(i=>s.deal.cells[i].type),labels=rng.shuffle(original.slice());
++  // The injected RNG may be buggy. It must return a permutation, not new cards.
++  if(!Array.isArray(labels)||labels.length!==original.length) throw new TypeError('INVALID_SHUFFLE_PERMUTATION');
++  const expected=original.slice().sort(),actual=labels.slice().sort();
++  if(actual.some((v,i)=>v!==expected[i])) throw new TypeError('INVALID_SHUFFLE_PERMUTATION');
+   const cells=s.deal.cells.map(c=>({...c,rect:{...c.rect}}));
+   ids.forEach((i,j)=>{cells[i].type=labels[j];});
+-  const deal={...s.deal,dealId:`${s.deal.dealId}#shuffle-${s.shuffleOrdinal+1}`,cells};
+-  const fresh=createRound(deal);
++  const ordinal=s.shuffleOrdinal+1,originalDealId=s.originalDealId;
++  const deal={...s.deal,cells};
++  deal.snapshotHash=hashSnapshot(deal);
++  deal.dealId=`${originalDealId}#shuffle-${ordinal}-${deal.snapshotHash}`;
++  const fresh=createRound(deal,{roundId:s.roundId});
+   return {...fresh,taken:s.taken.slice(),blockers:s.blockers.slice(),rack:s.rack.slice(),cleared:s.cleared,status:s.status,
+-    revision:s.revision+1,shuffleOrdinal:s.shuffleOrdinal+1};
++    originalDealId,revision:s.revision+1,shuffleOrdinal:ordinal};
+ }
+ module.exports={createRound,legalMoves,pick,shuffleRemaining};
+--- v0.7/src/schema.js
++++ v0.8/src/schema.js
+@@ -0,0 +1,47 @@
++'use strict';
++// Shared structural contract only. Replay still computes geometry and triples independently.
++const {hashSnapshot}=require('./content-hash');
++const MAX_CELLS=3000,MAX_COORDINATE=1000000;
++function fail(code) {const error=new TypeError(code);error.code=code;throw error;}
++function nonempty(value) {return typeof value==='string' && value.trim().length>0;}
++function validateLayoutFields(layout) {
++  if(!layout || !nonempty(layout.id) || !Array.isArray(layout.cells) || !layout.cells.length) fail('INVALID_LAYOUT');
++  if(layout.cells.length>MAX_CELLS) fail('LAYOUT_LIMIT');
++  const ids=new Set(),stacks=new Map();
++  for(const c of layout.cells) {
++    if(!c || !nonempty(c.id) || ids.has(c.id)) fail('DUPLICATE_OR_INVALID_ID');
++    ids.add(c.id);
++    if(!c.rect || !['x','y','w','h'].every(k=>Number.isSafeInteger(c.rect[k])) || c.rect.w<=0 || c.rect.h<=0) fail('INVALID_RECT');
++    if(['x','y','w','h'].some(k=>Math.abs(c.rect[k])>MAX_COORDINATE)) fail('COORDINATE_LIMIT');
++    if(c.zone==='board') {
++      if(!Number.isSafeInteger(c.z)) fail('INVALID_LAYER');
++    } else if(c.zone==='side') {
++      if(!nonempty(c.stackId) || !Number.isSafeInteger(c.position) || c.position<0) fail('INVALID_STACK');
++      const positions=stacks.get(c.stackId)||[];positions.push(c.position);stacks.set(c.stackId,positions);
++    } else fail('INVALID_ZONE');
++  }
++  for(const positions of stacks.values()) {
++    positions.sort((a,b)=>a-b);
++    if(positions.some((p,i)=>p!==i)) fail('STACK_GAP_OR_DUPLICATE_POSITION');
++  }
++  return true;
++}
++function validateSnapshotFields(deal) {
++  if(!deal || deal.schema!=='astra-deal-1') fail('INVALID_SNAPSHOT_SCHEMA');
++  if(!nonempty(deal.dealId)) fail('INVALID_DEAL_ID');
++  if(deal.slotCapacity!==7) fail('RUNTIME_REQUIRES_SEVEN_SLOTS');
++  if(deal.origin!==undefined && !nonempty(deal.origin)) fail('INVALID_ORIGIN');
++  validateLayoutFields({id:deal.layoutId,cells:deal.cells});
++  const counts=new Map();
++  for(const c of deal.cells) {
++    if(!nonempty(c.type)) fail('INVALID_TYPE');
++    counts.set(c.type,(counts.get(c.type)||0)+1);
++  }
++  if([...counts.values()].some(n=>n%3!==0)) fail('UNBALANCED_TYPES');
++  if(deal.snapshotHash!==undefined) {
++    if(typeof deal.snapshotHash!=='string' || !/^[0-9a-f]{64}$/.test(deal.snapshotHash)) fail('INVALID_SNAPSHOT_HASH');
++    if(hashSnapshot(deal)!==deal.snapshotHash) fail('SNAPSHOT_HASH_MISMATCH');
++  }
++  return true;
++}
++module.exports={validateLayoutFields,validateSnapshotFields,MAX_CELLS,MAX_COORDINATE};
+--- v0.7/src/solver.js
++++ v0.8/src/solver.js
+@@ -2,11 +2,13 @@
+ // Offline bounded exact search, fixed labels and no props. Not a client dependency.
+ const {buildGraph}=require('./layout');
+ const {replay}=require('./replay');
++const {validateSnapshotFields}=require('./schema');
+ function solve(deal,options={}) {
+   const {maxNodes=100000,capacity=7,maxMilliseconds=null}=options;
+   if(!Number.isSafeInteger(maxNodes)||maxNodes<0||!Number.isSafeInteger(capacity)||capacity<1)
+     throw new RangeError('INVALID_SEARCH_BUDGET_OR_CAPACITY');
+   if(maxMilliseconds!==null&&(!Number.isFinite(maxMilliseconds)||maxMilliseconds<=0)) throw new RangeError('INVALID_TIME_BUDGET');
++  validateSnapshotFields(deal);
+   const graph=buildGraph({id:deal.layoutId,cells:deal.cells}),n=deal.cells.length;
+   // Recursion bound is explicit; caller must split/queue larger workloads.
+   if(n>900) throw new RangeError('SOLVER_LIMIT_900');
+--- v0.7/tests/contract-hardening.test.js
++++ v0.8/tests/contract-hardening.test.js
+@@ -0,0 +1,111 @@
++'use strict';
++const test=require('node:test');
++const assert=require('node:assert/strict');
++const crypto=require('node:crypto');
++const fs=require('node:fs');
++const path=require('node:path');
++const E=require('../src');
++function flat(types=['A','A','A']) {return {schema:'astra-deal-1',dealId:'legacy-flat',layoutId:'flat',slotCapacity:7,
++ cells:types.map((type,i)=>({id:`p${i}`,type,zone:'board',z:0,rect:{x:i*100,y:0,w:90,h:90}}))};}
++function shuffled(state,seed='same') {return E.shuffleRemaining(state,E.createRandom(E.seedFromText(seed),'test-shuffle'));}
++const invalidCases=[
++ ['missing schema',d=>delete d.schema],
++ ['unknown schema',d=>{d.schema='anything';}],
++ ['missing deal ID',d=>delete d.dealId],
++ ['blank layout ID',d=>{d.layoutId=' ';}],
++ ['six-slot public deal',d=>{d.slotCapacity=6;}],
++ ['coordinate outside limit',d=>{d.cells[0].rect.x=1000001;}],
++ ['blank stack ID',d=>{d.cells=d.cells.map((c,i)=>({...c,zone:'side',stackId:'',position:i}));}],
++ ['invalid layer',d=>{d.cells[0].z=NaN;}],
++ ['unbalanced labels',d=>{d.cells[0].type='B';}],
++ ['empty cells',d=>{d.cells=[];}],
++ ['duplicate ID',d=>{d.cells[1].id=d.cells[0].id;}],
++ ['same-layer overlap',d=>{d.cells[1].rect.x=10;}],
++ ['side-stack gap',d=>{d.cells=d.cells.map((c,i)=>({...c,zone:'side',stackId:'x',position:i+1}));}],
++ ['bad hash encoding',d=>{d.snapshotHash='not-sha256';}],
++];
++for(const [name,damage] of invalidCases) test(`all public entrypoints reject ${name}`,()=>{
++ const d=flat();damage(d);
++ assert.throws(()=>E.createRound(d),name+' runtime');
++ assert.equal(E.replay(d,['p0','p1','p2']).ok,false,name+' replay');
++ assert.throws(()=>E.solve(d),name+' solver');
++ assert.equal(typeof E.verifyRelease,'function');
++ const r=E.verifyRelease(d,{dealHash:E.hashJSON(d),witness:['p0','p1','p2']});assert.equal(r.ok,false,name+' release');
++});
++test('oversized deals are rejected by runtime and independent replay before work starts',()=>{
++ const d=flat(new Array(3003).fill('A'));assert.throws(()=>E.createRound(d));
++ assert.equal(E.replay(d,d.cells.map(c=>c.id)).ok,false);
++});
++test('portable SHA-256 matches Node on padding, Unicode, and deterministic varied vectors',()=>{
++ assert.equal(typeof E.sha256Hex,'function');
++ const vectors=['','abc','中文羊了个羊🐏','\ud800','\udfff','a'.repeat(55),'a'.repeat(56),'a'.repeat(64),'a'.repeat(65),'a'.repeat(100000)];
++ const rng=E.createRandom(E.seedFromText('hash-crosscheck'),'vectors');
++ for(let k=0;k<100;k++)vectors.push(Array.from({length:k*7},()=>String.fromCharCode(rng.int(65536))).join(''));
++ for(const s of vectors)assert.equal(E.sha256Hex(s),crypto.createHash('sha256').update(s,'utf8').digest('hex'));
++});
++test('content hash ignores key insertion order and deal ID but binds every gameplay field',()=>{
++ assert.equal(typeof E.hashSnapshot,'function');
++ const a=flat(),b={cells:a.cells.map(c=>({rect:{h:c.rect.h,w:c.rect.w,y:c.rect.y,x:c.rect.x},z:c.z,zone:c.zone,type:c.type,id:c.id})),slotCapacity:7,layoutId:'flat',dealId:'other',schema:'astra-deal-1'};
++ assert.equal(E.hashSnapshot(a),E.hashSnapshot(b));
++ const hash=E.hashSnapshot(a);
++ for(const alter of [d=>{d.layoutId='other';},d=>{d.cells[0].rect.x++;},d=>{d.cells[0].z++;},d=>{d.cells[0].type='B';},d=>{d.cells[0].id='new';},d=>d.cells.reverse()]) {
++  const d=structuredClone(a);alter(d);assert.notEqual(E.hashSnapshot(d),hash);
++ }
++});
++test('legacy snapshots load without mutating input and obtain a verified content hash',()=>{
++ const d=flat(),before=JSON.stringify(d),s=E.createRound(d,{roundId:'session-1'});
++ assert.equal(JSON.stringify(d),before);assert.equal(s.originalDealId,d.dealId);assert.equal(s.roundId,'session-1');
++ assert.match(s.deal.snapshotHash,/^[0-9a-f]{64}$/);assert.equal(s.deal.snapshotHash,E.hashSnapshot(d));
++ assert(Object.isFrozen(s.deal));assert(Object.isFrozen(s.deal.cells[0].rect));
++});
++test('a stale hash is rejected even when a changed snapshot still has balanced types',()=>{
++ const d=structuredClone(E.createRound(flat()).deal);d.cells[0].rect.x=-100;
++ assert.throws(()=>E.createRound(d),/HASH/);assert.equal(E.replay(d,['p0','p1','p2']).ok,false);
++});
++test('shuffle identity tracks root deal, round, ordinal and actual label mapping',()=>{
++ const s=E.createRound(flat(['A','A','A','B','B','B','C','C','C']),{roundId:'session-x'});
++ const a=shuffled(s),b=shuffled(s),c=shuffled(s,'different'),next=shuffled(a,'next');
++ assert.deepEqual(a,b);assert.notEqual(a.deal.snapshotHash,c.deal.snapshotHash);
++ assert.equal(a.originalDealId,'legacy-flat');assert.equal(a.roundId,'session-x');
++ assert.equal(a.shuffleOrdinal,1);assert.equal(next.shuffleOrdinal,2);assert.equal(next.originalDealId,'legacy-flat');
++ assert.equal(a.deal.snapshotHash,E.hashSnapshot(a.deal));
++ assert.notEqual(a.deal.dealId,c.deal.dealId);assert.equal(a.revision,s.revision+1);
++ const restored=JSON.parse(JSON.stringify(a));assert.equal(E.hashSnapshot(restored.deal),a.deal.snapshotHash);
++});
++test('no-op shuffle preserves content hash but advances action identity without forcing a redraw',()=>{
++ const s=E.createRound(flat(),{roundId:'one-type'}),a=E.shuffleRemaining(s,{shuffle:items=>items.slice()});
++ assert.equal(a.deal.snapshotHash,s.deal.snapshotHash);assert.equal(a.shuffleOrdinal,1);assert.equal(a.revision,1);
++ assert.notEqual(a.deal.dealId,s.deal.dealId);
++});
++test('pick does not pretend the immutable deal hash is a complete mutable round-state hash',()=>{
++ const s=E.createRound(flat(),{roundId:'round'}),p=E.pick(s,'p0').state;
++ assert.equal(p.deal.snapshotHash,s.deal.snapshotHash);assert.equal(p.revision,1);assert.equal(p.roundId,s.roundId);
++});
++test('shuffle rejects injected, missing, and non-array RNG results atomically',()=>{
++ const s=E.createRound(flat(['A','A','A','B','B','B'])),before=JSON.stringify(s);
++ for(const corrupt of [()=>null,a=>a.slice(1),a=>a.map(()=> 'Z'),()=>['A','A','A','A','A','A']]) {
++  assert.throws(()=>E.shuffleRemaining(s,{shuffle:corrupt}));assert.equal(JSON.stringify(s),before);
++ }
++});
++test('shuffle cannot reassign a taken tile, and its full type pool stays balanced after triples',()=>{
++ const s0=E.createRound(flat(['A','A','A','B','B','B','C','C','C']));
++ let s=s0;for(const id of ['p0','p1','p2','p3'])s=E.pick(s,id).state;
++ const a=shuffled(s);assert.equal(a.cleared,3);assert.deepEqual(a.rack,['p3']);
++ for(let i=0;i<4;i++)assert.equal(a.deal.cells[i].type,s.deal.cells[i].type);
++ assert.doesNotThrow(()=>E.createRound(a.deal));assert.equal(a.deal.snapshotHash,E.hashSnapshot(a.deal));
++});
++test('publication gate accepts legacy and new receipts and refuses content/path tampering',()=>{
++ assert.equal(typeof E.verifyRelease,'function');
++ const d=flat(),receipt={dealHash:E.hashJSON(d),witness:['p0','p1','p2']};
++ assert.equal(E.verifyRelease(d,receipt).ok,true);
++ assert.equal(E.verifyRelease(d,{...receipt,dealHash:'0'.repeat(64)}).ok,false);
++ assert.equal(E.verifyRelease(d,{...receipt,witness:['p0','p0','p2']}).ok,false);
++ assert.equal(E.verifyRelease(d,null).ok,false);
++ const g=E.generateDeal({layout:E.makeFixtureLayout(18),quotas:{A:9,B:9},seed:'01'.repeat(32)});
++ assert.equal(E.verifyRelease(g.deal,g.receipt).ok,true);
++ assert.equal(g.deal.snapshotHash,E.hashSnapshot(g.deal));
++});
++test('independent replay has no imports of runtime, graph, generator or solver',()=>{
++ const text=fs.readFileSync(path.join(__dirname,'../src/replay.js'),'utf8');
++ assert(!/require\(['"]\.\/(runtime|layout|generator|solver)['"]\)/.test(text));
++});
+--- v0.7/tests/crosscheck.test.js
++++ v0.8/tests/crosscheck.test.js
+@@ -70,6 +70,8 @@
+  const x=hidden[0],y=hidden.find(c=>c.type!==x.type);assert(y);
+  const d=JSON.parse(JSON.stringify(g.deal)); const u=d.cells.find(c=>c.id===x.id),v=d.cells.find(c=>c.id===y.id);
+  [u.type,v.type]=[v.type,u.type];assert.notEqual(u.type,x.type);
++ // This is a newly synthesized, balanced test world, not a stale signed-off snapshot.
++ d.snapshotHash=E.hashSnapshot(d);
+  const obs1=E.observe(a),obs2=E.observe(E.createRound(d));assert.deepEqual(obs1,obs2);
+  for(const p of ['random','triple','pair'])assert.equal(E.chooseAction(obs1,p,E.createRandom('01'.repeat(32),p)),E.chooseAction(obs2,p,E.createRandom('01'.repeat(32),p)));
+ });
+--- v0.7/tests/engine.test.js
++++ v0.8/tests/engine.test.js
+@@ -79,7 +79,8 @@
+  assert.equal(s.status,'PLAYING'); assert.equal(s.rack.length,4); assert.equal(s.cleared,3);
+ });
+ test('seventh nonmatching tile fails and later clicks have no effect', () => {
+- const d=openDeal(['A','B','C','D','E','F','G']); let s=api('createRound')(d);
++ // Balanced 21-tile fixture; the FIRST seven picks still all differ.
++ const d=openDeal(['A','B','C','D','E','F','G','A','A','B','B','C','C','D','D','E','E','F','F','G','G']); let s=api('createRound')(d);
+  for(let i=0;i<7;i++) s=api('pick')(s,`p${i}`).state;
+  assert.equal(s.status,'LOST'); const r=E.pick(s,'p0'); assert.equal(r.ok,false); assert.equal(r.state,s);
+ });
+@@ -110,7 +111,7 @@
+ test('observation and selected action do not depend on unobserved types', () => {
+  const g=gen(),a=api('createRound')(g.deal),hidden=g.deal.cells.filter(c=>!api('legalMoves')(a).includes(c.id));
+  const bdeal=structuredClone(g.deal),h1=bdeal.cells.find(c=>c.id===hidden[0].id),h2=bdeal.cells.find(c=>c.id===hidden[1].id);
+- [h1.type,h2.type]=[h2.type,h1.type]; const b=E.createRound(bdeal);
++ [h1.type,h2.type]=[h2.type,h1.type]; bdeal.snapshotHash=E.hashSnapshot(bdeal); const b=E.createRound(bdeal);
+  const oa=api('observe')(a),ob=E.observe(b); assert.deepEqual(oa,ob);
+  assert.equal(api('chooseAction')(oa,'pair',api('createRandom')(seed,'bot')), E.chooseAction(ob,'pair',E.createRandom(seed,'bot')));
+  assert(!('deal' in oa)); assert(!('seed' in oa)); assert(!JSON.stringify(oa).includes('witness'));
+--- v0.7/tests/probe.test.js
++++ v0.8/tests/probe.test.js
+@@ -11,5 +11,5 @@
+  assert.equal(c.width,420);assert.equal(c.height,860);app.restart();assert.equal(app.getState().rack.length,0);assert.equal(app.getState().revision,0);app.destroy();
+ });
+ test('WeChat probe runtime is byte-identical to tested runtime',()=>{
+- for(const n of ['runtime.js','layout.js'])assert.equal(fs.readFileSync(path.join(__dirname,'../src',n),'utf8'),fs.readFileSync(path.join(__dirname,'../wechat_probe/engine',n),'utf8'));
++ for(const n of ['runtime.js','layout.js','schema.js','content-hash.js'])assert.equal(fs.readFileSync(path.join(__dirname,'../src',n),'utf8'),fs.readFileSync(path.join(__dirname,'../wechat_probe/engine',n),'utf8'));
+ });
+--- v0.7/tests/release-pipeline.test.js
++++ v0.8/tests/release-pipeline.test.js
+@@ -0,0 +1,47 @@
++'use strict';
++const test=require('node:test'),assert=require('node:assert/strict');
++const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
++const {spawnSync}=require('node:child_process');
++const E=require('../src');
++const base=path.resolve(__dirname,'..');
++function fixtureBuild(callback) {
++ const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'sheep-build-'));
++ try {
++  for(const d of ['tools','examples','wechat_probe'])fs.mkdirSync(path.join(tmp,d),{recursive:true});
++  fs.cpSync(path.join(base,'src'),path.join(tmp,'src'),{recursive:true});
++  for(const f of ['tools/build-probe.js','tools/verify.js','wechat_probe/app.js','examples/deal-270.json','examples/deal-270.receipt.json'])
++   fs.copyFileSync(path.join(base,f),path.join(tmp,f));
++  callback(tmp);
++ } finally {fs.rmSync(tmp,{recursive:true,force:true});}
++}
++test('probe build rejects mismatching proof before replacing a last-known-good bundle',()=>{
++ fixtureBuild(tmp=>{
++  const run=()=>spawnSync(process.execPath,['tools/build-probe.js'],{cwd:tmp,encoding:'utf8'});
++  assert.equal(run().status,0);
++  const htmlPath=path.join(tmp,'算法联调_双击打开.html'),old=fs.readFileSync(htmlPath);
++  const rp=path.join(tmp,'examples/deal-270.receipt.json'),r=JSON.parse(fs.readFileSync(rp,'utf8'));
++  r.witness[1]=r.witness[0];fs.writeFileSync(rp,JSON.stringify(r));
++  const result=run();assert.notEqual(result.status,0);
++  assert.match(result.stderr,/INVALID_PROBE_DEAL/);assert.deepEqual(fs.readFileSync(htmlPath),old);
++ });
++});
++test('CLI verifier rejects missing identity even with an updated receipt byte hash',()=>{
++ fixtureBuild(tmp=>{
++  const dp=path.join(tmp,'examples/deal-270.json'),rp=path.join(tmp,'examples/deal-270.receipt.json');
++  const d=JSON.parse(fs.readFileSync(dp,'utf8')),r=JSON.parse(fs.readFileSync(rp,'utf8'));
++  delete d.layoutId;delete d.snapshotHash;r.dealHash=E.hashJSON(d);
++  fs.writeFileSync(dp,JSON.stringify(d));fs.writeFileSync(rp,JSON.stringify(r));
++  const p=spawnSync(process.execPath,['tools/verify.js'],{cwd:tmp,encoding:'utf8'});
++  assert.notEqual(p.status,0);assert.equal(JSON.parse(p.stdout).ok,false);
++ });
++});
++test('fixture generation is unchanged apart from optional v0.8 content fingerprint',()=>{
++ for(const n of [270,540,720]) {
++  const dir=path.join(base,'history/v0.7_examples');
++  const old=JSON.parse(fs.readFileSync(path.join(dir,`deal-${n}.json`),'utf8'));
++  const r=JSON.parse(fs.readFileSync(path.join(dir,`deal-${n}.receipt.json`),'utf8'));
++  const g=E.generateDeal({layout:E.makeFixtureLayout(n),quotas:r.quotas,seed:r.seed,targetOccupancy:r.targetOccupancy,candidateId:r.candidateId,mutationAttempts:r.mutation.attempted});
++  assert.deepEqual(g.deal.cells,old.cells);assert.equal(g.deal.dealId,old.dealId);
++  assert.deepEqual(g.receipt.witness,r.witness);assert.equal(E.verifyRelease(old,r).ok,true);
++ }
++});
+--- v0.7/tests/review-regressions.test.js
++++ v0.8/tests/review-regressions.test.js
+@@ -0,0 +1,22 @@
++'use strict';
++// Original R1/R2/R3 reproductions; imports now point at the working engine.
++const test=require('node:test');
++const assert=require('node:assert/strict');
++const E=require('../src');
++function flat(types){return {schema:'astra-deal-1',dealId:'audit-flat',layoutId:'audit-flat',slotCapacity:7,
++ cells:types.map((type,i)=>({id:`p${i}`,type,zone:'board',z:0,rect:{x:100*i,y:0,w:90,h:90}}))};}
++test('R1: reject unbalanced imported initial snapshots before creating a round',()=>{
++ assert.throws(()=>E.createRound(flat(['A','A','B'])));
++});
++test('R2: release verification rejects a snapshot the runtime cannot load',()=>{
++ const deal=flat(['A','A','A']);delete deal.layoutId;
++ assert.throws(()=>E.createRound(deal));
++ assert.equal(E.replay(deal,['p0','p1','p2']).ok,false);
++});
++test('R3: different shuffled snapshots have different content identifiers',()=>{
++ const deal=flat(['A','A','A','B','B','B','C','C','C']);const s=E.createRound(deal);
++ const a=E.shuffleRemaining(s,E.createRandom(E.seedFromText('first-shuffle'),'s'));
++ const b=E.shuffleRemaining(s,E.createRandom(E.seedFromText('second-shuffle'),'s'));
++ assert.notDeepEqual(a.deal.cells,b.deal.cells);
++ assert.notEqual(a.deal.snapshotHash??a.deal.dealId,b.deal.snapshotHash??b.deal.dealId);
++});
+--- v0.7/tools/benchmark.js
++++ v0.8/tools/benchmark.js
+@@ -1,7 +1,7 @@
+ 'use strict';
+ const fs=require('node:fs');const path=require('node:path');const os=require('node:os');
+ const {performance}=require('node:perf_hooks');const assert=require('node:assert/strict');const E=require('../src');
+-const out=path.join(__dirname,'../reports');fs.mkdirSync(out,{recursive:true});
++const out=path.resolve(process.env.SHEEP_REPORT_DIR||path.join(__dirname,'../reports'));fs.mkdirSync(out,{recursive:true});
+ const total=Number(process.argv[2]||1000);
+ if(!Number.isSafeInteger(total)||total<3||total>10000)throw new RangeError('benchmark cases must be 3..10000');
+ const rows=[],seen=new Set(),runtimeRows=[];
+@@ -10,7 +10,7 @@
+ function stats(a){return {p50:quantile(a,.5),p95:quantile(a,.95),max:Math.max(...a),mean:a.reduce((s,v)=>s+v,0)/a.length};}
+ const started=performance.now();
+ for(let i=0;i<total;i++) {
+- const n=[270,540,720][i%3],seed=E.seedFromText(`stress-v07-${i}`),layout=E.makeFixtureLayout(n);
++ const n=[270,540,720][i%3],seed=E.seedFromText(`stress-v08-fixed-${i}`),layout=E.makeFixtureLayout(n);
+  const t0=performance.now(),g=E.generateDeal({layout,quotas:q(n),seed,targetOccupancy:i%7}),t1=performance.now();
+  const v=E.replay(g.deal,g.receipt.witness),t2=performance.now();assert(v.ok);assert.equal(v.cleared,n);
+  assert.equal(E.hashJSON(g.deal),g.receipt.dealHash);assert(!seen.has(g.deal.dealId));seen.add(g.deal.dealId);
+@@ -26,14 +26,14 @@
+ const policyRows=[];
+ for(let i=0;i<30;i++) {
+  // Held-out seed family: never used to select generation parameters.
+- const n=[270,540,720][i%3],seed=E.seedFromText(`heldout-v07-${i}`);
++ const n=[270,540,720][i%3],seed=E.seedFromText(`heldout-v08-fixed-${i}`);
+  const g=E.generateDeal({layout:E.makeFixtureLayout(n),quotas:q(n),seed,targetOccupancy:i%7});
+  const a=E.analyzeDeal(g.deal,{seed:E.seedFromText(`independent-evaluation-${i}`),trials:4});
+  policyRows.push({case:i,tiles:n,dealId:g.deal.dealId,targetOccupancy:i%7,...a});
+ }
+ const mutationRows=[];
+ for(let i=0;i<20;i++) {
+- const n=270,seed=E.seedFromText(`mutation-v07-${i}`);
++ const n=270,seed=E.seedFromText(`mutation-v08-fixed-${i}`);
+  const g=E.generateDeal({layout:E.makeFixtureLayout(n),quotas:q(n),seed,mutationAttempts:30});
+  assert(E.replay(g.deal,g.receipt.witness).ok);mutationRows.push({case:i,dealId:g.deal.dealId,...g.receipt.mutation});
+ }
+@@ -46,7 +46,7 @@
+    meanClearFraction:runs.reduce((s,r)=>s+r.clearFraction,0)/runs.length,
+    minClearFraction:Math.min(...runs.map(r=>r.clearFraction)),maxClearFraction:Math.max(...runs.map(r=>r.clearFraction))};
+ }
+-const report={version:'0.7.0',environment:{node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0].model},
++const report={version:'0.8.0',environment:{node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0].model},
+  dataset:'SYNTHETIC_NOT_HISTORICAL',totalCases:total,verified:rows.filter(r=>r.verified).length,
+  totalTiles:rows.reduce((s,r)=>s+r.tiles,0),uniqueDeals:seen.size,runtimeFullReplays:runtimeRows.length,
+  generationAndReplayBatchMs:generationEnd-started,totalBenchmarkMs:performance.now()-started,bySize,policySummary,
+--- v0.7/tools/browser_smoke.py
++++ v0.8/tools/browser_smoke.py
+@@ -5,6 +5,8 @@
+ from playwright.sync_api import sync_playwright
+ 
+ base = Path(__file__).resolve().parents[1]
++out = Path(os.environ.get('SHEEP_REPORT_DIR', str(base / 'reports'))).resolve()
++out.mkdir(parents=True, exist_ok=True)
+ with sync_playwright() as p:
+     chrome = os.environ.get('CHROME_BIN') or shutil.which('chromium')
+     browser = p.chromium.launch(**({'executable_path': chrome} if chrome else {}), headless=True)
+@@ -15,7 +17,7 @@
+     page.wait_for_function('window.probe !== undefined')
+     before = page.evaluate('({status:probe.getState().status,tiles:probe.getState().deal.cells.length})')
+     assert before == {'status': 'PLAYING', 'tiles': 270}
+-    page.screenshot(path=str(base / 'reports' / 'probe-start.png'), full_page=True)
++    page.screenshot(path=str(out / 'probe-start.png'), full_page=True)
+     # Exercise actual pointer events at one playable card center; transforms follow the visible canvas.
+     point = page.evaluate('''() => {
+       const s=probe.getState(),cs=s.deal.cells,c=cs.find((c,i)=>!s.taken[i]&&s.blockers[i]===0);
+@@ -33,14 +35,36 @@
+     count = page.evaluate('''() => {let n=0;while(probe.stepEvidence())n++;return n;}''')
+     after = page.evaluate('({status:probe.getState().status,cleared:probe.getState().cleared,rack:probe.getState().rack.length})')
+     assert count == 270 and after == {'status': 'WON', 'cleared': 270, 'rack': 0}
+-    page.screenshot(path=str(base / 'reports' / 'probe-complete.png'), full_page=True)
++    page.screenshot(path=str(out / 'probe-complete.png'), full_page=True)
+     assert not errors, errors
+     # Phone-sized resize smoke.
+     page.set_viewport_size({'width': 390, 'height': 844})
+     page.evaluate('probe.restart()')
+     assert page.evaluate('probe.getState().status') == 'PLAYING'
+-    result={'environment':'Headless Chromium via set_content; file navigation blocked by container policy; NOT WeChat DevTools or phone', 'pointer_pick':True,
++    # Pure JS identity/validation also executes in the browser, without Node polyfills.
++    identity_checks = page.evaluate("""() => {
++      const rt=modules.runtime,hash=modules['content-hash'].hashSnapshot;
++      const initial=probe.getState();
++      const a=rt.shuffleRemaining(initial,{shuffle:x=>x.slice()});
++      const b=rt.shuffleRemaining(initial,{shuffle:x=>x.slice().reverse()});
++      let rejected=false;
++      try {const bad=JSON.parse(JSON.stringify(initial.deal));bad.cells[0].type='BAD';rt.createRound(bad);} catch(e){rejected=true;}
++      return {original:initial.deal.snapshotHash===hash(initial.deal),
++        shuffled:a.deal.snapshotHash===hash(a.deal)&&b.deal.snapshotHash===hash(b.deal),
++        distinguishesMappings:a.deal.snapshotHash!==b.deal.snapshotHash,badInputRejected:rejected};
++    }""")
++    assert all(identity_checks.values()), identity_checks
++    file_navigation = {'tested': True, 'passed': False}
++    try:
++        page.goto((base / '算法联调_双击打开.html').as_uri(), wait_until='load', timeout=10000)
++        page.wait_for_function('window.probe !== undefined', timeout=3000)
++        assert page.evaluate('probe.getState().status') == 'PLAYING'
++        file_navigation['passed'] = True
++    except Exception as error:
++        file_navigation['error'] = str(error)
++    result={'environment':'Headless Chromium; set_content gameplay tests plus a separately reported local-file navigation attempt. NOT WeChat DevTools, Windows desktop or phone',
++            'browser_identity_checks':identity_checks,'local_file_navigation':file_navigation, 'pointer_pick':True,
+             'evidence_steps':count,'completion':after,'resize_restart':True,'page_errors':errors}
+-    (base/'reports'/'browser-smoke.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
++    (out/'browser-smoke.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+     print(json.dumps(result,ensure_ascii=False,indent=2))
+     browser.close()
+--- v0.7/tools/build-probe.js
++++ v0.8/tools/build-probe.js
+@@ -1,20 +1,26 @@
+ 'use strict';
+ const fs=require('node:fs'),path=require('node:path');
+ const base=path.join(__dirname,'..'),probe=path.join(base,'wechat_probe');
+-fs.mkdirSync(path.join(probe,'engine'),{recursive:true});fs.mkdirSync(path.join(probe,'data'),{recursive:true});
+-for(const file of ['layout.js','runtime.js'])fs.copyFileSync(path.join(base,'src',file),path.join(probe,'engine',file));
++const {verifyRelease}=require('../src/release');
+ const deal=JSON.parse(fs.readFileSync(path.join(base,'examples/deal-270.json'),'utf8'));
+ const receipt=JSON.parse(fs.readFileSync(path.join(base,'examples/deal-270.receipt.json'),'utf8'));
++const verification=verifyRelease(deal,receipt);
++if(!verification.ok) throw new Error(`INVALID_PROBE_DEAL:${verification.code}`);
++// Do not replace the last known-good bundles until input and proof have passed.
++fs.mkdirSync(path.join(probe,'engine'),{recursive:true});fs.mkdirSync(path.join(probe,'data'),{recursive:true});
++for(const file of ['content-hash.js','schema.js','layout.js','runtime.js'])fs.copyFileSync(path.join(base,'src',file),path.join(probe,'engine',file));
+ const data={deal,witness:receipt.witness};
+ fs.writeFileSync(path.join(probe,'data/sample.js'),'module.exports='+JSON.stringify(data)+';\n');
+-const sources={layout:fs.readFileSync(path.join(base,'src/layout.js'),'utf8'),runtime:fs.readFileSync(path.join(base,'src/runtime.js'),'utf8'),app:fs.readFileSync(path.join(probe,'app.js'),'utf8')};
++const sources={};
++for(const name of ['content-hash','schema','layout','runtime']) sources[name]=fs.readFileSync(path.join(base,'src',name+'.js'),'utf8');
++const wrapped=Object.entries(sources).map(([name,source])=>`modules[${JSON.stringify(name)}]=(function(){const module={exports:{}};${source}\nreturn module.exports;})();`).join('\n');
++const appSource=fs.readFileSync(path.join(probe,'app.js'),'utf8');
+ const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>算法联调样例</title>
+ <style>html,body{margin:0;height:100%;background:#dce5db;font-family:sans-serif}body{display:flex;align-items:center;justify-content:center}canvas{width:min(100vw,420px);height:min(100vh,860px);touch-action:none;box-shadow:0 10px 50px #0002}</style><canvas id="c"></canvas>
+ <script>
+-const modules={};function require(k){if(k==='./layout')return modules.layout;if(k==='./engine/runtime')return modules.runtime;throw Error(k);}
+-modules.layout=(function(){const module={exports:{}};${sources.layout}\nreturn module.exports;})();
+-modules.runtime=(function(){const module={exports:{}};${sources.runtime}\nreturn module.exports;})();
+-const appFactory=(function(){const module={exports:{}};${sources.app}\nreturn module.exports;})();
++const modules={};function require(k){const name=k.replace('./engine/','').replace('./','');if(modules[name])return modules[name];throw Error(k);}
++${wrapped}
++const appFactory=(function(){const module={exports:{}};${appSource}\nreturn module.exports;})();
+ const data=${JSON.stringify(data)};const canvas=document.getElementById('c');const r=canvas.getBoundingClientRect();
+ window.probe=appFactory.createProbe(canvas,data.deal,data.witness,r.width,r.height,devicePixelRatio||1);
+ canvas.addEventListener('pointerdown',e=>{const p=canvas.getBoundingClientRect();window.probe.tap(e.clientX-p.left,e.clientY-p.top);});
+--- v0.7/tools/check.js
++++ v0.8/tools/check.js
+@@ -0,0 +1,25 @@
++'use strict';
++// Re-runs write to local_reports; shipped reports remain an immutable evidence snapshot.
++const fs=require('node:fs'),path=require('node:path');
++const {spawnSync}=require('node:child_process');
++const base=path.resolve(__dirname,'..'),out=path.join(base,'local_reports');
++fs.mkdirSync(out,{recursive:true});
++const full=process.argv.includes('--full');
++const steps=[['tests',['tools/run-tests.js']]];
++for(const n of [270,540,720])steps.push([`release-${n}`,['tools/verify.js',`examples/deal-${n}.json`,`examples/deal-${n}.receipt.json`]]);
++if(full)steps.push(['benchmark',['tools/benchmark.js','1000']],['review-stress',['tools/review-stress.js']]);
++const results=[];
++for(const [name,args] of steps) {
++ console.log(`RUN ${name}`);
++ const result=spawnSync(process.execPath,args,{cwd:base,encoding:'utf8',maxBuffer:16*1024*1024,
++   env:{...process.env,SHEEP_REPORT_DIR:out}});
++ fs.writeFileSync(path.join(out,name+'.log'),(result.stdout||'')+(result.stderr||'')+(result.error?result.error.message:''));
++ const ok=result.status===0;results.push({step:name,ok,exitCode:result.status,log:name+'.log'});
++ console.log(`${ok?'PASS':'FAIL'} ${name}`);
++ if(!ok)break;
++}
++const ok=results.length===steps.length&&results.every(r=>r.ok);
++const summary={version:'0.8.0',node:process.version,platform:process.platform,full,ok,results,
++  scope:'Algorithm tests and fixture publication checks. No WeChat DevTools, real ads, human difficulty or phone certification.'};
++fs.writeFileSync(path.join(out,'check-summary.json'),JSON.stringify(summary,null,2));
++console.log(JSON.stringify(summary,null,2));process.exitCode=ok?0:1;
+--- v0.7/tools/review-stress.js
++++ v0.8/tools/review-stress.js
+@@ -0,0 +1,54 @@
++'use strict';
++// Additional review runs, with seeds absent from the original benchmark.
++const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
++const {performance}=require('node:perf_hooks');const E=require('../src');
++const out=path.resolve(process.env.SHEEP_REPORT_DIR||path.join(__dirname,'../reports'));fs.mkdirSync(out,{recursive:true});
++const report={node:process.version,platform:process.platform,limitations:'Synthetic layouts; no WeChat runtime, human testing, prop solver or original-game fidelity test.'};
++const rows=[];let runtimeReplays=0;
++for(let i=0;i<1000;i++){
++ const n=[270,540,720][i%3],quotas=Object.fromEntries(Array.from({length:15},(_,j)=>[`T${j.toString().padStart(2,'0')}`,n/15]));
++ const start=performance.now(),g=E.generateDeal({layout:E.makeFixtureLayout(n),quotas,seed:E.seedFromText(`fix-v08-new-family-20260918-${i}`),targetOccupancy:i%7});
++ const replay=E.replay(g.deal,g.receipt.witness);assert(replay.ok);
++ if(i%20===0){let s=E.createRound(g.deal);for(const id of g.receipt.witness){const p=E.pick(s,id);assert(p.ok);s=p.state;}assert.equal(s.status,'WON');runtimeReplays++;}
++ rows.push({index:i,tiles:n,dealId:g.deal.dealId,verified:replay.ok,elapsedMs:performance.now()-start});
++}
++report.newSeedBatch={cases:rows.length,verified:rows.filter(x=>x.verified).length,totalTiles:rows.reduce((n,r)=>n+r.tiles,0),runtimeReplays,rows};
++console.log(`new-seed batch verified: ${rows.length}, full runtime: ${runtimeReplays}`);
++// Independent direct-list exhaustive search, no production graph or verifier.
++function oracle(deal,cap){
++ const dead=new Set();let visits=0;
++ function walk(left,rack){
++  visits++;if(!left.length)return rack.length===0;
++  const key=left.map(c=>c.id).sort().join(',')+'|'+rack.slice().sort().join(',');if(dead.has(key))return false;
++  for(const c of left){
++   const blocked=left.some(b=>b.id!==c.id&&(
++    c.zone==='side'&&b.zone==='side'&&c.stackId===b.stackId&&b.position<c.position ||
++    c.zone==='board'&&b.zone==='board'&&b.z>c.z&&
++    Math.min(c.rect.x+c.rect.w,b.rect.x+b.rect.w)>Math.max(c.rect.x,b.rect.x)&&
++    Math.min(c.rect.y+c.rect.h,b.rect.y+b.rect.h)>Math.max(c.rect.y,b.rect.y)));
++   if(blocked||rack.length>=cap)continue;
++   let next=[...rack,c.type];if(next.filter(t=>t===c.type).length===3)next=next.filter(t=>t!==c.type);
++   if(next.length>=cap)continue;
++   if(walk(left.filter(b=>b.id!==c.id),next))return true;
++  }
++  dead.add(key);return false;
++ }
++ return {solvable:walk(deal.cells,[]),visits};
++}
++const cross=[];
++for(let k=0;k<120;k++){
++ const n=[9,12,15][k%3],rng=E.createRandom(E.seedFromText(`fix-v08-mixed-${k}`),'layout');
++ const labels=rng.shuffle(Array.from({length:n},(_,i)=>'T'+Math.floor(i/3))),sideCount=4,cells=[];
++ for(let i=0;i<n-sideCount;i++)cells.push({id:`b${i}`,type:labels[i],zone:'board',z:i,rect:{x:rng.int(3)*40,y:rng.int(3)*40,w:75,h:75}});
++ for(let s=0;s<2;s++)for(let pos=0;pos<2;pos++){const i=n-sideCount+s*2+pos;cells.push({id:`s${s}p${pos}`,type:labels[i],zone:'side',stackId:'s'+s,position:pos,rect:{x:s*150+pos*4,y:500,w:75,h:75}});}
++ const deal={schema:'astra-deal-1',dealId:`mix${k}`,layoutId:`mix${k}`,slotCapacity:7,cells};
++ for(const capacity of [3,4,5,6,7]){
++  const expected=oracle(deal,capacity),got=E.solve(deal,{capacity,maxNodes:1000000});
++  assert.notEqual(got.status,'UNKNOWN');assert.equal(got.status==='SOLVED',expected.solvable,`mixed-${k} capacity-${capacity}`);
++  cross.push({case:k,n,capacity,oracleSolvable:expected.solvable,oracleVisits:expected.visits,status:got.status});
++ }
++}
++report.mixedBoardAndSideCrosscheck={layouts:120,comparisons:cross.length,mismatches:0,unknown:0,rows:cross};
++console.log(`mixed-zone solver cross-check: ${cross.length}, mismatches: 0`);
++fs.writeFileSync(path.join(out,'additional-stress.json'),JSON.stringify(report,null,2));
++console.log('report saved');
+--- v0.7/tools/run-tests.js
++++ v0.8/tools/run-tests.js
+@@ -0,0 +1,11 @@
++'use strict';
++// Explicit filenames avoid shell glob differences between Windows and Linux.
++const fs=require('node:fs'),path=require('node:path');
++const {spawnSync}=require('node:child_process');
++const base=path.resolve(__dirname,'..');
++if(Number(process.versions.node.split('.')[0])<22) {console.error('Node.js 22 or newer is required.');process.exit(1);}
++const files=fs.readdirSync(path.join(base,'tests')).filter(n=>n.endsWith('.test.js')).sort().map(n=>path.join('tests',n));
++if(!files.length) {console.error('No tests found.');process.exit(1);}
++const result=spawnSync(process.execPath,['--test',...files],{cwd:base,stdio:'inherit'});
++if(result.error) console.error(result.error.message);
++process.exitCode=result.status===0?0:1;
+--- v0.7/tools/verify-package.js
++++ v0.8/tools/verify-package.js
+@@ -0,0 +1,18 @@
++'use strict';
++// Verify the delivered bundle before editing. Re-run outputs belong in local_reports.
++const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
++const base=path.resolve(__dirname,'..');
++try {
++ const manifest=JSON.parse(fs.readFileSync(path.join(base,'manifest.sha256.json'),'utf8'));
++ const errors=[];
++ for(const f of manifest.files) {
++  const absolute=path.resolve(base,f.path);
++  if(!absolute.startsWith(base+path.sep)) {errors.push('UNSAFE_PATH:'+f.path);continue;}
++  if(!fs.existsSync(absolute)||!fs.lstatSync(absolute).isFile()) {errors.push('MISSING_FILE:'+f.path);continue;}
++  const bytes=fs.readFileSync(absolute),hash=crypto.createHash('sha256').update(bytes).digest('hex');
++  if(bytes.length!==f.bytes||hash!==f.sha256)errors.push('MODIFIED_FILE:'+f.path);
++ }
++ console.log(JSON.stringify({ok:errors.length===0,files:manifest.files.length,errors,
++   note:'Content integrity only, not a digital signature or independent third-party review.'},null,2));
++ process.exitCode=errors.length?1:0;
++} catch(error) {console.error(error.message);process.exitCode=1;}
+--- v0.7/tools/verify.js
++++ v0.8/tools/verify.js
+@@ -1,8 +1,7 @@
+ 'use strict';
+-const fs=require('node:fs');const {replay,hashJSON}=require('../src');
++const fs=require('node:fs');const {verifyRelease}=require('../src');
+ try {
+  const deal=JSON.parse(fs.readFileSync(process.argv[2]||'examples/deal-270.json','utf8'));
+  const receipt=JSON.parse(fs.readFileSync(process.argv[3]||'examples/deal-270.receipt.json','utf8'));
+- if(hashJSON(deal)!==receipt.dealHash) throw new Error('DEAL_HASH_MISMATCH');
+- const r=replay(deal,receipt.witness);console.log(JSON.stringify(r,null,2));if(!r.ok)process.exitCode=1;
++ const r=verifyRelease(deal,receipt);console.log(JSON.stringify(r,null,2));if(!r.ok)process.exitCode=1;
+ } catch(e){console.error(e.message);process.exitCode=1;}
