@@ -838,7 +838,7 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
  const ctx=canvas.getContext('2d'),now=options.now||Date.now,W=390;
  let width=initialWidth,height=initialHeight,dpr=initialDpr,k=width/W,H=height/k,insets={top:Math.max(0,options.insets?.top||0),bottom:Math.max(0,options.insets?.bottom||0)},originX=0,regions=[],scene='HOME',modal=null,info=null,
   ctl=null,state=null,ticket=null,busy=false,visible=true,disposed=false,notice='',noticeUntil=0,page=0,honor='first',friendHistory=false,
-  nativeFriend=null,flying=[],sparks=[],inputUntil=0,submission=null,finalError=null,baseElapsed=0,
+  nativeFriend=null,flying=[],sparks=[],inputUntil=0,submission=null,settlementPending=false,legacySettlement=false,finalError=null,baseElapsed=0,
   rewardRoute=options.rewardRoute||POLICY.rewardRoute,afterTutorial='daily',lastCycleCheck=0;
  const storage=options.storage||null,provider=options.provider||null,platform=options.platform||null,clock=createClock(now);
  const prefs={sound:true,music:true,vibration:true,bullets:true,reducedMotion:options.motion===false};
@@ -870,7 +870,7 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
   if(info.today.won){Art.sheep(ctx,W/2,sy,84,info.profile.skin,options.motion===false?0:now()/700);center('你已加入羊群',sy+57,14,P.deep);}
   else{Art.tomb(ctx,W/2,sy,58);center(info.today.failures?'今天已尝试 '+info.today.failures+' 次':'羊群还在等你',sy+51,13,P.muted);}
   if(prefs.bullets&&info.bullets.length){const b=info.bullets[Math.floor(now()/4000)%info.bullets.length];Art.box(ctx,50,fieldY+fieldH-80,W-100,26,12,'rgba(255,255,243,.9)',null);center(b.text,fieldY+fieldH-67,12,P.deep);}
-  button('start',info.today.won?'已加入羊群':info.today.failures?'再次挑战':'加入羊群',57,H-216,W-114,53,true,P.yellow);
+  button('start',info.today.won||info.today.failures?'再次挑战':'加入羊群',57,H-216,W-114,53,true,P.yellow);
   const names=[['rank','羊群榜'],['friends','朋友圈'],['topic','话题 PK'],['wardrobe','换装'],['profile','个人'],['club','游戏圈']];
   names.forEach(([id,label],i)=>{const col=i%3,row=Math.floor(i/3);button(id,label,23+col*117,H-140+row*43,110,34,true,'#eaf4d3');});
   small('bullet','发弹幕',34,fieldY+fieldH-41,72,30);small('locate','我在哪',W-106,fieldY+fieldH-41,72,30);
@@ -948,13 +948,32 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
  function roundStore(){return storage?{write:log=>storage.set('active-round',JSON.stringify({scope:client.scope,log,ticket,elapsedMs:elapsed()}))}:undefined;}
  async function refresh(){info=await client.request('bootstrap');if(platform)platform.publish(info).catch(()=>{});draw();return info;}
  async function start(mode='daily'){
+  if(settlementPending)return {ok:false,code:'SETTLEMENT_PENDING'};
   if(provider)provider.cancel();if(platform){platform.hideClub();platform.hideFriends();}nativeFriend=null;clock.stop();
-  const r=await client.request('start',{mode});ticket=r.ticket;notice='';noticeUntil=0;submission=null;baseElapsed=0;clock.reset();
+  const r=await client.request('start',{mode});ticket=r.ticket;notice='';noticeUntil=0;submission=null;legacySettlement=false;baseElapsed=0;clock.reset();
   ctl=createController(r.deal,{roundId:ticket.id,store:roundStore(),nextU32:options.nextU32});scene='PLAY';modal=null;state=ctl.get();flying=[];sparks=[];inputUntil=0;clock.start();music();draw();return {ok:true};
  }
- async function persistTerminal(){clock.stop();if(!submission)submission={ticketId:ticket.id,log:ctl.export(),elapsedMs:elapsed()};
-  try{if(storage)storage.set('outbox',JSON.stringify({scope:client.scope,payload:submission}));await client.request('settle',submission);
-   if(storage)storage.set('outbox','');await refresh();finalError=null;showModal(state.board.status==='WON'?(ticket.mode==='tutorial'?'TUTORIAL_WIN':'WIN'):'LOSE');return {ok:true};
+ function clearTerminalRecords(roundId){if(!storage)return;
+  const saved=JSON.parse(storage.get('active-round')||'null');
+  if(saved?.scope===client.scope&&saved.ticket?.id===roundId)storage.set('active-round','');
+  const queued=JSON.parse(storage.get('outbox')||'null');
+  if(queued?.scope===client.scope&&queued.payload?.ticketId===roundId)storage.set('outbox','');
+ }
+ async function persistTerminal(){clock.stop();if(!submission)submission={ticketId:ticket.id,log:ctl.export(),elapsedMs:elapsed()};settlementPending=true;
+  try{if(storage){
+    // Record the final decision and exact duration before attempting the separate outbox write.
+    const legacy=legacySettlement?{legacySettlement:true}:{};
+    storage.set('active-round',JSON.stringify({scope:client.scope,log:submission.log,ticket,elapsedMs:submission.elapsedMs,settlementPending:true,...legacy}));
+    storage.set('outbox',JSON.stringify({scope:client.scope,ticket,payload:submission,...legacy}));
+   }
+   try{await client.request('settle',submission);}catch(e){
+    // Old builds left acknowledged active saves with a duration taken before the final transaction.
+    // Only this legacy fallback treats an existing server result as acknowledged; queued payloads stay exact.
+    if(e.message!=='SETTLEMENT_CONFLICT'||!legacySettlement)throw e;
+    clearTerminalRecords(submission.ticketId);await returnHome();return {ok:true,code:'ALREADY_SETTLED'};
+   }
+   // Keep the outbox until the active save is cleared, so partial cleanup can retry the same payload.
+   clearTerminalRecords(submission.ticketId);await refresh();settlementPending=false;finalError=null;showModal(state.board.status==='WON'?(ticket.mode==='tutorial'?'TUTORIAL_WIN':'WIN'):'LOSE');return {ok:true};
   }catch(e){finalError=e.message;if(e.message==='CYCLE_EXPIRED')showModal('EXPIRED');else showModal('SETTLEMENT_ERROR');return {ok:false,code:e.message};}
  }
  async function picked(id,animate=true){if(!ctl||scene!=='PLAY'||modal||!visible)return {ok:false,code:'UI_LOCKED'};
@@ -979,12 +998,12 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
     else rewardResult({kind:e.kind==='ad_closed'?'ad_close':e.kind,roundId:e.roundId,token:e.flowId,isEnded:e.isEnded});
    });if(!opened.ok)await rewardResult({roundId:ticket.id,token:p.token,kind:'failed'});
   }return r;}
- async function returnHome(){if(provider)provider.cancel();if(platform){platform.hideFriends();platform.hideClub();}nativeFriend=null;clock.stop();ctl=null;state=null;ticket=null;submission=null;scene='HOME';modal=null;await refresh();music();draw();}
+ async function returnHome(){if(provider)provider.cancel();if(platform){platform.hideFriends();platform.hideClub();}nativeFriend=null;clock.stop();await refresh();ctl=null;state=null;ticket=null;submission=null;settlementPending=false;legacySettlement=false;scene='HOME';modal=null;music();draw();}
  function loadFriends(){nativeFriend=null;if(platform){const p={x:37,y:(H-Math.min(600,H-62))/2+83,w:W-74,h:Math.min(600,H-62)-186};const r=platform.friends({day:info.day,history:friendHistory,width:Math.round(p.w*k*dpr),height:Math.round(p.h*k*dpr),page});if(r.ok)nativeFriend=r.canvas;}}
  async function handle(id){
   if(id==='retry-load')return initialize();
   if(id.startsWith('tile:'))return picked(id.slice(5));
-  if(id==='start'){if(info.today.won){toast('今天已加入羊群，下一关将在零点更新');return;}afterTutorial='daily';return start(info.profile.tutorialDone?'daily':'tutorial');}
+  if(id==='start'){afterTutorial='daily';return start(info.profile.tutorialDone?'daily':'tutorial');}
   if(id==='next-daily')return start(afterTutorial);
   if(id==='topic-start'){afterTutorial='topic';return start(info.profile.tutorialDone?'topic':'tutorial');}
   if(['return-home','confirm-exit','expired-home'].includes(id))return returnHome();
@@ -1016,10 +1035,34 @@ function createFullApp(canvas,deals,initialWidth,initialHeight,initialDpr=1,opti
  async function tap(x,y){if(!visible||disposed||busy||!Number.isFinite(x)||!Number.isFinite(y)||(!prefs.reducedMotion&&now()<inputUntil))return {ok:false,code:'UI_LOCKED'};
   x=(x-originX)/k;y=(y-insets.top)/k;let target;for(let i=regions.length-1;i>=0;i--){const r=regions[i];if(x>=r.x&&x<r.x+r.w&&y>=r.y&&y<r.y+r.h){target=r;break;}}
   if(!target||!target.enabled)return {ok:false,code:'NOT_ACTIONABLE'};busy=true;try{return await handle(target.id);}catch(e){toast(e.message);return {ok:false,code:e.message};}finally{busy=false;draw();}}
+ function restoreRound(log,originalTicket,duration){
+  ticket=clone(originalTicket);baseElapsed=duration;clock.reset();
+  ctl=createController(null,{saved:log,store:roundStore()});sync();scene='PLAY';flying=[];sparks=[];inputUntil=0;
+ }
+ const terminal=s=>!s.pending&&(s.board.status==='WON'||s.board.status==='LOST');
+ const durationValid=ms=>Number.isSafeInteger(ms)&&ms>=0;
+ const currentTicket=t=>t?.day===info.day&&now()<t.expiresAt;
  async function initialize(){try{await refresh();finalError=null;
-   if(storage){const queued=JSON.parse(storage.get('outbox')||'null');if(queued?.scope===client.scope){try{await client.request('settle',queued.payload);storage.set('outbox','');await refresh();}catch(e){if(e.message==='CYCLE_EXPIRED')storage.set('outbox','');}}
-    const saved=JSON.parse(storage.get('active-round')||'null');if(saved?.scope===client.scope&&saved.ticket?.day===info.day){const restored=Round.restore(saved.log);
-     if(restored.ok&&restored.state.pending?.phase==='EARNED'){ticket=saved.ticket;baseElapsed=Math.max(0,saved.elapsedMs||0);ctl=createController(restored.state.initialDeal,{saved:saved.log,store:roundStore()});state=ctl.get();scene='PLAY';showModal('RECOVERY');}}
+   if(storage){const queued=JSON.parse(storage.get('outbox')||'null'),saved=JSON.parse(storage.get('active-round')||'null');
+    if(queued?.scope===client.scope){
+     const payload=queued.payload,originalTicket=queued.ticket||(saved?.scope===client.scope&&saved.ticket?.id===payload?.ticketId?saved.ticket:null),restored=Round.restore(payload?.log);
+     if(!restored.ok||restored.state.roundId!==payload.ticketId||!terminal(restored.state)||!durationValid(payload.elapsedMs))throw Error('INVALID_PENDING_SETTLEMENT');
+     if(originalTicket?.id===payload.ticketId&&currentTicket(originalTicket)){
+      restoreRound(payload.log,originalTicket,payload.elapsedMs);submission=clone(payload);settlementPending=true;legacySettlement=queued.legacySettlement===true;await persistTerminal();
+     }else{
+      // A previously accepted result may replay after midnight; an unaccepted old result cannot.
+      try{await client.request('settle',payload);clearTerminalRecords(payload.ticketId);await refresh();}
+      catch(e){if(e.message==='CYCLE_EXPIRED')clearTerminalRecords(payload.ticketId);else if(!originalTicket||currentTicket(originalTicket))throw e;}
+     }
+    }else if(saved?.scope===client.scope&&currentTicket(saved.ticket)){
+     const restored=Round.restore(saved.log),duration=saved.elapsedMs??0;
+     if(restored.ok&&restored.state.roundId===saved.ticket.id&&durationValid(duration)){
+      if(restored.state.pending?.phase==='EARNED'){restoreRound(saved.log,saved.ticket,duration);showModal('RECOVERY');}
+      else if(terminal(restored.state)&&(saved.settlementPending===true||restored.state.board.status==='WON'||restored.state.used.revive>0)){
+       restoreRound(saved.log,saved.ticket,duration);submission={ticketId:ticket.id,log:saved.log,elapsedMs:duration};settlementPending=true;legacySettlement=saved.legacySettlement===true||saved.settlementPending!==true;await persistTerminal();
+      }
+     }
+    }
    }music();draw();return {ok:true};
   }catch(e){finalError=e.message;info=null;draw();return {ok:false,code:e.message};}}
  function resize(w,h,ratio=dpr,padding=insets){if(!Number.isFinite(w)||!Number.isFinite(h)||w<=0||h<=0)throw Error('INVALID_VIEWPORT');width=w;height=h;dpr=Math.min(4,Math.max(1,ratio));insets={top:Math.min(height*.25,Math.max(0,padding.top||0)),bottom:Math.min(height*.25,Math.max(0,padding.bottom||0))};const usable=Math.max(1,height-insets.top-insets.bottom);k=Math.min(width/W,usable/620);originX=(width-W*k)/2;H=usable/k;canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);draw();}

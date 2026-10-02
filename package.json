@@ -8,6 +8,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "start": "node tools/start-full.js",
+    "build": "node tools/build-full.js",
     "test": "node tools/run-tests.js",
     "generate": "node tools/generate.js",
     "benchmark": "node tools/benchmark.js",

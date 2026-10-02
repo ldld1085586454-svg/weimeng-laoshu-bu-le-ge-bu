@@ -1,9 +1,11 @@
 """Development browser QA: real pointer input, with transport limitations recorded."""
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-import json,shutil,time
+import argparse,json,os,shutil,time
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'reports/product';OUT.mkdir(exist_ok=True)
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output-dir',default=os.environ.get('SHEEP_BROWSER_REPORT_DIR',str(ROOT/'local_reports/product')))
+OUT=Path(parser.parse_args().output_dir).expanduser().resolve();OUT.mkdir(parents=True,exist_ok=True)
 report={'version':'0.12','navigation':'set_content (complete self-contained HTML)','checks':[], 'screenshots':[], 'pageErrors':[], 'realWeChatTested':False}
 html=(ROOT/'全模块游戏_双击打开.html').read_text()
 def check(name,actual=True):

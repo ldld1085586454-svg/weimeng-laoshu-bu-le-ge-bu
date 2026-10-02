@@ -41,7 +41,17 @@ try{
 fs.writeFileSync(path.join(root,'全模块游戏_双击打开.html'),html);
 const wxdir=path.join(root,'wechat_full');fs.mkdirSync(wxdir,{recursive:true});
 for(const f of files){const to=path.join(wxdir,f);fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(path.join(root,f),to);}
-fs.cpSync(path.join(root,'templates/wechat-full'),wxdir,{recursive:true,force:true,filter:(src,dest)=>!dest.endsWith('preview-config.js')||!fs.existsSync(dest)});
+const templateDir=path.join(root,'templates/wechat-full'),projectPath=path.join(wxdir,'project.config.json');
+const projectDefaults=JSON.parse(fs.readFileSync(path.join(templateDir,'project.config.json'),'utf8'));
+const developerProject=fs.existsSync(projectPath)?JSON.parse(fs.readFileSync(projectPath,'utf8')):{};
+const project={...projectDefaults,...developerProject,
+ setting:{...projectDefaults.setting,...developerProject.setting},
+ compileType:projectDefaults.compileType,miniprogramRoot:projectDefaults.miniprogramRoot};
+fs.cpSync(templateDir,wxdir,{recursive:true,force:true,filter:(src,dest)=>{
+ const relative=path.relative(wxdir,dest);
+ return relative!=='project.config.json'&&(relative!=='preview-config.js'||!fs.existsSync(dest));
+}});
+fs.writeFileSync(projectPath,JSON.stringify(project,null,2)+'\n');
 fs.mkdirSync(path.join(wxdir,'data'),{recursive:true});fs.writeFileSync(path.join(wxdir,'data/deals.js'),'module.exports='+JSON.stringify(deals)+';\n');
 fs.mkdirSync(path.join(wxdir,'audio'),{recursive:true});for(const [name,bytes] of Object.entries(audio))fs.writeFileSync(path.join(wxdir,'audio',name+'.wav'),bytes);
 fs.writeFileSync(path.join(root,'docs/product/asset-manifest.json'),JSON.stringify({art:{path:'ui/product/art.js',origin:'new development vector drawing',originalGameAssets:false},audio:Object.entries(audio).map(([name,buf])=>({file:'audio/'+name+'.wav',bytes:buf.length,origin:'newly synthesized development tones',originalGameAudio:false})),fonts:'system fonts only; no font files distributed',maps:deals.map(d=>({dealId:d.dealId,tiles:d.cells.length,origin:d.origin})),date:'2026-09-18'},null,2));
