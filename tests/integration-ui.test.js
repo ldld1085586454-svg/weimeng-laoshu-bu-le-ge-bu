@@ -1,0 +1,15 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const ui=fs.existsSync(path.join(__dirname,'../ui/integration-app.js'))?require('../ui/integration-app'):{};
+const sample=require('../wechat_probe/data/sample');
+function canvas(){const ctx=new Proxy({measureText:t=>({width:t.length*8})},{get:(o,k)=>k in o?o[k]:(()=>{})});return {getContext:()=>ctx};}
+function app(opts={}){assert.equal(typeof ui.createIntegrationApp,'function','integrated UI missing');return ui.createIntegrationApp(canvas(),sample.deal,390,844,1,opts);}
+function tap(a,id){const r=a.getHitRegions().find(x=>x.id===id);assert.ok(r,'hit region '+id);a.tap(r.x+r.w/2,r.y+r.h/2);}
+test('integrated UI: board starts and share return really applies shuffle',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-share');assert.equal(a.getSession().used.shuffle,0);tap(a,'dev-share-return');assert.equal(a.getSession().used.shuffle,1);assert.equal(a.getCommerce().shareReturns,1);assert.equal(a.getCommerce().observedAdCompletions,0);});
+test('integrated UI: completed-but-failed grant retries original flow',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-ad');tap(a,'dev-earn-fail');assert.equal(a.getFlow().status,'RECOVERY_REQUIRED');assert.equal(a.getSession().used.shuffle,0);const id=a.getFlow().id;tap(a,'retry');assert.equal(a.getFlow().id,id);assert.equal(a.getSession().used.shuffle,1);});
+test('integrated UI: ad incomplete never charges',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-ad');tap(a,'dev-ad-cancel');assert.equal(a.getSession().used.shuffle,0);assert.equal(a.getSession().pending,null);});
+test('integrated UI: restart during earning isolates late provider callback',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-share');const f=a.getFlow();tap(a,'restart-pending');const r=a.providerResultForQA({flowId:f.id,roundId:f.roundId,kind:'share_returned'});assert.equal(r.ok,false);assert.equal(a.getSession().used.shuffle,0);});
+test('integrated UI: ordinary hide/show alone does not grant',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-share');a.setVisible(false);a.setVisible(true);assert.equal(a.getSession().used.shuffle,0);});
+test('integrated UI: export/explicit QA restore preserves earned entitlement',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'source-ad');tap(a,'dev-earn-fail');const text=a.exportDiagnostic(),b=app();assert.ok(b.restoreForQA(text).ok);assert.equal(b.getFlow().status,'RECOVERY_REQUIRED');tap(b,'retry');assert.equal(b.getSession().used.shuffle,1);});
+test('integrated UI: all original witness picks reach real victory',()=>{const a=app();tap(a,'start');for(const id of sample.witness){const r=a.pickForQA(id);assert.ok(r.ok,r.code);}assert.equal(a.getSession().board.status,'WON');});
+test('integrated UI: modal targets remain in small viewport',()=>{const a=app();tap(a,'start');a.resize(320,568);tap(a,'shuffle');tap(a,'source-ad');for(const r of a.getHitRegions())assert.ok(r.y>=0&&r.y+r.h<=568,r.id);});

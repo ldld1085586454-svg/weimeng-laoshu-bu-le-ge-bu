@@ -1,0 +1,48 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const api=fs.existsSync(path.join(__dirname,'../src/integration/round.js'))?require('../src/integration/round'):{};
+function deal(){const labels=['A','B','C','D','E','F','G','A','B','C','D','E','F','G','A','B','C','D','E','F','G'];
+ return {schema:'astra-deal-1',dealId:'integration-fixture',layoutId:'open',origin:'SYNTHETIC_NOT_HISTORICAL',slotCapacity:7,
+ cells:labels.map((type,i)=>({id:'t'+i,type,zone:'board',z:0,rect:{x:(i%7)*110,y:Math.floor(i/7)*110,w:100,h:100}}))};}
+let serial=0;
+function boot(options={}){assert.equal(typeof api.createRound,'function','integration reducer missing');return api.createRound(deal(),{roundId:'round-1',mode:'development',candidateShareReturn:true,...options});}
+function cmd(s,type,extra={}){return {id:'i'+(++serial),roundId:s.session.roundId,expectedRevision:s.revision,type,...extra};}
+function result(s,type,extra={}){return api.dispatch(s,cmd(s,type,extra));}
+function step(s,type,extra={}){const r=result(s,type,extra);assert.equal(r.ok,true,r.code);return r.state;}
+function rack(){let s=boot();for(const tileId of ['t0','t1','t2'])s=step(s,'PICK',{tileId});return s;}
+function request(s,assist='move'){return step(s,'REQUEST',{assist,...(assist==='shuffle'?{permutation:s.session.board.deal.cells.filter((c,i)=>!s.session.board.taken[i]).map(c=>c.type).reverse()}: {})});}
+function choose(s,source='share'){return step(s,'CHOOSE',{source});}
+function earned(s,source='share'){s=choose(request(s),source);return step(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:source==='share'?'share_returned':'ad_closed',...(source==='ad'?{isEnded:true}:{})});}
+function grant(s){return step(s,'APPLY',{flowId:s.activeFlowId});}
+test('integration: bridge boots the approved playable session',()=>{const s=boot();assert.equal(s.session.board.deal.cells.length,21);assert.equal(s.session.board.status,'PLAYING');});
+test('integration: production is explicitly refused by local ledger',()=>{boot();assert.throws(()=>api.createRound(deal(),{roundId:'r',mode:'production'}),/PRODUCTION/);});
+test('integration: ineligible move cannot create an offer',()=>{const s=boot();assert.equal(result(s,'REQUEST',{assist:'move'}).code,'NOT_ENOUGH_RACK_TILES');assert.equal(s.flows.length,0);});
+test('integration: unbound revive cannot request a provider',()=>{assert.equal(result(boot(),'REQUEST',{assist:'revive'}).code,'REVIVE_RULE_UNBOUND');});
+test('integration: request locks actual board but does not charge quota',()=>{const s=request(rack());assert.equal(s.session.used.move,0);assert.equal(result(s,'PICK',{tileId:'t3'}).code,'REWARD_PENDING');});
+test('integration: share return earns a candidate entitlement without claiming sent',()=>{const s=earned(rack());const f=api.getFlow(s);assert.equal(f.status,'EARNED_PENDING');assert.equal(f.evidence,'share_return_only');assert.equal(s.session.used.move,0);});
+test('integration: candidate share grant moves the real first three tiles',()=>{const s=grant(earned(rack()));assert.deepEqual(s.session.board.buffer,['t0','t1','t2']);assert.equal(s.session.board.rack.length,0);assert.equal(s.session.used.move,1);});
+test('integration: ad and share use one shared quota',()=>{let s=grant(earned(rack()));for(const tileId of ['t3','t4','t5'])s=step(s,'PICK',{tileId});assert.equal(result(s,'REQUEST',{assist:'move'}).code,'ASSIST_EXHAUSTED');});
+test('integration: complete video and actual application are separate',()=>{const s=earned(rack(),'ad');assert.equal(s.session.board.rack.length,3);const n=grant(s);assert.equal(n.session.used.move,1);assert.equal(api.getFlow(n).evidence,'ad_client_complete');});
+for(const v of [false,undefined])test('integration: incomplete/unverified ad does not grant '+v,()=>{let s=choose(request(rack()),'ad');s=step(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'ad_closed',...(v===undefined?{}:{isEnded:v})});assert.equal(s.session.pending,null);assert.equal(s.session.used.move,0);assert.equal(result(s,'APPLY',{flowId:s.activeFlowId}).ok,false);});
+test('integration: source mismatch cannot turn share into video completion',()=>{let s=choose(request(rack()));assert.equal(result(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'ad_closed',isEnded:true}).code,'SOURCE_MISMATCH');});
+test('integration: unrelated foreground event is not a command or reward',()=>{let s=choose(request(rack()));assert.equal(result(s,'ON_SHOW').ok,false);assert.equal(api.getFlow(s).status,'AWAITING_PROVIDER');});
+test('integration: cancelled offer releases pending session without quota',()=>{const s=step(request(rack()),'CANCEL');assert.equal(s.session.pending,null);assert.equal(s.session.used.move,0);});
+test('integration: provider failure releases pending session',()=>{let s=choose(request(rack()),'ad');s=step(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'failed'});assert.equal(s.session.pending,null);assert.equal(s.session.used.move,0);});
+test('integration: earned reward cannot be cancelled or rerouted',()=>{const s=earned(rack());assert.equal(result(s,'CANCEL').ok,false);assert.equal(result(s,'CHOOSE',{source:'ad'}).ok,false);});
+test('integration: duplicate grant command does not reapply',()=>{const s=earned(rack()),c=cmd(s,'APPLY',{flowId:s.activeFlowId}),r=api.dispatch(s,c),dup=api.dispatch(r.state,c);assert.equal(dup.ok,true);assert.equal(dup.replayed,true);assert.equal(dup.state.session.used.move,1);});
+test('integration: duplicated provider callback after application is harmless',()=>{let s=choose(request(rack()));const c=cmd(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'share_returned'});s=api.dispatch(s,c).state;s=grant(s);const r=api.dispatch(s,c);assert.equal(r.replayed,true);assert.equal(r.state.session.used.move,1);});
+test('integration: old-round callback is rejected before touching current board',()=>{const s=choose(request(rack())),fresh=boot({roundId:'r-new'});assert.equal(api.dispatch(fresh,cmd(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'share_returned'})).code,'WRONG_ROUND');assert.equal(fresh.session.board.rack.length,0);});
+test('integration: stale revision cannot commit',()=>{const s=boot();assert.equal(api.dispatch(s,{...cmd(s,'PICK',{tileId:'t0'}),expectedRevision:9}).code,'STALE_REVISION');});
+test('integration: event ID reuse with different content fails',()=>{const s=boot(),c=cmd(s,'PICK',{tileId:'t0'}),n=api.dispatch(s,c).state;assert.equal(api.dispatch(n,{...c,tileId:'t1'}).code,'COMMAND_ID_CONFLICT');});
+test('integration: failure after earning preserves reward for retry',()=>{let s=earned(rack());s=step(s,'APPLY_FAILED',{flowId:s.activeFlowId});assert.equal(api.getFlow(s).status,'RECOVERY_REQUIRED');assert.equal(s.session.used.move,0);s=grant(s);assert.equal(s.session.used.move,1);});
+test('integration: replay restores pending earned reward without new provider',()=>{let s=earned(rack());s=step(s,'APPLY_FAILED',{flowId:s.activeFlowId});const r=api.decode(api.encode(s));assert.equal(r.ok,true,r.code);assert.deepEqual(r.state,s);const n=grant(r.state);assert.equal(n.session.used.move,1);});
+test('integration: corrupted persisted document is refused',()=>{const s=boot(),x=JSON.parse(api.encode(s));x.payload.roundId='tampered';assert.equal(api.decode(JSON.stringify(x)).ok,false);});
+test('integration: full applied state can be restored without applying twice',()=>{const s=grant(earned(rack())),r=api.decode(api.encode(s));assert.equal(r.ok,true);assert.deepEqual(r.state,s);assert.equal(api.getFlow(r.state).status,'APPLIED');});
+test('integration: no share reward when candidate profile is disabled',()=>{let s=boot({candidateShareReturn:false});for(const tileId of ['t0','t1','t2'])s=step(s,'PICK',{tileId});s=request(s);assert.equal(result(s,'CHOOSE',{source:'share'}).code,'SHARE_CANDIDATE_DISABLED');});
+test('integration: invalid shuffle cannot open provider flow',()=>{const s=boot();assert.equal(result(s,'REQUEST',{assist:'shuffle',permutation:['A']}).ok,false);assert.equal(s.flows.length,0);});
+test('integration: shuffle result fixed at request survives retry and preserves rack',()=>{let s=rack();const rackBefore=s.session.board.rack.slice();s=request(s,'shuffle');s=choose(s,'ad');const expected=api.getFlow(s).permutation.slice();s=step(s,'PROVIDER_RESULT',{flowId:s.activeFlowId,kind:'ad_closed',isEnded:true});s=step(s,'APPLY_FAILED',{flowId:s.activeFlowId});s=grant(s);assert.deepEqual(s.session.board.rack,rackBefore);assert.deepEqual(s.session.commands.at(-1).permutation,expected);assert.equal(s.session.used.shuffle,1);});
+test('integration: accepted pick after a grant records continuation once',()=>{let s=grant(earned(rack()));s=step(s,'PICK',{tileId:'t3'});s=step(s,'PICK',{tileId:'t4'});assert.equal(api.summary(s).resumed,1);assert.equal(api.summary(s).revenueCny,null);});
+test('integration: share rewards never inflate video completion metrics',()=>{const m=api.summary(grant(earned(rack())));assert.equal(m.shareReturns,1);assert.equal(m.observedAdCompletions,0);assert.equal(m.applied,1);});
+test('integration: mutations to input or exported state cannot rewrite history',()=>{const s=request(rack(),'shuffle'),old=JSON.stringify(s),c=cmd(s,'CHOOSE',{source:'ad'});const n=api.dispatch(s,c).state;c.source='share';assert.equal(JSON.stringify(s),old);assert.equal(n.commands.at(-1).source,'ad');});
+test('integration: wrong flow token cannot finish an offer',()=>{const s=choose(request(rack()));assert.equal(result(s,'PROVIDER_RESULT',{flowId:'fake',kind:'share_returned'}).code,'WRONG_FLOW');});
+test('integration: unknown command fields are rejected',()=>{const s=boot();assert.equal(result(s,'PICK',{tileId:'t0',paid:true}).code,'INVALID_COMMAND');});

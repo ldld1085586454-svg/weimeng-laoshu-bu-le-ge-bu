@@ -1,0 +1,20 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const ui=fs.existsSync(path.join(__dirname,'../ui/play-app.js'))?require('../ui/play-app'):{};
+const sh=fs.existsSync(path.join(__dirname,'../src/play/shuffle.js'))?require('../src/play/shuffle'):{};
+const data=require('../wechat_probe/data/sample');
+function canvas(){const ctx=new Proxy({measureText:t=>({width:t.length*8})},{get:(o,k)=>k in o?o[k]:(()=>{})});return {width:0,height:0,getContext:()=>ctx};}
+function app(){assert.equal(typeof ui.createPlayApp,'function','play UI not implemented');return ui.createPlayApp(canvas(),data.deal,390,844,1,{idFactory:(()=>{let n=0;return()=>'ui-'+(++n);})()});}
+function tap(a,id){const b=a.getHitRegions().find(x=>x.id===id);assert.ok(b,'missing hit region '+id);a.tap(b.x+b.w/2,b.y+b.h/2);}
+test('play UI: home starts a playable session through pointer intent',()=>{const a=app();assert.equal(a.getScene(),'HOME');tap(a,'start');assert.equal(a.getScene(),'PLAY');assert.equal(a.getSession().board.status,'PLAYING');});
+test('play UI: board hit region picks one tile only',()=>{const a=app();tap(a,'start');const b=a.getHitRegions().find(x=>x.kind==='tile'&&x.enabled);tap(a,b.id);assert.equal(a.getSession().board.rack.length,1);});
+test('play UI: ordinary undo requires explicit completed mock reward',()=>{const a=app();tap(a,'start');const b=a.getHitRegions().find(x=>x.kind==='tile'&&x.enabled&&x.zone==='board');tap(a,b.id);tap(a,'undo');assert.ok(a.getSession().pending);assert.equal(a.getSession().board.rack.length,1);tap(a,'mock-completed');assert.equal(a.getSession().board.rack.length,0);assert.equal(a.getSession().used.undo,1);});
+test('play UI: mock cancellation leaves quota untouched',()=>{const a=app();tap(a,'start');tap(a,'shuffle');tap(a,'mock-cancelled');assert.equal(a.getSession().used.shuffle,0);assert.equal(a.getSession().pending,null);});
+test('play UI: background/foreground does not pretend a reward completed',()=>{const a=app();tap(a,'start');tap(a,'shuffle');a.setVisible(false);a.setVisible(true);assert.ok(a.getSession().pending);assert.equal(a.getSession().used.shuffle,0);});
+test('play UI: modal blocks click-through to the board',()=>{const a=app();tap(a,'start');const b=a.getHitRegions().find(x=>x.kind==='tile'&&x.enabled);tap(a,'shuffle');a.tap(b.x+b.w/2,b.y+b.h/2);assert.equal(a.getSession().board.rack.length,0);});
+test('play UI: restart produces new round identity and resets per-round quota',()=>{const a=app();tap(a,'start');const old=a.getSession().roundId;tap(a,'shuffle');tap(a,'mock-completed');a.restart();assert.notEqual(a.getSession().roundId,old);assert.equal(a.getSession().used.shuffle,0);});
+test('play UI: resize retains stable round and on-screen hit targets',()=>{const a=app();tap(a,'start');const id=a.getSession().roundId;a.resize(320,568,2);assert.equal(a.getSession().roundId,id);for(const b of a.getHitRegions().filter(b=>b.kind!=='tile'))assert.ok(b.y>=0&&b.y+b.h<=568,b.id);});
+test('play UI: original evidence completes the extended session through actual commands',()=>{const a=app();tap(a,'start');for(const id of data.witness){const r=a.pickForQA(id);assert.equal(r.ok,true,r.code);}assert.equal(a.getSession().board.status,'WON');assert.equal(a.getScene(),'RESULT');});
+test('play UI: export contains real accepted operations, not a forged final board',()=>{const a=app();tap(a,'start');a.pickForQA(data.witness[0]);const e=JSON.parse(a.exportDiagnostic());assert.equal(e.payload.commands.length,1);});
+test('portable shuffle: repeatable injected uint32 source preserves multiset',()=>{assert.equal(typeof sh.permute,'function');const a=sh.permute(['A','A','B','C'],()=>123);assert.deepEqual(a.slice().sort(),['A','A','B','C']);assert.deepEqual(sh.permute(['A','A','B','C'],()=>123),a);});
+test('portable shuffle: invalid random values are rejected instead of corrupting deal',()=>{assert.equal(typeof sh.permute,'function');assert.throws(()=>sh.permute(['A','B'],()=>-1));assert.throws(()=>sh.permute(['A','B'],()=>NaN));});

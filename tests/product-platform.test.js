@@ -1,0 +1,8 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const API=fs.existsSync(path.join(__dirname,'../src/product/wechat.js'))?require('../src/product/wechat'):{};
+function env(){const messages=[],calls=[];return {messages,calls,wx:{getOpenDataContext:()=>({postMessage:m=>messages.push(m),canvas:{}}),setUserCloudStorage:o=>{calls.push(o);o.success&&o.success({});},createGameClubButton:o=>{calls.push(o);return {show(){},hide(){},destroy(){}}}}};}
+test('platform: open data gets display instructions but no friend list export',()=>{assert.equal(typeof API.createPlatform,'function','platform module missing');const e=env(),p=API.createPlatform(e.wx,{nativeSocial:true});p.friends({day:'2026-09-18',width:390,height:350,page:0});assert.equal(e.messages[0].type,'SHOW_FRIENDS');assert.equal(e.messages[0].users,undefined);});
+test('platform: friend scores are own local development observations',async()=>{const e=env(),p=API.createPlatform(e.wx,{nativeSocial:true});await p.publish({day:'2026-09-18',today:{won:true,failures:2},history:{wins:3}});const a=e.calls[0].KVDataList;assert.equal(a.length,2);assert.equal(JSON.parse(a[0].value).day,'2026-09-18');});
+test('platform: unsupported capability returns explicit unavailable',()=>{const p=API.createPlatform({},{});assert.equal(p.friends({}).ok,false);assert.equal(p.club({}).ok,false);});
+test('platform: native social does not silently activate without configuration',()=>{const e=env(),p=API.createPlatform(e.wx,{});assert.equal(p.club({}).ok,false);assert.equal(e.calls.length,0);});
