@@ -1,0 +1,2132 @@
+{
+  "format": 1,
+  "description": "Public source snapshot; excludes this manifest itself and the ZIP archive. Original manifest.sha256.json is historical.",
+  "date_utc": "2026-10-02",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 93,
+      "sha256": "dbab4b552f73271066dd55810e327da385c8251b816440c98edaeb113b4685de"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2689,
+      "sha256": "6917831e2677f61fa26562929638c9ec6ef91e5b7a948dabd42441185cabdb75"
+    },
+    {
+      "path": "README_先读我.md",
+      "bytes": 4034,
+      "sha256": "320f6c69b1a68ebc1f94a66dc9be9711394b583463a13f3b0621f32807c383b3"
+    },
+    {
+      "path": "art_reference_tools/README.md",
+      "bytes": 566,
+      "sha256": "27c5a16ae593994c7942598b7be707b1c26ba0e8f9e2897d12d522af9fe2031a"
+    },
+    {
+      "path": "art_reference_tools/analyze_cache_list.py",
+      "bytes": 2248,
+      "sha256": "7047bd02c178f2fcdb639b48a7785d824d435224f746e0b66b30318268775748"
+    },
+    {
+      "path": "art_reference_tools/block_spriteframes_full.csv",
+      "bytes": 2198,
+      "sha256": "a4744ac7b60432b06fcddb4d71deb390912a3830fb907d8322611187afbe24e7"
+    },
+    {
+      "path": "art_reference_tools/compare_cocos_snapshots.py",
+      "bytes": 3374,
+      "sha256": "0de31da7a6332e715485e4d7763e7e151e1ab924c5c4d80eb1bdbdf00f7657b1"
+    },
+    {
+      "path": "art_reference_tools/extract_cocos_spriteframes.py",
+      "bytes": 2372,
+      "sha256": "37b0a9c62511607df2a72181777c261a708094f1fe0f7fb941256b0318285501"
+    },
+    {
+      "path": "art_reference_tools/extract_main_ui_index.py",
+      "bytes": 4669,
+      "sha256": "3ba95f7b27ff1607b51ea916734258fb4bcb1b054c89e0c17c08f8ce63bd5296"
+    },
+    {
+      "path": "art_reference_tools/native_asset_files.csv",
+      "bytes": 2647,
+      "sha256": "87a28ad20f7695d86cc5d53e7f59bfd99b0ea75d9b406a1041049c35c261e29d"
+    },
+    {
+      "path": "art_reference_tools/scan_cocos_build.py",
+      "bytes": 9469,
+      "sha256": "19cd2ffc3608a7d73c8dd921341670cff5c72a9e194ad154189f0486915d49f1"
+    },
+    {
+      "path": "art_reference_tools/tests/test_analyze_cache_list.py",
+      "bytes": 2064,
+      "sha256": "e8f9a406d0b64a27ae803ea890eae2830130a40686761e4f790c05ae6be70437"
+    },
+    {
+      "path": "art_reference_tools/tests/test_extract_main_ui_index.py",
+      "bytes": 2020,
+      "sha256": "db066372059e244632ba90661be4e63bc0de1998481674a2a5192e42fa8aefc6"
+    },
+    {
+      "path": "art_reference_tools/v0.7/2022_reference_gallery_v07.html",
+      "bytes": 1781,
+      "sha256": "f8e071e0bec2fb544a7b8afec73bae3fd4d6ea2f7956c55a2ccd05d1faad47d3"
+    },
+    {
+      "path": "art_reference_tools/v0.7/resolve_local_cocos_resources.py",
+      "bytes": 2954,
+      "sha256": "42b63ffac7124236f83984e2e5771ce23a797976ed933869c1cc26cff72ecc79"
+    },
+    {
+      "path": "art_reference_tools/v0.7/解析本地Cocos资源路径.cmd",
+      "bytes": 286,
+      "sha256": "e7578aab61c15bc675423665978061291004b81fd63498403ed8f759ff234249"
+    },
+    {
+      "path": "art_reference_tools/下载社区参考图集_需确认权利.ps1",
+      "bytes": 881,
+      "sha256": "1fc92ef6a470eb4332134bbe0ea6b92cf273788ed5f58cb55e915087e56d10ee"
+    },
+    {
+      "path": "art_reference_tools/提取主UI三大道具.cmd",
+      "bytes": 425,
+      "sha256": "bf4485e934f0532347d806983a95219c58f0b3435c5c596c9254f5728a607570"
+    },
+    {
+      "path": "art_reference_tools/提取参考资源到_v012.ps1",
+      "bytes": 911,
+      "sha256": "6be2a9617114f92325937d2a2d50ed20b78552a15cd02947f1b2383a15d4945c"
+    },
+    {
+      "path": "assets/art/asset-manifest.json",
+      "bytes": 802,
+      "sha256": "58c0726ed6b40f881060871dd79c7ece1d097243cb66ba48017d0162636389b1"
+    },
+    {
+      "path": "assets/art/backgrounds/board.png",
+      "bytes": 7619,
+      "sha256": "5bfef6e6b1c99cb5242a94e370d048516f9f81c59a89ec1d18579015d0626753"
+    },
+    {
+      "path": "assets/art/backgrounds/home_region.png",
+      "bytes": 8470,
+      "sha256": "fc526e49b1fc43db6811b621af4d3097a015184c2e7698d09ffa4154a9486103"
+    },
+    {
+      "path": "assets/art/cards/block_1.png",
+      "bytes": 21700,
+      "sha256": "5053e6d654caa332171d893c6f399e95a859f9892c15eeed80f4c36c506697e0"
+    },
+    {
+      "path": "assets/art/cards/block_10.png",
+      "bytes": 22628,
+      "sha256": "8ad3c040039922979d398deb9a7c19dac4b89663c7eda00b059f6efeef252c81"
+    },
+    {
+      "path": "assets/art/cards/block_11.png",
+      "bytes": 21860,
+      "sha256": "0b517962b4575da067542d11245d242b01282bb3169c3491f6a1e91eaacf1fa4"
+    },
+    {
+      "path": "assets/art/cards/block_12.png",
+      "bytes": 23017,
+      "sha256": "afec3f17126f4e908f301438e5a1b04df8888b7224f21c1da4138533b1ba75ef"
+    },
+    {
+      "path": "assets/art/cards/block_13.png",
+      "bytes": 22758,
+      "sha256": "c370b03fd77ffdc131f00888963b410f2edfc0530c8bb32fe935120c5e67e767"
+    },
+    {
+      "path": "assets/art/cards/block_14.png",
+      "bytes": 22894,
+      "sha256": "35ff29228de0875f36ecbcd14e77341809d6697cb84ec107f64b8c83a3a35829"
+    },
+    {
+      "path": "assets/art/cards/block_15.png",
+      "bytes": 22751,
+      "sha256": "73b3c33a4e207f99e9d53040d071e6298003f22d81b144f1a575d3513eb5843e"
+    },
+    {
+      "path": "assets/art/cards/block_16.png",
+      "bytes": 22901,
+      "sha256": "2e823079b57847135df1881c954b777c21e7bd5e51a6ab84cb4a30729fa14116"
+    },
+    {
+      "path": "assets/art/cards/block_2.png",
+      "bytes": 22198,
+      "sha256": "e2d730bf0aacde8aed6f00eca4e54ee55b06473bda764cb5b74dcd852f158a5f"
+    },
+    {
+      "path": "assets/art/cards/block_3.png",
+      "bytes": 21947,
+      "sha256": "9f374029d7d4172267f902884e30a4ae033c87d9a106330a613ae2f45c10451f"
+    },
+    {
+      "path": "assets/art/cards/block_4.png",
+      "bytes": 22219,
+      "sha256": "85ee70f98f2ab37ee28d237d28f89857ae7f5491f97d16599e76964cc03f04b6"
+    },
+    {
+      "path": "assets/art/cards/block_5.png",
+      "bytes": 21925,
+      "sha256": "657b659294c7deeee3fcaa0919ac2878b7bb14dfdc5b8f46b9442a1aa117c838"
+    },
+    {
+      "path": "assets/art/cards/block_6.png",
+      "bytes": 22091,
+      "sha256": "6413c04c93f36f264ad68f076994b5429bf848d9d6fe4ee6d2af31808c4dfca6"
+    },
+    {
+      "path": "assets/art/cards/block_7.png",
+      "bytes": 21912,
+      "sha256": "53d8e6414396e934eb7a486447b4674fec42238b3bbe6ad2a6b2a0f87be0d5a2"
+    },
+    {
+      "path": "assets/art/cards/block_8.png",
+      "bytes": 22035,
+      "sha256": "6e5066fad54f6b4273a810f3fadf836a2b8939dde50d315d9b92301397637dac"
+    },
+    {
+      "path": "assets/art/cards/block_9.png",
+      "bytes": 22068,
+      "sha256": "a81e5ebd8b4a7385f57958018ddeaa2bc412e4d5dab20ff55fa4f7c3791e4c77"
+    },
+    {
+      "path": "assets/art/cards/block_bg.png",
+      "bytes": 4427,
+      "sha256": "5c7ba971843fa2d9c1f825faba794b2d52e911667cca340c89b5f8ff93bd33bc"
+    },
+    {
+      "path": "assets/art/effects/match.png",
+      "bytes": 7314,
+      "sha256": "c210bfabdd532b302617130dc4f09c85be758d3b279fa460e1a14ddfefbe5a4a"
+    },
+    {
+      "path": "assets/art/effects/shuffle.png",
+      "bytes": 7727,
+      "sha256": "009dfe6fe89f25c87786d8ad604abdef0ee1e6984439a1ccf97c8e8e258dd5fb"
+    },
+    {
+      "path": "assets/art/effects/win.png",
+      "bytes": 7604,
+      "sha256": "2cb2f64b55a8a9b49f4996aa0627692f67d2d7db93bfffdbf7d02343c1661f87"
+    },
+    {
+      "path": "assets/art/index/2022_social_skin_reference_urls.csv",
+      "bytes": 2451,
+      "sha256": "6e99c54b10d8e86d4369a87739b258930fe913f62422ae7ca4a628e674c3f83e"
+    },
+    {
+      "path": "assets/art/index/art_package_catalog_v09.csv",
+      "bytes": 24409,
+      "sha256": "81b276e0c5fde084ad8f0ebfb8ee991d6d318d64421682b5831557351bfa288d"
+    },
+    {
+      "path": "assets/art/index/audio_missing_exact_v010.csv",
+      "bytes": 3935,
+      "sha256": "4c4c369f12b8173645ff4797629ea35abca6aa20317cf2ffd09d683d4dadd0b6"
+    },
+    {
+      "path": "assets/art/index/audio_native_confirmed.csv",
+      "bytes": 1285,
+      "sha256": "e94b4f6778e7a3e7c77361c52705a9ec43122f9b918ac66f760bb88ffc1ebf65"
+    },
+    {
+      "path": "assets/art/index/audio_native_confirmed_v09.csv",
+      "bytes": 1252,
+      "sha256": "5f4c239be78a090fbf198e8d8cad97d940783e7c4e51f1770bc777120c237d87"
+    },
+    {
+      "path": "assets/art/index/audio_native_presence_v08.csv",
+      "bytes": 3832,
+      "sha256": "099634a7b12755247811027047ec4ba54adf033fa0379a6b4303a2b99f858af0"
+    },
+    {
+      "path": "assets/art/index/audio_public_mirror_crosscheck_v010.csv",
+      "bytes": 1309,
+      "sha256": "65cfbc58d826db00d279234a3b9b9018d75635f96fa62d0da75ec4cbd1bbdec5"
+    },
+    {
+      "path": "assets/art/index/audio_resource_keys.csv",
+      "bytes": 2039,
+      "sha256": "2ba9b44f44fbb33f029365f0379e2e2d68855bb519387c0dce31ab4283e61f24"
+    },
+    {
+      "path": "assets/art/index/clothes_names_124_vs_128_v011.csv",
+      "bytes": 2242,
+      "sha256": "67a64a9e530053a731b4bfb2e32a753f18901c1970a9641001ca3e631163e96f"
+    },
+    {
+      "path": "assets/art/index/costume_pagination_v010.json",
+      "bytes": 532,
+      "sha256": "9381e83423646d7f33907814370a9782c2f1bee07e74230744d7c78b8162ba44"
+    },
+    {
+      "path": "assets/art/index/dj2_versions_by_build_v011.csv",
+      "bytes": 901,
+      "sha256": "d47f40861c91c837c1379ec40925dc370604cb95d0d0530fd346174ae49e36d9"
+    },
+    {
+      "path": "assets/art/index/gameplay_prop_spriteframes_v09.csv",
+      "bytes": 543,
+      "sha256": "2c92567b7619175c24ba96dd865b18e05c563bfb8e6cbebf8a6dd76925667b4a"
+    },
+    {
+      "path": "assets/art/index/historical_visual_sources_v09.csv",
+      "bytes": 1136,
+      "sha256": "f662dddef7693010b182e2ab079d7558854a781f2cacfe478ff5ad5cf75ded43"
+    },
+    {
+      "path": "assets/art/index/key_native_crosscheck_v08.csv",
+      "bytes": 1296,
+      "sha256": "1b7ff1235f3474c7d73f9ff459d0345a2a95506da7d94285f23ab96ef03bf45c"
+    },
+    {
+      "path": "assets/art/index/main_native_textures_v09.csv",
+      "bytes": 843,
+      "sha256": "bf93ac993d128500dcb69fb75cea7075f3bc07d9efc458e9d3269f39d58ca8dc"
+    },
+    {
+      "path": "assets/art/index/main_popup_symbols_v09.csv",
+      "bytes": 1534,
+      "sha256": "ee6fabad68694ebd03b8b91c72e3138c3fa2abfb1b81c9f32f7a11da47b9f117"
+    },
+    {
+      "path": "assets/art/index/main_ui_124_vs_128_v011.json",
+      "bytes": 897,
+      "sha256": "169423220c37f633cd6f37c140899089d96c40f293bcd5f9fb63b0656ad69b91"
+    },
+    {
+      "path": "assets/art/index/main_ui_spriteframes_full_v09.csv",
+      "bytes": 7235,
+      "sha256": "3622958847f59f011ade7466689d6a70c6f3da8c99890a53f214df1c1771fd1b"
+    },
+    {
+      "path": "assets/art/index/main_ui_spriteframes_key_v09.csv",
+      "bytes": 3976,
+      "sha256": "572d6a68f5d101192c71631564809d06128dd5c6c8587be5cbd27453570d1e0e"
+    },
+    {
+      "path": "assets/art/index/main_ui_texture_distribution_v09.csv",
+      "bytes": 522,
+      "sha256": "dc745381fa59e952f0bbfa447b9e54cb05f48a3cec4ff0c9b5f1935566078496"
+    },
+    {
+      "path": "assets/art/index/mirror_audit_v011.csv",
+      "bytes": 1238,
+      "sha256": "2724c289547f5adaa6e6b6c70f43d32f79e83623ece6612e9053357274b0f055"
+    },
+    {
+      "path": "assets/art/index/native_png_full_map_v09.csv",
+      "bytes": 2010,
+      "sha256": "c8169c03c27d6ec4cae8f11a8523c1bfd1b7e301f0f39cb0c0f7c1a053b78f65"
+    },
+    {
+      "path": "assets/art/index/official_cache_1_2_4_relevant_map_v011.csv",
+      "bytes": 2385,
+      "sha256": "67c50f61663fa0a018dab659cb5229101d672ee272c9705975554d3817d3cc93"
+    },
+    {
+      "path": "assets/art/index/qierkang_commit_resource_timeline_v011.csv",
+      "bytes": 1476,
+      "sha256": "a4e53ec460134f4a21224668103875bf6316a83247781a0b5d061af865f65eaf"
+    },
+    {
+      "path": "assets/art/index/rank_spriteframes_exact.csv",
+      "bytes": 1564,
+      "sha256": "5fbc098656d545b536407599a85e878c1218c8e5ceb95aca97a706f9fe8ada5d"
+    },
+    {
+      "path": "assets/art/index/reward_spriteframes_exact.csv",
+      "bytes": 1420,
+      "sha256": "57510e679c75f4938a6aec5775b7be162f5d755897841105ab4090dfdd4869df"
+    },
+    {
+      "path": "assets/art/index/sheep_clothes_48_v010.csv",
+      "bytes": 10315,
+      "sha256": "af3c023b3f6e92865ef398d4dc65ed09e4777dfcca0904134a92c20214b0fe5b"
+    },
+    {
+      "path": "assets/art/index/sheep_spine_catalog_v09.csv",
+      "bytes": 1968,
+      "sha256": "0730e6101f8c84e288eadd56387e85f4946b1e15ee8bdf1c4070e3fd014d442e"
+    },
+    {
+      "path": "assets/art/index/snapshot_crosscheck_v08.csv",
+      "bytes": 1115,
+      "sha256": "aca4963b8ff6fe50b900837137d5506e3a61f0b265dd88ac44d3ee22c5451012"
+    },
+    {
+      "path": "assets/art/index/source_receipt_v010.json",
+      "bytes": 6451,
+      "sha256": "165ed14c50ee9dd263b7edfe533f2ca522ec0027307795e7549506390ef57d66"
+    },
+    {
+      "path": "assets/art/index/source_receipt_v011.json",
+      "bytes": 1427,
+      "sha256": "af4d1b23812f27b5b80b58bc7f12b563d1562f33895a25e1981523aa29062de7"
+    },
+    {
+      "path": "assets/art/index/source_receipt_v09.json",
+      "bytes": 5371,
+      "sha256": "0ec09ae38634b99d4529f9be9ea63ffba2b5189706be7cb80ae04815d58d4ac7"
+    },
+    {
+      "path": "assets/art/index/topic_pair_map_v010.csv",
+      "bytes": 1025,
+      "sha256": "00a2d57e7ad791ab73dd0ac6116ee9e6745aef115bb2f4520c97bef051232fd3"
+    },
+    {
+      "path": "assets/art/index/topic_pk_friend_skin_v08.csv",
+      "bytes": 1756,
+      "sha256": "343953c08beda0276cc220bf0cdc0a585d77e868ab7d2d94cddb65ac63e0ab9c"
+    },
+    {
+      "path": "assets/art/index/version_timeline_2022_v011.csv",
+      "bytes": 695,
+      "sha256": "8960490d85a919da6ef3ce38f38b4dd47bc590aca8dc8f25906ff605ea44b0c8"
+    },
+    {
+      "path": "assets/art/index/wechat_1_1_4_open_data_v011.json",
+      "bytes": 851,
+      "sha256": "2ab1ef1f6d5429eca2afc876118b29a64686f7d95d079add2efbc2b1f3b5b5bc"
+    },
+    {
+      "path": "assets/art/research-manifest.json",
+      "bytes": 3281,
+      "sha256": "3c29f8c2563ddb0fa7c37790acd26c5e6ffd923eee2c6f2455133e2b713cce93"
+    },
+    {
+      "path": "assets/art/sheep/grave_default.png",
+      "bytes": 6453,
+      "sha256": "2aceedd39c1f3585243f6be684b7b4a6f5309de76aebbc720466a2838cc23893"
+    },
+    {
+      "path": "assets/art/sheep/sheep_default.png",
+      "bytes": 6819,
+      "sha256": "011d491197ca91e012eb837ba49c4427b936ebdfc622a7cce007d91e03507cc0"
+    },
+    {
+      "path": "assets/art/social/block_bg.png",
+      "bytes": 4427,
+      "sha256": "5c7ba971843fa2d9c1f825faba794b2d52e911667cca340c89b5f8ff93bd33bc"
+    },
+    {
+      "path": "assets/art/social/friend_feed_bg.png",
+      "bytes": 7886,
+      "sha256": "8d2eaa090fe59d9d654534666bdad5622efff21e424677200ace12ee5de117d1"
+    },
+    {
+      "path": "assets/art/social/honor_bg.png",
+      "bytes": 6889,
+      "sha256": "e5ae9e8c1e0f2ff05ec32653f575ddc1714bcb706f28afa779ebcbc045cd6c4f"
+    },
+    {
+      "path": "assets/art/social/rank_bg.png",
+      "bytes": 7523,
+      "sha256": "7d4cdfe3cf0cae386316ecefb5243f349ff9bfda66b5b4fd63177ad475347718"
+    },
+    {
+      "path": "assets/art/social/topic_pk_bg.png",
+      "bytes": 7432,
+      "sha256": "d3a9827ff4daea53db9df3180918cd4a8fb9a3306e850fe1169e524893301961"
+    },
+    {
+      "path": "assets/art/ui/prop_cancel.png",
+      "bytes": 6396,
+      "sha256": "44329812ab6c38512109532984f0bf6052fa63e87b39c2124450eadaffc77e80"
+    },
+    {
+      "path": "assets/art/ui/prop_life_remove.png",
+      "bytes": 7623,
+      "sha256": "b526a4962e314fc89b2868c22da64a72173a67677cceba91fa1c530b20d677ba"
+    },
+    {
+      "path": "assets/art/ui/prop_random.png",
+      "bytes": 6414,
+      "sha256": "98dd2fea3a93ad798023f6d8640cc8a9e1f7f59937160f1e4711667ec2df6862"
+    },
+    {
+      "path": "assets/art/ui/prop_remove.png",
+      "bytes": 6313,
+      "sha256": "55e81394f05f2fd47ed9b5a66e00f6feee987010f71afe2ff975bdd40168955b"
+    },
+    {
+      "path": "assets/art/ui/reward_share.png",
+      "bytes": 6134,
+      "sha256": "23a71ff90d15654ac47f527e1b4b818f7b58883b5316e020f00afdf4524456a1"
+    },
+    {
+      "path": "assets/art/ui/reward_video.png",
+      "bytes": 6521,
+      "sha256": "66ba64f25fa38733904db0cf787f42b0d207b6f063d882c4f77cdc0d9d871bb6"
+    },
+    {
+      "path": "config/commerce.v010.json",
+      "bytes": 1480,
+      "sha256": "2c439d82c0ed193cefc1f0ce648348ab9778b61aa844ce0f975d492b45fc7e2f"
+    },
+    {
+      "path": "config/full-release-gates.json",
+      "bytes": 975,
+      "sha256": "9521fabea93cbfdf1080263b219f4e60ebbb03d35f15f9e48c07a3885cf03fb7"
+    },
+    {
+      "path": "config/release-checklist.json",
+      "bytes": 1860,
+      "sha256": "fb833debd15449ff4535414fe9ce6ce87567d5147c01d9228dd81c8381886238"
+    },
+    {
+      "path": "docs/art/13_社区原生图集文件定位_v0.6.md",
+      "bytes": 1006,
+      "sha256": "8dd691eb61b1c9a8c0a965246b3b995fb350997e9ef6b1d21420715f2552e1bf"
+    },
+    {
+      "path": "docs/art/14_本地Cocos构建自动扫描_v0.6.md",
+      "bytes": 696,
+      "sha256": "600167d109d70e444a9a5496b55e450de242d58fcebd044ce84c2494a7c99678"
+    },
+    {
+      "path": "docs/art/16_rewardIcon与rank精确裁剪_v0.7.md",
+      "bytes": 910,
+      "sha256": "89e56e381e7465e1a27f8c8c888f8dcfb0e9232b72502b4fc79d795b10c63879"
+    },
+    {
+      "path": "docs/art/17_2022首周换装与社交证据_v0.7.md",
+      "bytes": 879,
+      "sha256": "44174feb4127fab61ff8a0e151bc7c1b12fbeb71f55d668ff76e330d35019e2b"
+    },
+    {
+      "path": "docs/art/18_音频资源映射_v0.7.md",
+      "bytes": 486,
+      "sha256": "1022be5af1839b3b88b2c48f0cd0503f864418af606a32e5505651bc961feee0"
+    },
+    {
+      "path": "docs/art/19_当前缺口_v0.7.md",
+      "bytes": 484,
+      "sha256": "8ad682c6e3f1fb8174dc3a0d08d5aa6734bdd87cbadad9d4daac37b86ba1300d"
+    },
+    {
+      "path": "docs/art/20_双仓2022快照交叉验证_v0.8.md",
+      "bytes": 1645,
+      "sha256": "093245f334bc242215b2fa254fa8e9e70393be626fdb5981f7efd0104cc954a3"
+    },
+    {
+      "path": "docs/art/21_话题PK朋友圈与首周换装_v0.8.md",
+      "bytes": 1252,
+      "sha256": "47aaf339c43a1758279a52d5ae95ebb4c1afdd874ba8ca39ba1c9a6f7e3bee34"
+    },
+    {
+      "path": "docs/art/22_prop_random精确裁切状态_v0.8.md",
+      "bytes": 990,
+      "sha256": "12f7527ea135231c669030c2fe52648e597e731cc0dd35a2318a3e0eaefb44f7"
+    },
+    {
+      "path": "docs/art/23_音频文件存在性与接入边界_v0.8.md",
+      "bytes": 626,
+      "sha256": "3f4e178a49d211aabdc9016a90e6d5cf435b22ebf22d627085f1c81a8584e1c7"
+    },
+    {
+      "path": "docs/art/24_资源供应链与许可门禁_v0.8.md",
+      "bytes": 761,
+      "sha256": "dbddf3f0ed9d1f7b96cc46e7cd925dc3a02f14c7d23c83fe52e6858134671ed3"
+    },
+    {
+      "path": "docs/art/25_assets_main主UI图集反解_v0.9.md",
+      "bytes": 1201,
+      "sha256": "e256a12ef8d623dd96902f0fbcc38adfd31379bd38b30c407a0da2da015992cf"
+    },
+    {
+      "path": "docs/art/25_社区原生PNG完整映射_v0.9.md",
+      "bytes": 1104,
+      "sha256": "ab1ba696e179a784fe5f22ea1d9d76655d60b6a4dbba68a5a36bc0e8b613c5bf"
+    },
+    {
+      "path": "docs/art/26_2022首页与社交页面核验_v0.9.md",
+      "bytes": 1848,
+      "sha256": "ed8b6be67b63ee697aa6e7b8e2c4cf577c1f7025d4196e8ad82ed0483b89c305"
+    },
+    {
+      "path": "docs/art/26_三大道具精确对局图标_v0.9.md",
+      "bytes": 803,
+      "sha256": "372995a1995f4b74ee9ce2c1cab64d4b617c4c5110b637d5284705c26573c4aa"
+    },
+    {
+      "path": "docs/art/27_音频版权与存在性边界_v0.9.md",
+      "bytes": 1031,
+      "sha256": "9e916ff69e5a04257164a192d15c527adacff9da77abd859b7e7f0282a46cbe8"
+    },
+    {
+      "path": "docs/art/27_首页社交弹窗结构_v0.9.md",
+      "bytes": 848,
+      "sha256": "774adf5824b6f1f2c2d77025b3910b6fef598bbd845c27ee86d36a7c72eb32d4"
+    },
+    {
+      "path": "docs/art/28_rewardIcon缺失元数据结论_v0.9.md",
+      "bytes": 928,
+      "sha256": "56a5b9f9ae242b04ffe013effbe6f9d5e042af4dedef752424b56aae4f7a6a06"
+    },
+    {
+      "path": "docs/art/28_首周皮肤证据边界_v0.9.md",
+      "bytes": 855,
+      "sha256": "350042691412a95dd2317b149fc90ae8f717ebe9cc938f7986fa4a4875b9a15c"
+    },
+    {
+      "path": "docs/art/31_来源收据与可复核路径_v0.9.md",
+      "bytes": 511,
+      "sha256": "50545f36a877f8401a194030d62cfdd5d8fb10b95c0ca13eff0acbeeffc9e768"
+    },
+    {
+      "path": "docs/art/32_assets_main主UI图集反解_v0.9.md",
+      "bytes": 1201,
+      "sha256": "e256a12ef8d623dd96902f0fbcc38adfd31379bd38b30c407a0da2da015992cf"
+    },
+    {
+      "path": "docs/art/33_三大道具精确对局图标_v0.9.md",
+      "bytes": 803,
+      "sha256": "372995a1995f4b74ee9ce2c1cab64d4b617c4c5110b637d5284705c26573c4aa"
+    },
+    {
+      "path": "docs/art/34_首页社交弹窗结构_v0.9.md",
+      "bytes": 848,
+      "sha256": "774adf5824b6f1f2c2d77025b3910b6fef598bbd845c27ee86d36a7c72eb32d4"
+    },
+    {
+      "path": "docs/art/35_首周皮肤证据边界_v0.9.md",
+      "bytes": 855,
+      "sha256": "350042691412a95dd2317b149fc90ae8f717ebe9cc938f7986fa4a4875b9a15c"
+    },
+    {
+      "path": "docs/art/36_羊群主题Spine结构_v0.9.md",
+      "bytes": 683,
+      "sha256": "f216632b89e2da35fb427055d875b6b5e0fc6a4518998eec7a5c355848751f98"
+    },
+    {
+      "path": "docs/art/37_主UI反解后的剩余缺口_v0.9.md",
+      "bytes": 752,
+      "sha256": "41c4d7c392deceec53d5a6b93c1cdd47910336adfc62269aaddbcfbbc7fbd85f"
+    },
+    {
+      "path": "docs/art/38_首周48换装目录与动态排序_v0.10.md",
+      "bytes": 1829,
+      "sha256": "a568b52c4fdc85b693905ee8893f95dfb082d7c9d5a8948c2b6ae7343d3ac971"
+    },
+    {
+      "path": "docs/art/39_音频全网补查_v0.10.md",
+      "bytes": 1271,
+      "sha256": "0e24183bf609e0336062fdfe5e9f4d996f7512ee04e8dc3b9b3dc39e2881a051"
+    },
+    {
+      "path": "docs/art/40_主UI页面还原索引_v0.10.md",
+      "bytes": 1445,
+      "sha256": "4142a4601a09b530c7f673ac4eac4f95bebfd4cdd0c77ae15a9a6164a896f846"
+    },
+    {
+      "path": "docs/art/41_首周TopicPK皮肤配对_v0.10.md",
+      "bytes": 657,
+      "sha256": "8b4aeb20d0e400ecd8686e927315d2e52705b94d03375c42c7b5f894b68c4296"
+    },
+    {
+      "path": "docs/art/42_2022构建版本时间线_v0.11.md",
+      "bytes": 673,
+      "sha256": "1ab2f3024534c7ec828c160441b350f481958c1583802e9d585d04e611c737bb"
+    },
+    {
+      "path": "docs/art/43_微信1.2.4与H5_1.2.8差异_v0.11.md",
+      "bytes": 1080,
+      "sha256": "5985398fc0072d041dae9a9c773449b91d35cf179eaaaa87a1931702f2503ff3"
+    },
+    {
+      "path": "docs/art/44_DJ2资源追踪_v0.11.md",
+      "bytes": 654,
+      "sha256": "0f26bba593de0f0e44352ea23d33f02e682d4539dc7cf7170fbc385f9e24068e"
+    },
+    {
+      "path": "docs/art/45_微信1.1.4开放数据域_v0.11.md",
+      "bytes": 650,
+      "sha256": "eabe80a420f05bf590d452d80ed703e30debfb44d4e09a0fe5e38646d63eec23"
+    },
+    {
+      "path": "docs/art/46_音频与镜像深挖_v0.11.md",
+      "bytes": 827,
+      "sha256": "fa01b15181a08fbc53ee7d0fd8cc992309bf7be3a109d79cbb608b0c0f901a53"
+    },
+    {
+      "path": "docs/art/47_当前剩余缺口_v0.11.md",
+      "bytes": 464,
+      "sha256": "1342a7b7ffb97e0f1b155e759db752397e1273d60a070ca9af02529af1641da6"
+    },
+    {
+      "path": "docs/commerce/01_商业化完整规格_v0.10.md",
+      "bytes": 15013,
+      "sha256": "e1772f57444b2fe9b093fb9a3eae4814f200ab1b767f47c9f609e64860aff9f9"
+    },
+    {
+      "path": "docs/commerce/02_指标口径与收入核对.md",
+      "bytes": 7231,
+      "sha256": "9f217bfa97db12132134c6addc0747d17f8db7e12ad75fab60c8a706c7c65f7b"
+    },
+    {
+      "path": "docs/commerce/03_接入接口与模块任务.md",
+      "bytes": 5541,
+      "sha256": "a9d03ba3ff0f2bc30eb20904e59a8f8cc3bc588b9b8aaaa1048d96cd09af2bf0"
+    },
+    {
+      "path": "docs/commerce/04_本轮交付与验收.md",
+      "bytes": 1570,
+      "sha256": "4b635ad7634c0eef8582185292f9c6909feb3a8fd8df6771efdfb57916ca7989"
+    },
+    {
+      "path": "docs/commerce/sources.json",
+      "bytes": 2310,
+      "sha256": "090d6ef839a92e7849eab193e5d23c9083083a18fac20f2df9581987cb7d0699"
+    },
+    {
+      "path": "docs/implementation-v011.md",
+      "bytes": 570,
+      "sha256": "12a333e4269ee6f99bb2f819914736f72f099e28b55fa19eb37ec6a220f79d8c"
+    },
+    {
+      "path": "docs/product/asset-manifest.json",
+      "bytes": 1402,
+      "sha256": "6a347b78da49b623b93f1ca7c7eb2125d8803696d08d55a53dba8ad1b3b1754f"
+    },
+    {
+      "path": "docs/product/frozen-v011.json",
+      "bytes": 1834,
+      "sha256": "f3113afac7f681b65af9caa5b9427c30b568caf6fd264360b3be3b1369407d5c"
+    },
+    {
+      "path": "docs/product/全模块交付与验收_v0.12.md",
+      "bytes": 8570,
+      "sha256": "62bd1c8e0668d43a3c3aed00c2e1a506620b3c0e9fa85415cad6476a2593cb5f"
+    },
+    {
+      "path": "docs/product/实施计划.md",
+      "bytes": 2794,
+      "sha256": "58a1cb07448a0cc656c4df2224f2e96234d23bb83ee9d9d90772dded1feda549"
+    },
+    {
+      "path": "docs/product/微信与服务端接入.md",
+      "bytes": 5691,
+      "sha256": "a459c5ad042247dd1674e4e0cdfbc90d7b5cab76fb80d90cdd4954b8287e0636"
+    },
+    {
+      "path": "docs/product/模块文件清单.json",
+      "bytes": 1927,
+      "sha256": "8a6a9a4a7dd591fd46a94dfce751967c19305af332a7661d2c4e7c09e0667ea7"
+    },
+    {
+      "path": "docs/product/美术资源落位_v0.5.md",
+      "bytes": 1267,
+      "sha256": "1c2ee13de328d748491e24286ad5113bcf4593862c337b4aef7e8961ca3b9f07"
+    },
+    {
+      "path": "docs/product/美术资源落位_v0.7.md",
+      "bytes": 739,
+      "sha256": "a70f50eb4d7a3999518cf6ff402d4c899a7a05281e070818e81a0bbb65de6d70"
+    },
+    {
+      "path": "docs/product/美术资源落位_v0.8.md",
+      "bytes": 549,
+      "sha256": "5b483601aa5a7fababc6d4364c881817a8512edc78881445273fab0d2e2187c6"
+    },
+    {
+      "path": "docs/reference/v0.2_版本锁定与范围.md",
+      "bytes": 5071,
+      "sha256": "8cd5160ffe39b51918c14b57c66756f0f8b79928569d30af9363541242e67fe1"
+    },
+    {
+      "path": "docs/reference/v0.3_玩家流程与核心规则.md",
+      "bytes": 17686,
+      "sha256": "6d4bea94445f03392c5d30aeb8a40618b6b40eb5b4cd91fd967dacc934902e8f"
+    },
+    {
+      "path": "docs/reference/v0.3_社区源码审读与差异.md",
+      "bytes": 5389,
+      "sha256": "124dc85bc99d982b8788fb113535bcdd3e5b1b6951adf3937ed74ccdce70eca8"
+    },
+    {
+      "path": "docs/reference/v0.4_模块交付与验收入口.md",
+      "bytes": 8177,
+      "sha256": "6ae9ef16ac2c70b1e0c595421a82ab3adb8d02c126976c9f6f1a01dc2d61293c"
+    },
+    {
+      "path": "docs/reference/v0.4_模块接口数据结构状态机.md",
+      "bytes": 26973,
+      "sha256": "0396c75d94057f371801d53926ba1b23fecf0697cf5a050cc654eb9786cf474b"
+    },
+    {
+      "path": "docs/reference/v0.5_核心算法设计.md",
+      "bytes": 24936,
+      "sha256": "807ba281fcb8b61d5a47112a31b55f15ea233a493b29a641cdcdd8fb4e9ba3f2"
+    },
+    {
+      "path": "docs/reference/v0.6_算法深入复核与多方综合.md",
+      "bytes": 16786,
+      "sha256": "a53dd22225a0d2fc7c731f60b129662aca18a346a7b2268040283452f9c1cd53"
+    },
+    {
+      "path": "docs/reference/阅读说明.md",
+      "bytes": 296,
+      "sha256": "498e6e13bef2ab8ac4a1f89e42979fee4c931aac75f022a872854a37a108152c"
+    },
+    {
+      "path": "docs/sources.json",
+      "bytes": 509,
+      "sha256": "cc9d290dca145881cae8eeea20cc69879b8ccae401235bea149b923a11b6d044"
+    },
+    {
+      "path": "docs/v0.8_algorithm_frozen.json",
+      "bytes": 1060,
+      "sha256": "96b75d8796c7ef1f7791a4f3b75c7ad654c21413dcaeeb73d13ff37ebd698569"
+    },
+    {
+      "path": "docs/交付与验收_v0.9.md",
+      "bytes": 3670,
+      "sha256": "bb78efcd3463b0672eb562711086bc4728b1425d4d62842a46d14f62c9320b0f"
+    },
+    {
+      "path": "docs/交给开发模型_v0.8.md",
+      "bytes": 1886,
+      "sha256": "40ffa9821eaf606e0d10e1e256df0feff4e65b3f9ba0af4f8620671c3a11ac2b"
+    },
+    {
+      "path": "docs/代码变更_v0.7至v0.8.patch",
+      "bytes": 53081,
+      "sha256": "05c2fae896dc72c24fbd7456712e8cb3bc2158c86567ef3ba64a13748e928951"
+    },
+    {
+      "path": "docs/修复与验收_v0.8.md",
+      "bytes": 5872,
+      "sha256": "af557e93859be09e9b52cb5663edaa0f72803a243b73604263786c2c060c33e8"
+    },
+    {
+      "path": "docs/实施任务_v0.9.md",
+      "bytes": 1692,
+      "sha256": "07dd362e5ab9ca57e3f90edd921339756489b5db053e38d9d0de4ab5c3b3a2f4"
+    },
+    {
+      "path": "docs/实际开发交付_v0.11.md",
+      "bytes": 6501,
+      "sha256": "44a342640435b56a80a52522d03a6f89441aeec66d6a00947df785ea6b344477"
+    },
+    {
+      "path": "docs/接口与候选规则_v0.9.md",
+      "bytes": 6593,
+      "sha256": "a651ea85ba31177962713617cb262707eca91112fc72d154c016c8e44cc95d01"
+    },
+    {
+      "path": "docs/接口与接入_v0.8.md",
+      "bytes": 7131,
+      "sha256": "abfb6f29bd29f55af38a6cee3f2ab5424ef66faa27ca7ebc1a4b6cb815554f97"
+    },
+    {
+      "path": "examples/deal-270.json",
+      "bytes": 51158,
+      "sha256": "e7cde69fed0b3d9915e82669c11819113d36872e74c013815f934e7a044f2951"
+    },
+    {
+      "path": "examples/deal-270.receipt.json",
+      "bytes": 4479,
+      "sha256": "90d51c8cb2ae6c363ba1f6b113972795979b9cbcd89c747f9de3ab2ee27f0c60"
+    },
+    {
+      "path": "examples/deal-540.json",
+      "bytes": 102141,
+      "sha256": "19b735e3d483859bad613c455e629ec619f8c1841b00f477159127d64874a9a1"
+    },
+    {
+      "path": "examples/deal-540.receipt.json",
+      "bytes": 8094,
+      "sha256": "69c7ddb4ca36a60ae106e5d3c45d43b07a7490aa63ed7bd32e8d14e6ac1cd280"
+    },
+    {
+      "path": "examples/deal-720.json",
+      "bytes": 136243,
+      "sha256": "d97b07d1eb5d0e5f14ac71717f6ca7253d972fda5e672c6588d9d51cef35ce0a"
+    },
+    {
+      "path": "examples/deal-720.receipt.json",
+      "bytes": 10504,
+      "sha256": "e11d21b5de7b90c0bf225160e31609fdad6a96921a3aa79a92f59764abe358a1"
+    },
+    {
+      "path": "manifest.sha256.json",
+      "bytes": 105384,
+      "sha256": "0bc85ab7183cb8671ad5e042c4983d93f0153534484ad5c4c9e2691b4eb46a6c"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1503,
+      "sha256": "044dbdb48b36ec3665e482981944dd2c436963e93d1a2071d2042ce0fadbe1f1"
+    },
+    {
+      "path": "services/server.js",
+      "bytes": 4101,
+      "sha256": "b531a7a8d802b4fcf162bb3088a61a1184c5a0606dad334f9ebfa1351748f375"
+    },
+    {
+      "path": "src/analysis.js",
+      "bytes": 2378,
+      "sha256": "3e500479ba326ae6a41660dccd9a7ba92a2b00585a6cdd57d11684587cab9e7d"
+    },
+    {
+      "path": "src/commerce/model.js",
+      "bytes": 6767,
+      "sha256": "4e33e0932424e49cc3a953b790dfe6194b8aa62a402be9a084f4e3efd6033b7b"
+    },
+    {
+      "path": "src/content-hash.js",
+      "bytes": 3689,
+      "sha256": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df"
+    },
+    {
+      "path": "src/generator.js",
+      "bytes": 3915,
+      "sha256": "2c37ebfbebed04be0298e8ed83cce4d60bb7172199a57364ad3e66850b0d7c38"
+    },
+    {
+      "path": "src/index.js",
+      "bytes": 387,
+      "sha256": "f515f03674a052008ff65c36142cd3653e2f2c6482b3dfbf12e9b8aef1cf8473"
+    },
+    {
+      "path": "src/integration/controller.js",
+      "bytes": 2815,
+      "sha256": "8f2ba53a8f16e68a2947fd7c633c8ddca23fd38edd9c5a10276fb0bc35eb64d0"
+    },
+    {
+      "path": "src/integration/round.js",
+      "bytes": 9006,
+      "sha256": "cda4c5ce6ce0216f8c96827a23cbccd156646626b53b1df348b8da7c84e9cd33"
+    },
+    {
+      "path": "src/integration/wechat-provider.js",
+      "bytes": 3098,
+      "sha256": "9227c03cfe68454826abf83a40834468b499f00a4183de5f067c61b0308eeff0"
+    },
+    {
+      "path": "src/layout.js",
+      "bytes": 2295,
+      "sha256": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f"
+    },
+    {
+      "path": "src/play/board.js",
+      "bytes": 5605,
+      "sha256": "f37d5a6c85920e100b7396013963651ed262a4a00554eeaf1574751fd3e5dff1"
+    },
+    {
+      "path": "src/play/profile.js",
+      "bytes": 562,
+      "sha256": "600d85f73781f54894a00a2ce5b9d594def5f09aa05013d547d4bf28c84d2174"
+    },
+    {
+      "path": "src/play/session.js",
+      "bytes": 6998,
+      "sha256": "178cb319605ac859fef197f38e5efb71cf1f3e05138e7632603f5516decf7d33"
+    },
+    {
+      "path": "src/play/shuffle.js",
+      "bytes": 818,
+      "sha256": "3aa9cd690625bf87263d397a5c04255366159f5b495a3b18f9f5d07085ca8cab"
+    },
+    {
+      "path": "src/policies.js",
+      "bytes": 2036,
+      "sha256": "56bd472d70c149a76fc7a302b1ad8727c3029bf83068e4bafb5d8ba02dfca8e3"
+    },
+    {
+      "path": "src/product/board.js",
+      "bytes": 5820,
+      "sha256": "8b936a10690025899a1c705457fe56c247bf8c3ddab4af20441894575748616e"
+    },
+    {
+      "path": "src/product/catalog.js",
+      "bytes": 1777,
+      "sha256": "b87522c7ebd000a86ec0ae357ef18fde417e912093a5d80e39996179b0f6540d"
+    },
+    {
+      "path": "src/product/client.js",
+      "bytes": 987,
+      "sha256": "46dfef6227f0ae51e4e66999aeba5ef8339907d2427db1ed2c6b7f546af9e883"
+    },
+    {
+      "path": "src/product/clock.js",
+      "bytes": 691,
+      "sha256": "e1758a67d1a1051b66ed505b50a8beecb50ca2d61bef9277055ec48022e97939"
+    },
+    {
+      "path": "src/product/controller.js",
+      "bytes": 2993,
+      "sha256": "15abfb12ff7d870be66c1b428b6bfef0b421a04c115f4bf4454cec6f8e273889"
+    },
+    {
+      "path": "src/product/effects.js",
+      "bytes": 1221,
+      "sha256": "89d6024c0532db91ddace0b1bde213b86abe24fe76d5445e4ca51a5a8f1ac723"
+    },
+    {
+      "path": "src/product/round.js",
+      "bytes": 9369,
+      "sha256": "c16e9d65c3c7cef097b11258a66f1d6606b6c465163857c2f55c9e7dae104bd1"
+    },
+    {
+      "path": "src/product/social.js",
+      "bytes": 7538,
+      "sha256": "2c247c74680862f4c9ce17e89c79fc5cd5b858fc5483e4bbfcf5a52df6023466"
+    },
+    {
+      "path": "src/product/wechat.js",
+      "bytes": 1846,
+      "sha256": "515f87cf6d9577872af49e8fd2f3ba99c80c717b41f05c17ecdfd573fe2f544e"
+    },
+    {
+      "path": "src/random.js",
+      "bytes": 1953,
+      "sha256": "42c8af5f97137881ac71a6ea47616611566e494e5157aad0121c94778801820e"
+    },
+    {
+      "path": "src/release.js",
+      "bytes": 999,
+      "sha256": "328f67517678d40f0900212c2fd7c773876d3121dacbedd73a0d72f4e5632f54"
+    },
+    {
+      "path": "src/replay.js",
+      "bytes": 3648,
+      "sha256": "1e34bdde84f5ef94472b1cbe6fef086f977e976cf132135e8aed81ccc616bacd"
+    },
+    {
+      "path": "src/runtime.js",
+      "bytes": 4330,
+      "sha256": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd"
+    },
+    {
+      "path": "src/schema.js",
+      "bytes": 2483,
+      "sha256": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699"
+    },
+    {
+      "path": "src/solver.js",
+      "bytes": 2895,
+      "sha256": "0df2b639f4c3dd5a577c61c53ba221d8474e750233cc0b357692fc011b70efee"
+    },
+    {
+      "path": "templates/wechat-full/game.js",
+      "bytes": 2444,
+      "sha256": "fbcdc4624f42b690e4d6cf87cea14e72eab35848cd3755976d76f6985966ee5b"
+    },
+    {
+      "path": "templates/wechat-full/game.json",
+      "bytes": 85,
+      "sha256": "bb50949b55ad471cefa495b178bd0bb7ba0e2c9664e0f891907618df59a4794f"
+    },
+    {
+      "path": "templates/wechat-full/open-data/index.js",
+      "bytes": 37,
+      "sha256": "23f812931aa5383a2eab47b36cc5cfd39d3d69341351ab648adcff5d7842bc50"
+    },
+    {
+      "path": "templates/wechat-full/open-data/renderer.js",
+      "bytes": 2602,
+      "sha256": "e5cbf099e87a6d0837cfd93a4e9775ef39a834ba24d2636fc5f6e5e53951cb02"
+    },
+    {
+      "path": "templates/wechat-full/preview-config.js",
+      "bytes": 180,
+      "sha256": "dc0340507546d90e262bf6022d69f422755d79270ed86fade792877b4e1ec2e2"
+    },
+    {
+      "path": "templates/wechat-full/project.config.json",
+      "bytes": 251,
+      "sha256": "acdf20395b773e84e3b5d5ff10ea2f8d7847e426e9f5fa4f18fcf8573ef85a0a"
+    },
+    {
+      "path": "templates/wechat-integration/game.js",
+      "bytes": 1247,
+      "sha256": "170bc07adae23da181e2e0f8efa9979be17b9ceaa4e7a6fcbdc17d7f78216565"
+    },
+    {
+      "path": "templates/wechat-integration/game.json",
+      "bytes": 63,
+      "sha256": "f2040d390a83be5efb7da7501d21a0ae05a2e79feb0e243c3cebf16c214f849f"
+    },
+    {
+      "path": "templates/wechat-integration/preview-config.js",
+      "bytes": 290,
+      "sha256": "60bfd853bc2485ed20bf3f7fad7863342af6961c320fbb70b429e353cff49e56"
+    },
+    {
+      "path": "templates/wechat-integration/project.config.json",
+      "bytes": 332,
+      "sha256": "28d1f2cda6ce05b4e64b030116f8b7d89528dfda9dd3ac082349cb0cc94ca6c9"
+    },
+    {
+      "path": "tests/commerce.test.js",
+      "bytes": 6502,
+      "sha256": "a7af39933c6a5200647475f964f56fa606157a2ca41d36405854ddb1951e79f4"
+    },
+    {
+      "path": "tests/contract-hardening.test.js",
+      "bytes": 7402,
+      "sha256": "6044bb4b92882d8cbff655a95590d6bd7eae8b50844cc2288d9100d6bc293241"
+    },
+    {
+      "path": "tests/crosscheck.test.js",
+      "bytes": 4823,
+      "sha256": "8be156a9f385b61f5ceb9c7a689764f4a6021fd0d63788c8a03367db072371cb"
+    },
+    {
+      "path": "tests/engine.test.js",
+      "bytes": 9647,
+      "sha256": "40da908cef59d4b64721292cc2aa6c0160e196a8e9897b8e4cdcc1b008a5aac6"
+    },
+    {
+      "path": "tests/integration-controller.test.js",
+      "bytes": 3967,
+      "sha256": "69a655238bd8b7b745344a0d202ccbd1e85ae00012ac04b787864dd009b7c6e3"
+    },
+    {
+      "path": "tests/integration-provider.test.js",
+      "bytes": 4592,
+      "sha256": "91ceed0c8696d2adb58d92b306d6bce19b0841b08aae6c99eb70919c29503a9a"
+    },
+    {
+      "path": "tests/integration-round.test.js",
+      "bytes": 9719,
+      "sha256": "f5920005c1fa3e33c124ca16ef2cfc943264dcc9ff7fd81e9b6b20e3c5d76f54"
+    },
+    {
+      "path": "tests/integration-ui.test.js",
+      "bytes": 3102,
+      "sha256": "0270e6f58deeba239e0ec416d7a99f21cfdc18f8a7aabfac88a0f2b8e9551c0f"
+    },
+    {
+      "path": "tests/integration-wechat.test.js",
+      "bytes": 2119,
+      "sha256": "c830476f2edf3c6f900ba7781b2ab5dc3764bf8787626909b41ddfc46907bc2f"
+    },
+    {
+      "path": "tests/play-assists.test.js",
+      "bytes": 6308,
+      "sha256": "a9e0400aa23f7f2a45c30f3f9069e11fef1ed607bb051ab96fe9b8a42bfe61fa"
+    },
+    {
+      "path": "tests/play-hardening.test.js",
+      "bytes": 4183,
+      "sha256": "4d22d91bfe02e1bb9b3183cf7e07401d3f909bb2a0bd44faaa0d915f3096db4c"
+    },
+    {
+      "path": "tests/play-session.test.js",
+      "bytes": 7289,
+      "sha256": "f28ba7f4a5b56a3403da154d78bcd03bc212eb5e6612e44a23f16180686e6631"
+    },
+    {
+      "path": "tests/play-ui.test.js",
+      "bytes": 4082,
+      "sha256": "07507b4e2c8ef128ae637dd0a16811a57597f3cfeded00176555cce13e4ca5b1"
+    },
+    {
+      "path": "tests/play-wechat-bridge.test.js",
+      "bytes": 1844,
+      "sha256": "371059096742ecbace133990de91bbb7d3d6fdee84e475d3537f1ab3e244f910"
+    },
+    {
+      "path": "tests/probe.test.js",
+      "bytes": 1318,
+      "sha256": "2246db3bf437b8180c679001a52d492fd20fe837032a339db1b84042228000f9"
+    },
+    {
+      "path": "tests/product-build.test.js",
+      "bytes": 1718,
+      "sha256": "83b11006b3ef6f95dcfe8086674bcf327a094314c4ac930c764369bdf426d8ff"
+    },
+    {
+      "path": "tests/product-core.test.js",
+      "bytes": 6047,
+      "sha256": "2b6661369e1c3e7a8d2f3725a35dba0072fd863e9b713a835eae755af74a8bf7"
+    },
+    {
+      "path": "tests/product-delivery.test.js",
+      "bytes": 736,
+      "sha256": "3987885938a6fa310b56dc56199560c0fe1ed225899bcaef526fab8fa74f4278"
+    },
+    {
+      "path": "tests/product-native.test.js",
+      "bytes": 3499,
+      "sha256": "39daaa8b3cbadea97d31ab4b42610c4c2f853437290974ad7cf4e764fcf7eb2c"
+    },
+    {
+      "path": "tests/product-platform.test.js",
+      "bytes": 1620,
+      "sha256": "0cf07460c9078e9d96bb5d5a5bc94d3552958587913a996261aefc41423dd185"
+    },
+    {
+      "path": "tests/product-server.test.js",
+      "bytes": 2898,
+      "sha256": "4d4c1f6933e3c6cb35dfd7fd68fbe4a9df3aaac5241c8bb0d6e493b7a07292f8"
+    },
+    {
+      "path": "tests/product-social.test.js",
+      "bytes": 6645,
+      "sha256": "3eebd3e146f147b27deae3da574ca26d9e52e65260c3b1e20a240f7ff1317b8f"
+    },
+    {
+      "path": "tests/product-ui.test.js",
+      "bytes": 5544,
+      "sha256": "e7e9eff6c2e692046502cbf175367283417399dac9d477f72d673db75a230b98"
+    },
+    {
+      "path": "tests/release-pipeline.test.js",
+      "bytes": 2841,
+      "sha256": "e82faa9a085b2bf71e9ee9cb5e340e9ab5e57f9e134b5c801292dc3bfa6e2aff"
+    },
+    {
+      "path": "tests/review-regressions.test.js",
+      "bytes": 1261,
+      "sha256": "2e7444bb574219d50a8a39639e450e7833677f9dc82d4dcf577febb7c7bfc9e3"
+    },
+    {
+      "path": "tools/benchmark.js",
+      "bytes": 4383,
+      "sha256": "16ade455305d1f3d69fddeaed39f669ba15200796e888cb1649f24a953c497a6"
+    },
+    {
+      "path": "tools/browser_smoke.py",
+      "bytes": 4520,
+      "sha256": "835d3b3037750cce45dc87c2f2e59c2058d727f7fba360d0a5057954e856d475"
+    },
+    {
+      "path": "tools/build-commerce.js",
+      "bytes": 7059,
+      "sha256": "400224f854bdc7ebf0ce779ba371c513fde72a984479edf7194913798db0dee7"
+    },
+    {
+      "path": "tools/build-full.js",
+      "bytes": 7833,
+      "sha256": "f98e55dfe19dcc0df7987ea0d9f9acc31c694d09a0f6f31262d429ef4353d542"
+    },
+    {
+      "path": "tools/build-integration.js",
+      "bytes": 4266,
+      "sha256": "a896f71234f6a142077186d1cae20c33769a96bd18d2a933bee9562b9981cd96"
+    },
+    {
+      "path": "tools/build-play.js",
+      "bytes": 3587,
+      "sha256": "756bb50599692f2f99a12529f64e474b0f0a4edfee8183d24bf4b4917ceae765"
+    },
+    {
+      "path": "tools/build-probe.js",
+      "bytes": 2829,
+      "sha256": "e86d051c08689e5077372d3a106de01a32dca79217ed17be6994fa629bac36a7"
+    },
+    {
+      "path": "tools/check-full.js",
+      "bytes": 1411,
+      "sha256": "3e97a08abc7df99e0f08f6bbf2cc1ce5da54cb51744134f23c12aff9b751a6ba"
+    },
+    {
+      "path": "tools/check.js",
+      "bytes": 1754,
+      "sha256": "1e9f1aea213a0cf80ae33b383e7694b6115bad5a91243a53d9a298901c8745a9"
+    },
+    {
+      "path": "tools/commerce_browser_smoke.py",
+      "bytes": 4327,
+      "sha256": "441cc1ff5256e486fab53b1509deb0962f267a5b544d4071097456fbf87390fe"
+    },
+    {
+      "path": "tools/full-browser-qa.py",
+      "bytes": 7639,
+      "sha256": "bef3a48041b398a0a9438381c248fe569f1dbf91751da6b27fb3f3aa9eb1efaf"
+    },
+    {
+      "path": "tools/full-stress.js",
+      "bytes": 3878,
+      "sha256": "e3d6d1041fbef2879479f3ada5fa680d450b3d3b72fa9f3068e788100912f0dc"
+    },
+    {
+      "path": "tools/full_visual_first.py",
+      "bytes": 1532,
+      "sha256": "786c15d9f2756e47fe420f3ddf746a208e0110f461dd06c603288e38989907c4"
+    },
+    {
+      "path": "tools/generate.js",
+      "bytes": 1096,
+      "sha256": "4b4ffbd6ab5ec87149882c09fbea43ffa40b7a02d465305101b36d35bbf72def"
+    },
+    {
+      "path": "tools/integration_browser_smoke.py",
+      "bytes": 5234,
+      "sha256": "3af53178ab396ac3b31111e654eb008c937cf3c6daf090546824266be75c522b"
+    },
+    {
+      "path": "tools/play-stress.js",
+      "bytes": 5972,
+      "sha256": "0b6c28d4dc21da86fbcf457dfe37b7167a9da906c3a8b5306f082213a51ca5a7"
+    },
+    {
+      "path": "tools/play_browser_smoke.py",
+      "bytes": 7280,
+      "sha256": "9ef35c26e5d4516e05d67e730a25b3e7ddd5edb1bba6f12a63792b8a32b72554"
+    },
+    {
+      "path": "tools/release-gate-full.js",
+      "bytes": 429,
+      "sha256": "4e7f4eba35c0dbfe50738b79f97a350bbc9fdfc7434b95ac5bcddfddcfbbda01"
+    },
+    {
+      "path": "tools/review-stress.js",
+      "bytes": 3860,
+      "sha256": "ea81e19980a5aeb86ae13304c4a3d5717548ac03799bcb3f897dbb05366a25f8"
+    },
+    {
+      "path": "tools/run-tests.js",
+      "bytes": 733,
+      "sha256": "6bfbf4bd0cca1f75a04208ddc63d705435805e82fb3fbc5716b00f09e15f22aa"
+    },
+    {
+      "path": "tools/serve-integration.js",
+      "bytes": 862,
+      "sha256": "7a3096a317411183bdb9e171bc737c033ba37d5db3b32a2de7deb85ccba709ee"
+    },
+    {
+      "path": "tools/serve-play.js",
+      "bytes": 862,
+      "sha256": "63ff2d8d33687523f3aec8191cc3a8709b40275334cfaef8c80bc28eb8d397e1"
+    },
+    {
+      "path": "tools/start-full.js",
+      "bytes": 1072,
+      "sha256": "c245b7d73c435e6c5569eebe53c13a17fc9ef9780f22f9d60627c43d5e5736aa"
+    },
+    {
+      "path": "tools/verify-package.js",
+      "bytes": 1104,
+      "sha256": "b63ee72cd4c9ed2dfaf92b2f4df7c0d50d28c0944d147b9735b4b2e72696db01"
+    },
+    {
+      "path": "tools/verify.js",
+      "bytes": 443,
+      "sha256": "421cf823216dc7c8ab464cc235637eb689887054eb05f34684c681bda3129e7e"
+    },
+    {
+      "path": "ui/commerce/app.js",
+      "bytes": 9187,
+      "sha256": "355838649cc25c9d6877803b1ee37164a4afd95d61ece54466192da76155bafc"
+    },
+    {
+      "path": "ui/integration-app.js",
+      "bytes": 12190,
+      "sha256": "8a6ebe6e224383133dcc38bbe882e594185f8ea2653880829e595c7e2f4fc032"
+    },
+    {
+      "path": "ui/play-app.js",
+      "bytes": 8982,
+      "sha256": "a75a462cf6c682e1e5eec3ad5c759de2cf7abe84dcd870518b05c4bd51bc3fb6"
+    },
+    {
+      "path": "ui/product/app.js",
+      "bytes": 31136,
+      "sha256": "91f3f9a327d69755bdaf85875e6523e5d4cf16c62e07d14301c137ad926a7e99"
+    },
+    {
+      "path": "ui/product/art.js",
+      "bytes": 6241,
+      "sha256": "3f1768a66195b98ccb8d7ae754aeab62ea1f3a64a9da4168e55a6e57ade8650b"
+    },
+    {
+      "path": "wechat_full/assets/art/asset-manifest.json",
+      "bytes": 802,
+      "sha256": "58c0726ed6b40f881060871dd79c7ece1d097243cb66ba48017d0162636389b1"
+    },
+    {
+      "path": "wechat_full/assets/art/backgrounds/board.png",
+      "bytes": 7619,
+      "sha256": "5bfef6e6b1c99cb5242a94e370d048516f9f81c59a89ec1d18579015d0626753"
+    },
+    {
+      "path": "wechat_full/assets/art/backgrounds/home_region.png",
+      "bytes": 8470,
+      "sha256": "fc526e49b1fc43db6811b621af4d3097a015184c2e7698d09ffa4154a9486103"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_1.png",
+      "bytes": 21700,
+      "sha256": "5053e6d654caa332171d893c6f399e95a859f9892c15eeed80f4c36c506697e0"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_10.png",
+      "bytes": 22628,
+      "sha256": "8ad3c040039922979d398deb9a7c19dac4b89663c7eda00b059f6efeef252c81"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_11.png",
+      "bytes": 21860,
+      "sha256": "0b517962b4575da067542d11245d242b01282bb3169c3491f6a1e91eaacf1fa4"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_12.png",
+      "bytes": 23017,
+      "sha256": "afec3f17126f4e908f301438e5a1b04df8888b7224f21c1da4138533b1ba75ef"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_13.png",
+      "bytes": 22758,
+      "sha256": "c370b03fd77ffdc131f00888963b410f2edfc0530c8bb32fe935120c5e67e767"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_14.png",
+      "bytes": 22894,
+      "sha256": "35ff29228de0875f36ecbcd14e77341809d6697cb84ec107f64b8c83a3a35829"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_15.png",
+      "bytes": 22751,
+      "sha256": "73b3c33a4e207f99e9d53040d071e6298003f22d81b144f1a575d3513eb5843e"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_16.png",
+      "bytes": 22901,
+      "sha256": "2e823079b57847135df1881c954b777c21e7bd5e51a6ab84cb4a30729fa14116"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_2.png",
+      "bytes": 22198,
+      "sha256": "e2d730bf0aacde8aed6f00eca4e54ee55b06473bda764cb5b74dcd852f158a5f"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_3.png",
+      "bytes": 21947,
+      "sha256": "9f374029d7d4172267f902884e30a4ae033c87d9a106330a613ae2f45c10451f"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_4.png",
+      "bytes": 22219,
+      "sha256": "85ee70f98f2ab37ee28d237d28f89857ae7f5491f97d16599e76964cc03f04b6"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_5.png",
+      "bytes": 21925,
+      "sha256": "657b659294c7deeee3fcaa0919ac2878b7bb14dfdc5b8f46b9442a1aa117c838"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_6.png",
+      "bytes": 22091,
+      "sha256": "6413c04c93f36f264ad68f076994b5429bf848d9d6fe4ee6d2af31808c4dfca6"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_7.png",
+      "bytes": 21912,
+      "sha256": "53d8e6414396e934eb7a486447b4674fec42238b3bbe6ad2a6b2a0f87be0d5a2"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_8.png",
+      "bytes": 22035,
+      "sha256": "6e5066fad54f6b4273a810f3fadf836a2b8939dde50d315d9b92301397637dac"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_9.png",
+      "bytes": 22068,
+      "sha256": "a81e5ebd8b4a7385f57958018ddeaa2bc412e4d5dab20ff55fa4f7c3791e4c77"
+    },
+    {
+      "path": "wechat_full/assets/art/cards/block_bg.png",
+      "bytes": 4427,
+      "sha256": "5c7ba971843fa2d9c1f825faba794b2d52e911667cca340c89b5f8ff93bd33bc"
+    },
+    {
+      "path": "wechat_full/assets/art/effects/match.png",
+      "bytes": 7314,
+      "sha256": "c210bfabdd532b302617130dc4f09c85be758d3b279fa460e1a14ddfefbe5a4a"
+    },
+    {
+      "path": "wechat_full/assets/art/effects/shuffle.png",
+      "bytes": 7727,
+      "sha256": "009dfe6fe89f25c87786d8ad604abdef0ee1e6984439a1ccf97c8e8e258dd5fb"
+    },
+    {
+      "path": "wechat_full/assets/art/effects/win.png",
+      "bytes": 7604,
+      "sha256": "2cb2f64b55a8a9b49f4996aa0627692f67d2d7db93bfffdbf7d02343c1661f87"
+    },
+    {
+      "path": "wechat_full/assets/art/index/2022_social_skin_reference_urls.csv",
+      "bytes": 2451,
+      "sha256": "6e99c54b10d8e86d4369a87739b258930fe913f62422ae7ca4a628e674c3f83e"
+    },
+    {
+      "path": "wechat_full/assets/art/index/art_package_catalog_v09.csv",
+      "bytes": 24409,
+      "sha256": "81b276e0c5fde084ad8f0ebfb8ee991d6d318d64421682b5831557351bfa288d"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_missing_exact_v010.csv",
+      "bytes": 3935,
+      "sha256": "4c4c369f12b8173645ff4797629ea35abca6aa20317cf2ffd09d683d4dadd0b6"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_native_confirmed.csv",
+      "bytes": 1285,
+      "sha256": "e94b4f6778e7a3e7c77361c52705a9ec43122f9b918ac66f760bb88ffc1ebf65"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_native_confirmed_v09.csv",
+      "bytes": 1252,
+      "sha256": "5f4c239be78a090fbf198e8d8cad97d940783e7c4e51f1770bc777120c237d87"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_native_presence_v08.csv",
+      "bytes": 3832,
+      "sha256": "099634a7b12755247811027047ec4ba54adf033fa0379a6b4303a2b99f858af0"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_public_mirror_crosscheck_v010.csv",
+      "bytes": 1309,
+      "sha256": "65cfbc58d826db00d279234a3b9b9018d75635f96fa62d0da75ec4cbd1bbdec5"
+    },
+    {
+      "path": "wechat_full/assets/art/index/audio_resource_keys.csv",
+      "bytes": 2039,
+      "sha256": "2ba9b44f44fbb33f029365f0379e2e2d68855bb519387c0dce31ab4283e61f24"
+    },
+    {
+      "path": "wechat_full/assets/art/index/clothes_names_124_vs_128_v011.csv",
+      "bytes": 2242,
+      "sha256": "67a64a9e530053a731b4bfb2e32a753f18901c1970a9641001ca3e631163e96f"
+    },
+    {
+      "path": "wechat_full/assets/art/index/costume_pagination_v010.json",
+      "bytes": 532,
+      "sha256": "9381e83423646d7f33907814370a9782c2f1bee07e74230744d7c78b8162ba44"
+    },
+    {
+      "path": "wechat_full/assets/art/index/dj2_versions_by_build_v011.csv",
+      "bytes": 901,
+      "sha256": "d47f40861c91c837c1379ec40925dc370604cb95d0d0530fd346174ae49e36d9"
+    },
+    {
+      "path": "wechat_full/assets/art/index/gameplay_prop_spriteframes_v09.csv",
+      "bytes": 543,
+      "sha256": "2c92567b7619175c24ba96dd865b18e05c563bfb8e6cbebf8a6dd76925667b4a"
+    },
+    {
+      "path": "wechat_full/assets/art/index/historical_visual_sources_v09.csv",
+      "bytes": 1136,
+      "sha256": "f662dddef7693010b182e2ab079d7558854a781f2cacfe478ff5ad5cf75ded43"
+    },
+    {
+      "path": "wechat_full/assets/art/index/key_native_crosscheck_v08.csv",
+      "bytes": 1296,
+      "sha256": "1b7ff1235f3474c7d73f9ff459d0345a2a95506da7d94285f23ab96ef03bf45c"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_native_textures_v09.csv",
+      "bytes": 843,
+      "sha256": "bf93ac993d128500dcb69fb75cea7075f3bc07d9efc458e9d3269f39d58ca8dc"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_popup_symbols_v09.csv",
+      "bytes": 1534,
+      "sha256": "ee6fabad68694ebd03b8b91c72e3138c3fa2abfb1b81c9f32f7a11da47b9f117"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_ui_124_vs_128_v011.json",
+      "bytes": 897,
+      "sha256": "169423220c37f633cd6f37c140899089d96c40f293bcd5f9fb63b0656ad69b91"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_ui_spriteframes_full_v09.csv",
+      "bytes": 7235,
+      "sha256": "3622958847f59f011ade7466689d6a70c6f3da8c99890a53f214df1c1771fd1b"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_ui_spriteframes_key_v09.csv",
+      "bytes": 3976,
+      "sha256": "572d6a68f5d101192c71631564809d06128dd5c6c8587be5cbd27453570d1e0e"
+    },
+    {
+      "path": "wechat_full/assets/art/index/main_ui_texture_distribution_v09.csv",
+      "bytes": 522,
+      "sha256": "dc745381fa59e952f0bbfa447b9e54cb05f48a3cec4ff0c9b5f1935566078496"
+    },
+    {
+      "path": "wechat_full/assets/art/index/mirror_audit_v011.csv",
+      "bytes": 1238,
+      "sha256": "2724c289547f5adaa6e6b6c70f43d32f79e83623ece6612e9053357274b0f055"
+    },
+    {
+      "path": "wechat_full/assets/art/index/native_png_full_map_v09.csv",
+      "bytes": 2010,
+      "sha256": "c8169c03c27d6ec4cae8f11a8523c1bfd1b7e301f0f39cb0c0f7c1a053b78f65"
+    },
+    {
+      "path": "wechat_full/assets/art/index/official_cache_1_2_4_relevant_map_v011.csv",
+      "bytes": 2385,
+      "sha256": "67c50f61663fa0a018dab659cb5229101d672ee272c9705975554d3817d3cc93"
+    },
+    {
+      "path": "wechat_full/assets/art/index/qierkang_commit_resource_timeline_v011.csv",
+      "bytes": 1476,
+      "sha256": "a4e53ec460134f4a21224668103875bf6316a83247781a0b5d061af865f65eaf"
+    },
+    {
+      "path": "wechat_full/assets/art/index/rank_spriteframes_exact.csv",
+      "bytes": 1564,
+      "sha256": "5fbc098656d545b536407599a85e878c1218c8e5ceb95aca97a706f9fe8ada5d"
+    },
+    {
+      "path": "wechat_full/assets/art/index/reward_spriteframes_exact.csv",
+      "bytes": 1420,
+      "sha256": "57510e679c75f4938a6aec5775b7be162f5d755897841105ab4090dfdd4869df"
+    },
+    {
+      "path": "wechat_full/assets/art/index/sheep_clothes_48_v010.csv",
+      "bytes": 10315,
+      "sha256": "af3c023b3f6e92865ef398d4dc65ed09e4777dfcca0904134a92c20214b0fe5b"
+    },
+    {
+      "path": "wechat_full/assets/art/index/sheep_spine_catalog_v09.csv",
+      "bytes": 1968,
+      "sha256": "0730e6101f8c84e288eadd56387e85f4946b1e15ee8bdf1c4070e3fd014d442e"
+    },
+    {
+      "path": "wechat_full/assets/art/index/snapshot_crosscheck_v08.csv",
+      "bytes": 1115,
+      "sha256": "aca4963b8ff6fe50b900837137d5506e3a61f0b265dd88ac44d3ee22c5451012"
+    },
+    {
+      "path": "wechat_full/assets/art/index/source_receipt_v010.json",
+      "bytes": 6451,
+      "sha256": "165ed14c50ee9dd263b7edfe533f2ca522ec0027307795e7549506390ef57d66"
+    },
+    {
+      "path": "wechat_full/assets/art/index/source_receipt_v011.json",
+      "bytes": 1427,
+      "sha256": "af4d1b23812f27b5b80b58bc7f12b563d1562f33895a25e1981523aa29062de7"
+    },
+    {
+      "path": "wechat_full/assets/art/index/source_receipt_v09.json",
+      "bytes": 5371,
+      "sha256": "0ec09ae38634b99d4529f9be9ea63ffba2b5189706be7cb80ae04815d58d4ac7"
+    },
+    {
+      "path": "wechat_full/assets/art/index/topic_pair_map_v010.csv",
+      "bytes": 1025,
+      "sha256": "00a2d57e7ad791ab73dd0ac6116ee9e6745aef115bb2f4520c97bef051232fd3"
+    },
+    {
+      "path": "wechat_full/assets/art/index/topic_pk_friend_skin_v08.csv",
+      "bytes": 1756,
+      "sha256": "343953c08beda0276cc220bf0cdc0a585d77e868ab7d2d94cddb65ac63e0ab9c"
+    },
+    {
+      "path": "wechat_full/assets/art/index/version_timeline_2022_v011.csv",
+      "bytes": 695,
+      "sha256": "8960490d85a919da6ef3ce38f38b4dd47bc590aca8dc8f25906ff605ea44b0c8"
+    },
+    {
+      "path": "wechat_full/assets/art/index/wechat_1_1_4_open_data_v011.json",
+      "bytes": 851,
+      "sha256": "2ab1ef1f6d5429eca2afc876118b29a64686f7d95d079add2efbc2b1f3b5b5bc"
+    },
+    {
+      "path": "wechat_full/assets/art/research-manifest.json",
+      "bytes": 3281,
+      "sha256": "3c29f8c2563ddb0fa7c37790acd26c5e6ffd923eee2c6f2455133e2b713cce93"
+    },
+    {
+      "path": "wechat_full/assets/art/sheep/grave_default.png",
+      "bytes": 6453,
+      "sha256": "2aceedd39c1f3585243f6be684b7b4a6f5309de76aebbc720466a2838cc23893"
+    },
+    {
+      "path": "wechat_full/assets/art/sheep/sheep_default.png",
+      "bytes": 6819,
+      "sha256": "011d491197ca91e012eb837ba49c4427b936ebdfc622a7cce007d91e03507cc0"
+    },
+    {
+      "path": "wechat_full/assets/art/social/block_bg.png",
+      "bytes": 4427,
+      "sha256": "5c7ba971843fa2d9c1f825faba794b2d52e911667cca340c89b5f8ff93bd33bc"
+    },
+    {
+      "path": "wechat_full/assets/art/social/friend_feed_bg.png",
+      "bytes": 7886,
+      "sha256": "8d2eaa090fe59d9d654534666bdad5622efff21e424677200ace12ee5de117d1"
+    },
+    {
+      "path": "wechat_full/assets/art/social/honor_bg.png",
+      "bytes": 6889,
+      "sha256": "e5ae9e8c1e0f2ff05ec32653f575ddc1714bcb706f28afa779ebcbc045cd6c4f"
+    },
+    {
+      "path": "wechat_full/assets/art/social/rank_bg.png",
+      "bytes": 7523,
+      "sha256": "7d4cdfe3cf0cae386316ecefb5243f349ff9bfda66b5b4fd63177ad475347718"
+    },
+    {
+      "path": "wechat_full/assets/art/social/topic_pk_bg.png",
+      "bytes": 7432,
+      "sha256": "d3a9827ff4daea53db9df3180918cd4a8fb9a3306e850fe1169e524893301961"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/prop_cancel.png",
+      "bytes": 6396,
+      "sha256": "44329812ab6c38512109532984f0bf6052fa63e87b39c2124450eadaffc77e80"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/prop_life_remove.png",
+      "bytes": 7623,
+      "sha256": "b526a4962e314fc89b2868c22da64a72173a67677cceba91fa1c530b20d677ba"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/prop_random.png",
+      "bytes": 6414,
+      "sha256": "98dd2fea3a93ad798023f6d8640cc8a9e1f7f59937160f1e4711667ec2df6862"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/prop_remove.png",
+      "bytes": 6313,
+      "sha256": "55e81394f05f2fd47ed9b5a66e00f6feee987010f71afe2ff975bdd40168955b"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/reward_share.png",
+      "bytes": 6134,
+      "sha256": "23a71ff90d15654ac47f527e1b4b818f7b58883b5316e020f00afdf4524456a1"
+    },
+    {
+      "path": "wechat_full/assets/art/ui/reward_video.png",
+      "bytes": 6521,
+      "sha256": "66ba64f25fa38733904db0cf787f42b0d207b6f063d882c4f77cdc0d9d871bb6"
+    },
+    {
+      "path": "wechat_full/audio/clear.wav",
+      "bytes": 10628,
+      "sha256": "460947510944847bed3df0cc0729135e2b969b9b55c83161ed06eec588a140f1"
+    },
+    {
+      "path": "wechat_full/audio/click.wav",
+      "bytes": 2910,
+      "sha256": "71609dab3f62892a7c4ebf9b32317b17b7f2465ce24864436eeb06c88edf6c1d"
+    },
+    {
+      "path": "wechat_full/audio/fail.wav",
+      "bytes": 14596,
+      "sha256": "a313cc6838a61642202f3eda5a1557738bb189d6a71cfe7bc7118d30d3ca75e2"
+    },
+    {
+      "path": "wechat_full/audio/music.wav",
+      "bytes": 282284,
+      "sha256": "24cf85d9ea55cb3d061af1f973d6769ae8a4e45e225c292cf98e3fff13afad0c"
+    },
+    {
+      "path": "wechat_full/audio/win.wav",
+      "bytes": 22094,
+      "sha256": "40773d0c3c07151d400258f97439d8776844343139915b9b2d574e5ba4c621d4"
+    },
+    {
+      "path": "wechat_full/data/deals.js",
+      "bytes": 139697,
+      "sha256": "68780a0e5581c1f946e891bd57d33473a23f5a14e8c62656556e6deb650018d8"
+    },
+    {
+      "path": "wechat_full/game.js",
+      "bytes": 2444,
+      "sha256": "fbcdc4624f42b690e4d6cf87cea14e72eab35848cd3755976d76f6985966ee5b"
+    },
+    {
+      "path": "wechat_full/game.json",
+      "bytes": 85,
+      "sha256": "bb50949b55ad471cefa495b178bd0bb7ba0e2c9664e0f891907618df59a4794f"
+    },
+    {
+      "path": "wechat_full/open-data/index.js",
+      "bytes": 37,
+      "sha256": "23f812931aa5383a2eab47b36cc5cfd39d3d69341351ab648adcff5d7842bc50"
+    },
+    {
+      "path": "wechat_full/open-data/renderer.js",
+      "bytes": 2602,
+      "sha256": "e5cbf099e87a6d0837cfd93a4e9775ef39a834ba24d2636fc5f6e5e53951cb02"
+    },
+    {
+      "path": "wechat_full/preview-config.js",
+      "bytes": 180,
+      "sha256": "dc0340507546d90e262bf6022d69f422755d79270ed86fade792877b4e1ec2e2"
+    },
+    {
+      "path": "wechat_full/project.config.json",
+      "bytes": 251,
+      "sha256": "acdf20395b773e84e3b5d5ff10ea2f8d7847e426e9f5fa4f18fcf8573ef85a0a"
+    },
+    {
+      "path": "wechat_full/src/content-hash.js",
+      "bytes": 3689,
+      "sha256": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df"
+    },
+    {
+      "path": "wechat_full/src/integration/wechat-provider.js",
+      "bytes": 3098,
+      "sha256": "9227c03cfe68454826abf83a40834468b499f00a4183de5f067c61b0308eeff0"
+    },
+    {
+      "path": "wechat_full/src/layout.js",
+      "bytes": 2295,
+      "sha256": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f"
+    },
+    {
+      "path": "wechat_full/src/play/profile.js",
+      "bytes": 562,
+      "sha256": "600d85f73781f54894a00a2ce5b9d594def5f09aa05013d547d4bf28c84d2174"
+    },
+    {
+      "path": "wechat_full/src/play/shuffle.js",
+      "bytes": 818,
+      "sha256": "3aa9cd690625bf87263d397a5c04255366159f5b495a3b18f9f5d07085ca8cab"
+    },
+    {
+      "path": "wechat_full/src/product/art-assets.js",
+      "bytes": 506,
+      "sha256": "938812ce37e7af2d762fe698f6250a31c9c9ae7fb71cfe10d89324fe3c38c780"
+    },
+    {
+      "path": "wechat_full/src/product/board.js",
+      "bytes": 5820,
+      "sha256": "8b936a10690025899a1c705457fe56c247bf8c3ddab4af20441894575748616e"
+    },
+    {
+      "path": "wechat_full/src/product/catalog.js",
+      "bytes": 1777,
+      "sha256": "b87522c7ebd000a86ec0ae357ef18fde417e912093a5d80e39996179b0f6540d"
+    },
+    {
+      "path": "wechat_full/src/product/client.js",
+      "bytes": 987,
+      "sha256": "46dfef6227f0ae51e4e66999aeba5ef8339907d2427db1ed2c6b7f546af9e883"
+    },
+    {
+      "path": "wechat_full/src/product/clock.js",
+      "bytes": 691,
+      "sha256": "e1758a67d1a1051b66ed505b50a8beecb50ca2d61bef9277055ec48022e97939"
+    },
+    {
+      "path": "wechat_full/src/product/controller.js",
+      "bytes": 2993,
+      "sha256": "15abfb12ff7d870be66c1b428b6bfef0b421a04c115f4bf4454cec6f8e273889"
+    },
+    {
+      "path": "wechat_full/src/product/effects.js",
+      "bytes": 1221,
+      "sha256": "89d6024c0532db91ddace0b1bde213b86abe24fe76d5445e4ca51a5a8f1ac723"
+    },
+    {
+      "path": "wechat_full/src/product/round.js",
+      "bytes": 9369,
+      "sha256": "c16e9d65c3c7cef097b11258a66f1d6606b6c465163857c2f55c9e7dae104bd1"
+    },
+    {
+      "path": "wechat_full/src/product/social.js",
+      "bytes": 7538,
+      "sha256": "2c247c74680862f4c9ce17e89c79fc5cd5b858fc5483e4bbfcf5a52df6023466"
+    },
+    {
+      "path": "wechat_full/src/product/wechat.js",
+      "bytes": 1846,
+      "sha256": "515f87cf6d9577872af49e8fd2f3ba99c80c717b41f05c17ecdfd573fe2f544e"
+    },
+    {
+      "path": "wechat_full/src/runtime.js",
+      "bytes": 4330,
+      "sha256": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd"
+    },
+    {
+      "path": "wechat_full/src/schema.js",
+      "bytes": 2483,
+      "sha256": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699"
+    },
+    {
+      "path": "wechat_full/ui/product/app.js",
+      "bytes": 31136,
+      "sha256": "91f3f9a327d69755bdaf85875e6523e5d4cf16c62e07d14301c137ad926a7e99"
+    },
+    {
+      "path": "wechat_full/ui/product/art.js",
+      "bytes": 6241,
+      "sha256": "3f1768a66195b98ccb8d7ae754aeab62ea1f3a64a9da4168e55a6e57ade8650b"
+    },
+    {
+      "path": "wechat_game/data/deal.js",
+      "bytes": 24713,
+      "sha256": "ea74ea3aa78c22a4efaca7dc612d956a886521ca7dde77e59e48c1785342cb6a"
+    },
+    {
+      "path": "wechat_game/game.js",
+      "bytes": 779,
+      "sha256": "85bd2c9aacf636faa5c3c1bb12fd9167cd6d17647c165d4a236f714e3f26f0b6"
+    },
+    {
+      "path": "wechat_game/game.json",
+      "bytes": 55,
+      "sha256": "7c889e358a3ea4aa01f89ab8e811d922589e70fc419d25d8268248d10c2e4458"
+    },
+    {
+      "path": "wechat_game/project.config.json",
+      "bytes": 267,
+      "sha256": "f0080dcda4a90861756b7a4295ae9116ed5e23b1568f184afc71d1809dfb8f6c"
+    },
+    {
+      "path": "wechat_game/src/content-hash.js",
+      "bytes": 3689,
+      "sha256": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df"
+    },
+    {
+      "path": "wechat_game/src/layout.js",
+      "bytes": 2295,
+      "sha256": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f"
+    },
+    {
+      "path": "wechat_game/src/play/board.js",
+      "bytes": 5605,
+      "sha256": "f37d5a6c85920e100b7396013963651ed262a4a00554eeaf1574751fd3e5dff1"
+    },
+    {
+      "path": "wechat_game/src/play/profile.js",
+      "bytes": 562,
+      "sha256": "600d85f73781f54894a00a2ce5b9d594def5f09aa05013d547d4bf28c84d2174"
+    },
+    {
+      "path": "wechat_game/src/play/session.js",
+      "bytes": 6998,
+      "sha256": "178cb319605ac859fef197f38e5efb71cf1f3e05138e7632603f5516decf7d33"
+    },
+    {
+      "path": "wechat_game/src/play/shuffle.js",
+      "bytes": 818,
+      "sha256": "3aa9cd690625bf87263d397a5c04255366159f5b495a3b18f9f5d07085ca8cab"
+    },
+    {
+      "path": "wechat_game/src/runtime.js",
+      "bytes": 4330,
+      "sha256": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd"
+    },
+    {
+      "path": "wechat_game/src/schema.js",
+      "bytes": 2483,
+      "sha256": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699"
+    },
+    {
+      "path": "wechat_game/ui/play-app.js",
+      "bytes": 8982,
+      "sha256": "a75a462cf6c682e1e5eec3ad5c759de2cf7abe84dcd870518b05c4bd51bc3fb6"
+    },
+    {
+      "path": "wechat_integration/data/deal.js",
+      "bytes": 24713,
+      "sha256": "ea74ea3aa78c22a4efaca7dc612d956a886521ca7dde77e59e48c1785342cb6a"
+    },
+    {
+      "path": "wechat_integration/game.js",
+      "bytes": 1247,
+      "sha256": "170bc07adae23da181e2e0f8efa9979be17b9ceaa4e7a6fcbdc17d7f78216565"
+    },
+    {
+      "path": "wechat_integration/game.json",
+      "bytes": 63,
+      "sha256": "f2040d390a83be5efb7da7501d21a0ae05a2e79feb0e243c3cebf16c214f849f"
+    },
+    {
+      "path": "wechat_integration/preview-config.js",
+      "bytes": 290,
+      "sha256": "60bfd853bc2485ed20bf3f7fad7863342af6961c320fbb70b429e353cff49e56"
+    },
+    {
+      "path": "wechat_integration/project.config.json",
+      "bytes": 332,
+      "sha256": "28d1f2cda6ce05b4e64b030116f8b7d89528dfda9dd3ac082349cb0cc94ca6c9"
+    },
+    {
+      "path": "wechat_integration/src/content-hash.js",
+      "bytes": 3689,
+      "sha256": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df"
+    },
+    {
+      "path": "wechat_integration/src/integration/controller.js",
+      "bytes": 2815,
+      "sha256": "8f2ba53a8f16e68a2947fd7c633c8ddca23fd38edd9c5a10276fb0bc35eb64d0"
+    },
+    {
+      "path": "wechat_integration/src/integration/round.js",
+      "bytes": 9006,
+      "sha256": "cda4c5ce6ce0216f8c96827a23cbccd156646626b53b1df348b8da7c84e9cd33"
+    },
+    {
+      "path": "wechat_integration/src/integration/wechat-provider.js",
+      "bytes": 3098,
+      "sha256": "9227c03cfe68454826abf83a40834468b499f00a4183de5f067c61b0308eeff0"
+    },
+    {
+      "path": "wechat_integration/src/layout.js",
+      "bytes": 2295,
+      "sha256": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f"
+    },
+    {
+      "path": "wechat_integration/src/play/board.js",
+      "bytes": 5605,
+      "sha256": "f37d5a6c85920e100b7396013963651ed262a4a00554eeaf1574751fd3e5dff1"
+    },
+    {
+      "path": "wechat_integration/src/play/profile.js",
+      "bytes": 562,
+      "sha256": "600d85f73781f54894a00a2ce5b9d594def5f09aa05013d547d4bf28c84d2174"
+    },
+    {
+      "path": "wechat_integration/src/play/session.js",
+      "bytes": 6998,
+      "sha256": "178cb319605ac859fef197f38e5efb71cf1f3e05138e7632603f5516decf7d33"
+    },
+    {
+      "path": "wechat_integration/src/play/shuffle.js",
+      "bytes": 818,
+      "sha256": "3aa9cd690625bf87263d397a5c04255366159f5b495a3b18f9f5d07085ca8cab"
+    },
+    {
+      "path": "wechat_integration/src/runtime.js",
+      "bytes": 4330,
+      "sha256": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd"
+    },
+    {
+      "path": "wechat_integration/src/schema.js",
+      "bytes": 2483,
+      "sha256": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699"
+    },
+    {
+      "path": "wechat_integration/ui/integration-app.js",
+      "bytes": 12190,
+      "sha256": "8a6ebe6e224383133dcc38bbe882e594185f8ea2653880829e595c7e2f4fc032"
+    },
+    {
+      "path": "wechat_probe/app.js",
+      "bytes": 4194,
+      "sha256": "ed5b99c6bee9407f3fb0b55a3e61a056676590025f5460093ad462bf016b33dc"
+    },
+    {
+      "path": "wechat_probe/data/sample.js",
+      "bytes": 26999,
+      "sha256": "49f9ae35319204ba14d6d3c239817b55c468e6cda28b58d630d86df35d34279d"
+    },
+    {
+      "path": "wechat_probe/engine/content-hash.js",
+      "bytes": 3689,
+      "sha256": "d473a06b286f93180f337c0f921b434506516b483b766b714a219b6ca42420df"
+    },
+    {
+      "path": "wechat_probe/engine/layout.js",
+      "bytes": 2295,
+      "sha256": "48e3691d066fa39db1332f837eb822fbbc77847b5e9776fcdadbad42afa7173f"
+    },
+    {
+      "path": "wechat_probe/engine/runtime.js",
+      "bytes": 4330,
+      "sha256": "0a31420b98c593b519e3c5b6050036b04b518862d6a02b51bff6c8c0fc3644dd"
+    },
+    {
+      "path": "wechat_probe/engine/schema.js",
+      "bytes": 2483,
+      "sha256": "861aee5039e695d1b81c1b2849afe7c6a63028742ce99e296f4cdddb6f975699"
+    },
+    {
+      "path": "wechat_probe/game.js",
+      "bytes": 736,
+      "sha256": "52175ead5474546c0c8e7836820b3d623a5635eb3d55aff429d35b4276991e5b"
+    },
+    {
+      "path": "wechat_probe/game.json",
+      "bytes": 55,
+      "sha256": "7c889e358a3ea4aa01f89ab8e811d922589e70fc419d25d8268248d10c2e4458"
+    },
+    {
+      "path": "wechat_probe/project.config.json",
+      "bytes": 256,
+      "sha256": "c952488721d8520b14a3dd1794ac0fb1e550c9f41f928642bd52476bf76a3ddf"
+    },
+    {
+      "path": "一键验收.cmd",
+      "bytes": 341,
+      "sha256": "408c9ab131ee352b248d0db5220f5256e4a6bdff09d5119b61a9c54e34899509"
+    },
+    {
+      "path": "全模块游戏_双击打开.html",
+      "bytes": 675336,
+      "sha256": "dcb6f370d3abf0f71d7df0ab6d011dea71de4aa7a0c0d7ceea7d0fc81adcc32e"
+    },
+    {
+      "path": "启动全模块预览.cmd",
+      "bytes": 298,
+      "sha256": "50c3d2c7c9133d6f3060b30c4dc17b6c97d250c3be0a9b7b07ce414ac65b69f0"
+    },
+    {
+      "path": "启动整合版预览.cmd",
+      "bytes": 246,
+      "sha256": "adb44553305c7fb85aaad16f351d3c4d747d6df46c8d2358dccd33eccdd911d3"
+    },
+    {
+      "path": "商业化流程演示_双击打开.html",
+      "bytes": 25539,
+      "sha256": "1a5e441f649b2efb73f5130e5ac0813bfded50a574e49907f6c160a1d2bbe364"
+    },
+    {
+      "path": "商业化验收.cmd",
+      "bytes": 303,
+      "sha256": "67e7f1da8d2e02234f0493371f69f2a556e7aa5e7fdc150892975f1d6e9a169e"
+    },
+    {
+      "path": "完整压力验收.cmd",
+      "bytes": 348,
+      "sha256": "dd065e0547cfb9ec1d21471e6935b35185423ef219eaca23b20f32d5c0952d7f"
+    },
+    {
+      "path": "对局与领取整合_双击打开.html",
+      "bytes": 81641,
+      "sha256": "ba66c5c5aca76749a33b32e937300fbc94bcb05c9d9bf7abca0eae26c7c2dc52"
+    },
+    {
+      "path": "本地网页预览.cmd",
+      "bytes": 76,
+      "sha256": "54e079ccfdfac7396767c8eb798aceda44c0c9be73850ec2ce5880ef349d1c6f"
+    },
+    {
+      "path": "生成关卡.cmd",
+      "bytes": 377,
+      "sha256": "d95bfe4dad4df7fb708af01ec2e19bcf8938adfe2a4b72f253b60ac0fc8ada7b"
+    },
+    {
+      "path": "算法联调_双击打开.html",
+      "bytes": 45481,
+      "sha256": "9a5e69b4e90813c82bfc6647a59c5860fa39063bc5d3b0c37f18166265ac2f53"
+    },
+    {
+      "path": "美术资源落位_先读我.md",
+      "bytes": 1841,
+      "sha256": "74230ebb0e4b86396248b2b4073417663d527c986d87b17b56eac4107552c8f2"
+    },
+    {
+      "path": "运行测试.cmd",
+      "bytes": 345,
+      "sha256": "9991e85f70a9e9e95af4e5cf52670f60e20e6643452d1ef69e0b067e9da2cba0"
+    },
+    {
+      "path": "道具与对局联调_双击打开.html",
+      "bytes": 62984,
+      "sha256": "3e46ef1a70a453cf1b45a3a0515283e9475b5a7cd8b1f1c668e6a7e44370e1c5"
+    },
+    {
+      "path": "验收全模块.cmd",
+      "bytes": 298,
+      "sha256": "faa2a9f806425213c291e50564677b98115d72caab1712e4cec121c36ae3dbea"
+    }
+  ]
+}
