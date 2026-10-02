@@ -1,0 +1,12 @@
+﻿resource,source_url,local_cache_path,cached_at_utc
+resources config,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/config.fea9f.json,gamecaches/resources/16638477120080.json,2022-09-22T11:55:12.008Z
+main config,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/main/config.ac8a6.json,gamecaches/main/16638477125131.json,2022-09-22T11:55:12.513Z
+main packed import,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/main/import/0f/0fb0b76e8.77c04.json,gamecaches/main/16638477130142.json,2022-09-22T11:55:13.014Z
+resources base config,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/import/90/9020bbe7-5f82-4103-8834-0e5480b8745c.25ed8.json,gamecaches/resources/16638477145265.json,2022-09-22T11:55:14.526Z
+clickBlock mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/77/7707a34c-69ce-4387-bb34-2aeb87bfc465.05b18.mp3,gamecaches/resources/166384774385063.mp3,2022-09-22T11:55:43.850Z
+game_cycle mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/a4/a4fcfcfb-d829-4d13-9d2d-2d6c1ea5a5cd.1d4ee.mp3,gamecaches/resources/166384774536066.mp3,2022-09-22T11:55:45.360Z
+main_music mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/af/af08da0b-da84-4f1a-b262-7358e067110c.5b35e.mp3,gamecaches/resources/166384774586567.mp3,2022-09-22T11:55:45.865Z
+transitFont mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/fc/fc856c7d-2af0-40bf-a4a4-ccb026dc3550.1ce42.mp3,gamecaches/resources/166384774687269.mp3,2022-09-22T11:55:46.872Z
+game_begin mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/ba/baf4b4e8-d38c-453a-9129-fecd42dded85.6557b.mp3,gamecaches/resources/166384774939174.mp3,2022-09-22T11:55:49.391Z
+levelInit mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/b5/b5383548-6622-497b-a127-560c50380573.a8ef0.mp3,gamecaches/resources/166384775040076.mp3,2022-09-22T11:55:50.400Z
+blockRandom mp3,https://cat-match-static.easygame2021.com/catMatch/sheep_wx_1_2_4/remote/resources/native/a4/a4bdaba7-b4bc-41e3-871d-b76b2b0fcd25.f1e7e.mp3,gamecaches/resources/166384775392883.mp3,2022-09-22T11:55:53.928Z

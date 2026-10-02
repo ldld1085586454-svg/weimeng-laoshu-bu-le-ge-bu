@@ -1,0 +1,15 @@
+resource_key_or_role,native_path,width,height,size_bytes,blob_sha,evidence
+sheep/DJ1,assets/resources/native/07/075c3ee7-0a1b-4cfc-bfa9-13fd64c058f3.cd29d.png,,,116394,705b8181fded143276fd02e81d6dfb97c0d4fe08,C
+sheep/UI,assets/resources/native/08/08518b16-715f-42a7-8882-0083786ea957.353d5.png,,,112782,f3ad306938f9b76bab925e16d532326b3efbb24e,C
+rewardIcon texture atlas,assets/resources/native/12/128b0bdde.4bc94.png,345,1022,188946,cb16e5bff20fa2672051ca9b6e495b96f39f3f77,C
+rank texture atlas,assets/resources/native/15/159df0053.c126a.png,277,1018,39508,c85203eba5b06dd0b84b848d4c755db2a924c420,C
+block texture atlas,assets/resources/native/1b/1bb1ee4cb.e456b.png,1011,1017,534795,93763d79c40b8e85e9e7d6de4922d8ece33dc835,C
+sheep/Finish1,assets/resources/native/40/40962d94-4e79-4582-b35f-28688210343e.6943b.png,314,314,27928,5892043d22ad1804f575bcadaa9af18a25548d5a,C
+sheep/BG,assets/resources/native/46/46043294-9105-48ab-a8f5-bca2849212fd.51dee.png,,,127981,e85a904c70692dda02f4618d39f221e4158577b4,C
+sheep/Dead1,assets/resources/native/77/77d900af-7d1b-4833-830a-aa834d69ac9d.5f033.png,519,519,110297,c6da15273c1f9e39d80f85275508c4ab9b887c72,C
+sheep/Sheeps,assets/resources/native/86/8676e8a2-739e-45c5-b84b-2865fff6dfff.2c094.png,1047,1047,582890,531530e3d47660086f247f1e9a66eb362e71c4b4,C
+sheep/Alpaca02,assets/resources/native/9f/9fb506f5-de79-4fc9-b915-572251b7084f.7eb59.png,,,36389,ecca6d6a277536f61ed538a29deb79f4a24c08ba,C
+sheep/Turnarounds,assets/resources/native/a4/a4701819-0b95-4e3e-b415-cd6e2a40323f.1eaea.png,,,11210,1771d98b7f89ef18f76e70824783ae46446b5e60,C
+sheep/ThemeSheeps,assets/resources/native/ca/ca9ead85-a02b-4b4d-bdf4-80614045b1e7.3ef61.png,697,697,241415,5261e13cb7a1b77623ed53e6aa0f8862597ebaca,C
+sheep/Theme,assets/resources/native/e8/e80a2e15-d5b2-4ce2-8fe2-e87254e4bd17.642e9.png,,,439562,50b8541d4b04dda44710b76fe6a0e1082524b5f3,C
+sheep/Alpaca01,assets/resources/native/f6/f64446d0-006b-4bc3-97ea-8e705ce9824b.32f99.png,,,33411,054dffb14a66341b9450093c84034ac2d45a7547,C

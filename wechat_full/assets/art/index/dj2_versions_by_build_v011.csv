@@ -1,0 +1,9 @@
+﻿build,type,uuid,import_version,native_version,status
+WeChat 1.2.4,cc.Texture2D,486c2143-f6a0-4d1a-aa83-9086fd6bc1f4,,b0dba,not cached in captured session
+WeChat 1.2.4,cc.Asset,a526190d-0a6f-450b-9ab7-e02db3f9f954,b76b9,21d18,not cached in captured session
+WeChat 1.2.4,sp.SkeletonData,11f23bda-aa5a-4a31-9d93-5582d8ba4266,259c9,,not cached in captured session
+WeChat 1.2.4,cc.SpriteFrame,61d4f0ae-a764-4986-a3d1-90ea11ae09cb,035e4,,not cached in captured session
+H5/community 1.2.8,cc.Texture2D,486c2143-f6a0-4d1a-aa83-9086fd6bc1f4,,f4ded,missing from qierkang upload
+H5/community 1.2.8,cc.Asset,a526190d-0a6f-450b-9ab7-e02db3f9f954,b76b9,467f8,missing from qierkang upload
+H5/community 1.2.8,sp.SkeletonData,11f23bda-aa5a-4a31-9d93-5582d8ba4266,67b70,,missing from qierkang upload
+H5/community 1.2.8,cc.SpriteFrame,61d4f0ae-a764-4986-a3d1-90ea11ae09cb,c5ccd,,missing from qierkang upload

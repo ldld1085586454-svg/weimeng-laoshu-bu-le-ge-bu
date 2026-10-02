@@ -1,0 +1,9 @@
+metric,qierkang_snapshot,bkkkker_snapshot,result,notes
+commit_time,2022-09-15T13:55:24Z,2022-09-16T10:28:41Z,ordered,"GitHub commit timestamps; both are community snapshots, not official build provenance"
+commit_sha,11fe37888add6f44f688f798ede3c6fd612eedc5,bd57224f372ca7809d80c57305f35cf27eb631e7,different,"Independent repository commits"
+resources_config_sha,69c58bdb3976b601755512c9b472e4f66f174848,4281b88f30e3be751477fc498377b0578300d68c,different,"Different JSON formatting/serialization"
+resources_config_canonical,,,equal,"Parsed JSON objects are canonically equal: paths/uuids/versions all match"
+all_overlapping_blob_paths,115,115,93_same_sha,"22 overlapping blobs differ, mostly formatting/minification or unrelated main bundle"
+resources_native_overlap,22,22,21_same_sha,"Only one overlapping resources/native binary differs"
+resources_native_difference,,,assets/resources/native/46/46043294-9105-48ab-a8f5-bca2849212fd.51dee.png,"Maps to sheep/BG native texture"
+resources_import_overlap,57,57,47_same_sha,"Several JSONs differ only in formatting/serialization; compare semantics before interpreting"

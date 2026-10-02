@@ -1,0 +1,6 @@
+﻿texture_alias,native_path,dimensions,spriteframe_count,role
+14280553b,assets/main/native/14/14280553b.cc313.png,789x2048,65,主UI/道具/按钮/设置/排行榜框
+159878452,assets/main/native/15/159878452.961d9.png,635x1592,24,话题PK专用UI
+1f3fbc33c,assets/main/native/1f/1f3fbc33c.9933b.png,126x654,20,coins数字序列
+1b5f49aa9,assets/main/native/1b/1b5f49aa9.8f1f9.png,501x940,17,朋友圈/排行榜/弹幕/定位入口图标
+standalone,多张独立纹理,variable,8,羊/星标/默认panel等独立SpriteFrame

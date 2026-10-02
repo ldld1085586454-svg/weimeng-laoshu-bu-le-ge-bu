@@ -1,0 +1,9 @@
+resource_key,native_path,sha,size_bytes,status
+clickBlock,assets/resources/native/77/7707a34c-69ce-4387-bb34-2aeb87bfc465.05b18.mp3,64da1870f478464648b5c193f26c6e2d59389d6f,13688,confirmed_in_repo_tree
+blockRandom,assets/resources/native/a4/a4bdaba7-b4bc-41e3-871d-b76b2b0fcd25.f1e7e.mp3,e7f2ca9a0abfce329edc1ff4f8f4e10e6e8d2cb3,62429,confirmed_in_repo_tree
+game_cycle,assets/resources/native/a4/a4fcfcfb-d829-4d13-9d2d-2d6c1ea5a5cd.1d4ee.mp3,87a16407d64d233f0eab3c2ac05e52b7cd6fe60a,637154,confirmed_in_repo_tree
+main_music,assets/resources/native/af/af08da0b-da84-4f1a-b262-7358e067110c.5b35e.mp3,5d9daa244506d5a73af64db66b2342ca5fc9ee5d,569170,confirmed_in_repo_tree
+levelInit,assets/resources/native/b5/b5383548-6622-497b-a127-560c50380573.a8ef0.mp3,d87f388d7be50f165fcbf3b872efaabc358fcbe5,18476,confirmed_in_repo_tree
+game_begin,assets/resources/native/ba/baf4b4e8-d38c-453a-9129-fecd42dded85.6557b.mp3,7db6ee04c6eada636d8a87294d7133318ccb80d6,980202,confirmed_in_repo_tree
+crush,assets/resources/native/f2/f24cd81f-d3a6-4f36-ae7c-4e4b769c856c.1acc0.mp3,022d509d1429db763fcca13e0b6b053e94ebf6b8,8834,confirmed_in_repo_tree
+transitFont,assets/resources/native/fc/fc856c7d-2af0-40bf-a4a4-ccb026dc3550.1ce42.mp3,496118135a62e90718d27a7d3130b37a42ad8995,10988,confirmed_in_repo_tree
