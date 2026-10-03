@@ -1,0 +1,45 @@
+extends RefCounted
+
+func run(a: RefCounted) -> bool:
+	var tree: SceneTree = Engine.get_main_loop()
+	var view = load("res://scenes/main.tscn").instantiate()
+	var store = preload("res://tests/helpers/service_memory_store.gd").new()
+	view.router = preload("res://ui/app_router.gd").new()
+	view.router.configure(store, null, Callable(), Callable(), "mascot-ui-tests")
+	tree.root.add_child(view)
+	await tree.process_frame
+	if not view.get("mascot") is Control:
+		a.truth(false, "home uses live character rig")
+		view.free()
+		return true
+	a.truth(view.mascot.visible, "home character is visible")
+	a.equal(view.honor_mascots.size(), 3, "three distinct honor appearances")
+	a.equal(view.honor_mascots[0].role, "first", "first honor role bound")
+	a.equal(view.honor_mascots[1].role, "king", "king honor role bound")
+	a.equal(view.honor_mascots[2].role, "fast", "fast honor role bound")
+	view._action("mascot-tap")
+	a.equal(view.mascot.cue, "tap", "home tap animates character")
+	a.equal(view.model.screen, "home", "character tap never starts or mutates game")
+	view.router.open_settings()
+	a.truth(view.modal_view.mascot.has_method("play"), "modal shares live character rig")
+	view.router.action("setting-reducedMotion")
+	a.truth(view.mascot.reduced_motion and view.modal_view.mascot.reduced_motion, "preference immediately reaches home and modal")
+	view.router.action("close")
+	view.router.action("start")
+	a.truth(view.mascot.visible, "small board character enables play feedback")
+	for n in range(12):
+		var legal: Array = view.hit_tiles.filter(func(hit): return hit.enabled)
+		view.router.pick(legal[0].id)
+		view.director.advance(1000)
+	a.equal(view.model.state.board.status, "WON", "actual tutorial still wins")
+	a.equal(view.modal_view.mascot.pose().expression, "win", "actual tutorial outcome reaches character")
+	a.truth(view.modal_view.mascot.reduced_motion, "terminal modal respects reduced motion")
+	view.modal_view.mascot.set_reduced_motion(false)
+	view.modal_view.mascot.play("win")
+	view.modal_view.mascot.advance(.24)
+	view._cancel_visual("resize")
+	a.equal(view.modal_view.mascot.cue, "idle", "resize also snaps terminal modal character")
+	a.equal(view.modal_view.mascot.pose().expression, "win", "snapping preserves the committed terminal expression")
+	a.equal(view.mascot.cue, "idle", "resize clears transient character movement")
+	view.free()
+	return true

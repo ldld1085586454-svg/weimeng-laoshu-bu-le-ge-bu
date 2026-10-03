@@ -1,0 +1,86 @@
+extends RefCounted
+
+func run(a: RefCounted) -> bool:
+	if not FileAccess.file_exists("res://presentation/audio_director.gd"):
+		a.truth(false, "audio director implementation exists")
+		return true
+	var script = load("res://presentation/audio_director.gd")
+	if script == null or not script.can_instantiate():
+		a.truth(false, "audio director implementation loads")
+		return true
+	var audio = script.new()
+	var tree: SceneTree = Engine.get_main_loop()
+	tree.root.add_child(audio)
+	var prefs: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/default-prefs.json"))
+	var heard: Array[String] = []
+	audio.cue_started.connect(func(cue: String): heard.append(cue))
+	audio.apply_preferences(prefs)
+	audio.set_context("home", "", true)
+	var music: AudioStreamPlayer = audio.get_node("Music")
+	a.truth(music.stream is AudioStreamWAV, "actual imported music WAV loaded")
+	a.equal(music.stream.loop_mode, AudioStreamWAV.LOOP_FORWARD, "one music track loops")
+	a.truth(music.stream.loop_end > music.stream.loop_begin, "music loop covers a nonempty sample range")
+	a.truth(music.playing and not music.stream_paused, "visible scene starts music")
+	var music_id := music.get_instance_id()
+	var playback_id := music.get_stream_playback().get_instance_id()
+	for scene in ["home", "play", "home", "play"]:
+		audio.set_context(scene, "", true)
+		a.equal(audio.get_node("Music").get_instance_id(), music_id, "context changes reuse the single music player")
+		a.equal(audio.get_child_count(), 5, "context changes do not accumulate audio tracks")
+		a.equal(music.get_stream_playback().get_instance_id(), playback_id, "context cycling preserves existing music playback")
+	for cue in ["click", "clear", "win", "fail"]:
+		a.truth(audio.get_node(cue.capitalize()).stream is AudioStreamWAV, "actual " + cue + " WAV loaded")
+		audio.play_cue(cue)
+	a.equal(heard, ["click", "clear", "win", "fail"], "committed cue ordering is preserved")
+	a.truth(audio.play_event("click", "round-a:8:0"), "new committed event produces cue")
+	a.equal(audio.play_event("click", "round-a:8:0"), false, "redelivered committed event is silent")
+	a.truth(audio.play_event("click", "round-a:10:0"), "same tile in later turn can produce a new cue")
+	a.equal(heard.size(), 6, "duplicate events do not add sound")
+	a.equal(audio.play_event("unknown", "round-a:11:0"), false, "unknown cue rejected")
+	a.equal(audio.play_event("click", ""), false, "event delivery requires an explicit unique ID")
+	audio.set_context("play", "settings", true)
+	a.truth(music.stream_paused, "modal pauses music")
+	audio.set_context("play", "settings", false)
+	audio.set_context("play", "", false)
+	a.truth(music.stream_paused, "closing modal while hidden does not restore music")
+	a.equal(audio.play_event("clear", "round-a:12:0"), false, "background committed cue stays silent")
+	audio.set_context("play", "", true)
+	a.truth(not music.stream_paused, "returning to visible scene resumes music")
+	a.equal(music.get_stream_playback().get_instance_id(), playback_id, "modal and hidden cycles resume rather than restart music")
+	a.equal(audio.play_event("clear", "round-a:12:0"), false, "background event is not replayed on return")
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	a.truth(music.stream_paused, "window focus loss pauses music")
+	audio.set_context("home", "", true)
+	a.truth(music.stream_paused, "context refresh cannot override focus loss")
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	a.truth(not music.stream_paused, "focus return resumes eligible music")
+	audio.notification(Node.NOTIFICATION_APPLICATION_PAUSED)
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	a.truth(music.stream_paused, "focus return cannot override an application pause")
+	audio.notification(Node.NOTIFICATION_APPLICATION_RESUMED)
+	a.truth(not music.stream_paused, "application resume restores music when focused")
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	audio.notification(Node.NOTIFICATION_APPLICATION_PAUSED)
+	audio.notification(Node.NOTIFICATION_APPLICATION_RESUMED)
+	a.truth(music.stream_paused, "application resume cannot override lost focus")
+	audio.notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	prefs.music = false
+	prefs.sound = false
+	audio.apply_preferences(prefs)
+	a.truth(music.stream_paused, "music toggle applies immediately")
+	for cue in ["click", "clear", "win", "fail"]:
+		a.equal(audio.get_node(cue.capitalize()).playing, false, "sound toggle stops active " + cue + " cue immediately")
+	a.equal(audio.play_event("win", "round-a:13:0"), false, "sound toggle suppresses committed cue")
+	prefs.music = true
+	prefs.sound = true
+	audio.apply_preferences(prefs)
+	a.truth(not music.stream_paused, "music enabling takes effect immediately")
+	a.equal(audio.play_event("win", "round-a:13:0"), false, "muted event never replays after enabling sound")
+	a.truth(audio.play_event("win", "round-b:1:0"), "fresh round event plays after enabling sound")
+	a.equal(audio.vibration_supported(), false, "Windows vibration capability explicitly unsupported")
+	audio.set_context("", "", true)
+	a.truth(music.stream_paused, "no active scene pauses music")
+	tree.root.remove_child(audio)
+	audio.free()
+	return true
