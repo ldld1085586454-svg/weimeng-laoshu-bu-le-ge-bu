@@ -1,0 +1,1803 @@
+{
+  "sourceCommit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+  "times": [
+    {
+      "wallMs": 1790956799000,
+      "cycle": "2026-10-02",
+      "nextReset": 1790956800000
+    },
+    {
+      "wallMs": 1790956799999,
+      "cycle": "2026-10-02",
+      "nextReset": 1790956800000
+    },
+    {
+      "wallMs": 1790956800000,
+      "cycle": "2026-10-03",
+      "nextReset": 1791043200000
+    },
+    {
+      "wallMs": 1709135999999,
+      "cycle": "2024-02-28",
+      "nextReset": 1709136000000
+    },
+    {
+      "wallMs": 1709136000000,
+      "cycle": "2024-02-29",
+      "nextReset": 1709222400000
+    },
+    {
+      "wallMs": 1709222400000,
+      "cycle": "2024-03-01",
+      "nextReset": 1709308800000
+    },
+    {
+      "wallMs": 951753600000,
+      "cycle": "2000-02-29",
+      "nextReset": 951840000000
+    },
+    {
+      "wallMs": -2203920000000,
+      "cycle": "1900-03-01",
+      "nextReset": -2203833600000
+    },
+    {
+      "wallMs": 1798732800000,
+      "cycle": "2027-01-01",
+      "nextReset": 1798819200000
+    },
+    {
+      "wallMs": 0,
+      "cycle": "1970-01-01",
+      "nextReset": 57600000
+    },
+    {
+      "wallMs": -1,
+      "cycle": "1970-01-01",
+      "nextReset": 57600000
+    },
+    {
+      "wallMs": -28800000,
+      "cycle": "1970-01-01",
+      "nextReset": 57600000
+    },
+    {
+      "wallMs": -28800001,
+      "cycle": "1969-12-31",
+      "nextReset": -28800000
+    },
+    {
+      "wallMs": -86400000,
+      "cycle": "1969-12-31",
+      "nextReset": -28800000
+    },
+    {
+      "wallMs": -62135596800000,
+      "cycle": "0001-01-01",
+      "nextReset": -62135539200000
+    },
+    {
+      "wallMs": -62167248000000,
+      "cycle": "0000-01-01",
+      "nextReset": -62167161600000
+    },
+    {
+      "wallMs": -62167247999999,
+      "cycle": "0000-01-01",
+      "nextReset": -62167161600000
+    },
+    {
+      "wallMs": 253402271999998,
+      "cycle": "9999-12-31",
+      "nextReset": 253402272000000
+    },
+    {
+      "wallMs": 253402271999999,
+      "cycle": "9999-12-31",
+      "nextReset": 253402272000000
+    }
+  ],
+  "indices": [
+    {
+      "day": "2026-10-02",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-02",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-02",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2024-02-29",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2024-02-29",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2024-02-29",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2000-02-29",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2000-02-29",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2000-02-29",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "1900-03-01",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "1900-03-01",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "1900-03-01",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "1970-01-01",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "1970-01-01",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "1970-01-01",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "1969-12-31",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "1969-12-31",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "1969-12-31",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-01",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-01",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-01",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-02",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-02",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-02",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-03",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-03",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-03",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-04",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-04",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-04",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-05",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-05",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-05",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-06",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-06",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-06",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-07",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-07",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-09-07",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-08",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-08",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-08",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-09",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-09",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-09",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-10",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-10",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-10",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-11",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-11",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-11",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-12",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-12",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-12",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-13",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-13",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-13",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-14",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-14",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-14",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-15",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-15",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-09-15",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-16",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-16",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-16",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-17",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-17",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-17",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-18",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-18",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-18",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-19",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-19",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-09-19",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-20",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-20",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-20",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-21",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-21",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-21",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-22",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-22",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-22",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-23",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-23",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-23",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-24",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-24",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-24",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-09-25",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-25",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-09-25",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-26",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-26",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-26",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-09-27",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-09-27",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-27",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-28",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-28",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-09-28",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-29",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-09-29",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-29",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-09-30",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-09-30",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-09-30",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-01",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-01",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-01",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-02",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-02",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-02",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-03",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-04",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-04",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-04",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-05",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-05",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-05",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-06",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-06",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-06",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-07",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-07",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-07",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-08",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-08",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-08",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-09",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-09",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-09",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-10",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-10",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-10",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-11",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-11",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-11",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-12",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-12",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-12",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-13",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-13",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-13",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-14",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-14",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-14",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-15",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-15",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-15",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-16",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-16",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-16",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-17",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-17",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-17",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-18",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-18",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-18",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-19",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-19",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-19",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-20",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-20",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-20",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-21",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-21",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-21",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-22",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-22",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-22",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-23",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-23",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-23",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-24",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-24",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-24",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-25",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-25",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-25",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-26",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-26",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-26",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-27",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-27",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-10-27",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-10-28",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-10-28",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-28",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-29",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-29",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-10-29",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-10-30",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-10-30",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-30",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-10-31",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-10-31",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-10-31",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-01",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-01",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-01",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-02",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-02",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-02",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-03",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-03",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-03",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-04",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-04",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-04",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-05",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-05",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-05",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-06",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-06",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-06",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-07",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-07",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-07",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-08",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-08",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-08",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-09",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-09",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-09",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-10",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-10",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-10",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-11",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-11",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-11",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-12",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-12",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-12",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-13",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-13",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-13",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-14",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-14",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-14",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-15",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-15",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-15",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-16",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-16",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-16",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-17",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-17",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-17",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-18",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-18",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-18",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-19",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-19",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-19",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-20",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-20",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-20",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-21",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-21",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-21",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-22",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-22",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-22",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-23",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-23",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-23",
+      "mode": "topic",
+      "index": 2
+    },
+    {
+      "day": "2026-11-24",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-24",
+      "mode": "daily",
+      "index": 1
+    },
+    {
+      "day": "2026-11-24",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-25",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-25",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-25",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-26",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-26",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-26",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-27",
+      "mode": "tutorial",
+      "index": 1
+    },
+    {
+      "day": "2026-11-27",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-27",
+      "mode": "topic",
+      "index": 1
+    },
+    {
+      "day": "2026-11-28",
+      "mode": "tutorial",
+      "index": 2
+    },
+    {
+      "day": "2026-11-28",
+      "mode": "daily",
+      "index": 2
+    },
+    {
+      "day": "2026-11-28",
+      "mode": "topic",
+      "index": 0
+    },
+    {
+      "day": "2026-11-29",
+      "mode": "tutorial",
+      "index": 0
+    },
+    {
+      "day": "2026-11-29",
+      "mode": "daily",
+      "index": 0
+    },
+    {
+      "day": "2026-11-29",
+      "mode": "topic",
+      "index": 0
+    }
+  ],
+  "catalog": {
+    "POLICY": {
+      "version": "development-reconstruction-012",
+      "target": "2022-09-wechat",
+      "productionEnabled": false,
+      "cycleOffsetMinutes": 480,
+      "tutorial": "first-local-launch",
+      "dailyDedupe": "user-cycle-mode",
+      "revive": "research-revive-append-three-v011",
+      "art": "new-development-vector-art",
+      "rewardRoute": "video",
+      "shareEvidence": "return-only-not-send-confirmation"
+    },
+    "REGIONS": [
+      "广东",
+      "浙江",
+      "江苏",
+      "山东",
+      "四川",
+      "河南",
+      "河北",
+      "湖南",
+      "湖北",
+      "福建",
+      "安徽",
+      "上海",
+      "北京",
+      "重庆",
+      "江西",
+      "广西",
+      "云南",
+      "辽宁",
+      "山西",
+      "陕西",
+      "贵州",
+      "黑龙江",
+      "吉林",
+      "内蒙古",
+      "甘肃",
+      "新疆",
+      "天津",
+      "海南",
+      "宁夏",
+      "青海",
+      "西藏",
+      "台湾",
+      "香港",
+      "澳门"
+    ],
+    "SKINS": [
+      {
+        "id": "plain",
+        "name": "小白羊",
+        "requirement": "初始形象"
+      },
+      {
+        "id": "cap",
+        "name": "小草帽",
+        "requirement": "完成一次每日挑战"
+      },
+      {
+        "id": "scarf",
+        "name": "围巾羊",
+        "requirement": "昨日话题阵营获胜"
+      }
+    ],
+    "BULLETS": [
+      {
+        "id": "cheer",
+        "text": "加油！"
+      },
+      {
+        "id": "again",
+        "text": "再试一次"
+      },
+      {
+        "id": "hard",
+        "text": "今天太难了"
+      },
+      {
+        "id": "done",
+        "text": "终于过关了"
+      },
+      {
+        "id": "team",
+        "text": "为羊队加油"
+      },
+      {
+        "id": "easy",
+        "text": "今天太简单"
+      }
+    ]
+  },
+  "tutorial": {
+    "schema": "astra-deal-1",
+    "dealId": "tutorial-reconstruction-012",
+    "layoutId": "tutorial-flat",
+    "origin": "SYNTHETIC_NOT_HISTORICAL",
+    "slotCapacity": 7,
+    "cells": [
+      {
+        "id": "teach-0",
+        "type": "T00",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-1",
+        "type": "T00",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 110,
+          "y": 0,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-2",
+        "type": "T00",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 220,
+          "y": 0,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-3",
+        "type": "T01",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 0,
+          "y": 110,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-4",
+        "type": "T01",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 110,
+          "y": 110,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-5",
+        "type": "T01",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 220,
+          "y": 110,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-6",
+        "type": "T02",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 0,
+          "y": 220,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-7",
+        "type": "T02",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 110,
+          "y": 220,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-8",
+        "type": "T02",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 220,
+          "y": 220,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-9",
+        "type": "T03",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 0,
+          "y": 330,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-10",
+        "type": "T03",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 110,
+          "y": 330,
+          "w": 96,
+          "h": 96
+        }
+      },
+      {
+        "id": "teach-11",
+        "type": "T03",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 220,
+          "y": 330,
+          "w": 96,
+          "h": 96
+        }
+      }
+    ]
+  }
+}

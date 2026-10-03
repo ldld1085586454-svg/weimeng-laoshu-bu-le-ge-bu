@@ -1,0 +1,1716 @@
+{
+  "provenance": "Fixed Node v24 oracle: source stable serializer and ASTRA_CONTENT_V1 snapshot; IEEE-754 bytes avoid JSON parser rounding.",
+  "vectors": [
+    {
+      "label": "vertical tab",
+      "value": "A\u000b",
+      "encoded": "\"A\\u000b\"",
+      "sha256": "09c6431174bdfe5375ffb1c1e019fb7c0c16ccb7f9b30a59c792cffc6645523a"
+    },
+    {
+      "label": "controls 1 through 31",
+      "value": "\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\n\u000b\f\r\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f",
+      "encoded": "\"\\u0001\\u0002\\u0003\\u0004\\u0005\\u0006\\u0007\\b\\t\\n\\u000b\\f\\r\\u000e\\u000f\\u0010\\u0011\\u0012\\u0013\\u0014\\u0015\\u0016\\u0017\\u0018\\u0019\\u001a\\u001b\\u001c\\u001d\\u001e\\u001f\"",
+      "sha256": "2f0c589a754d4b5062a261dcfef1577ec60f2d23843fb5a2eb2f67b00e9901ef"
+    },
+    {
+      "label": "quotes slashes and Unicode",
+      "value": "\"\\/ 中文😀  ",
+      "encoded": "\"\\\"\\\\/ 中文😀  \"",
+      "sha256": "c3dc12f56e980c88db38c8310c885325dc62f38ad84acd9236945b61157c69e5"
+    },
+    {
+      "label": "UTF16 key ordering",
+      "value": {
+        "": 1,
+        "😀": 2,
+        "a": 3,
+        "𐀀": 4,
+        "a😀": 5,
+        "a": 6
+      },
+      "encoded": "{\"a\":3,\"a😀\":5,\"a\":6,\"𐀀\":4,\"😀\":2,\"\":1}",
+      "sha256": "f394f0476a9a4889f20a2413e749378a05295697f6aba8d4ea60f53ce4e27657"
+    }
+  ],
+  "numberVectors": [
+    {
+      "bits": "0000000000000000",
+      "encoded": "0",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "bits": "0000000000000080",
+      "encoded": "0",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "bits": "000000000000f03f",
+      "encoded": "1",
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+    },
+    {
+      "bits": "000000000000f0bf",
+      "encoded": "-1",
+      "sha256": "1bad6b8cf97131fceab8543e81f7757195fbb1d36b376ee994ad1cf17699c464"
+    },
+    {
+      "bits": "9a9999999999b93f",
+      "encoded": "0.1",
+      "sha256": "14be4b45f18e0d8c67b4f719b5144eee88497e413709d11d85b096d8e2346310"
+    },
+    {
+      "bits": "48afbc9af2d77a3e",
+      "encoded": "1e-7",
+      "sha256": "5b33e02f2c5103a05d32f6ba9cb058294452bfbf393967f68bb30c1bdcbbab22"
+    },
+    {
+      "bits": "8dedb5a0f7c6b03e",
+      "encoded": "0.000001",
+      "sha256": "159fb29a827ad04b260aa6c8ab6d8637f8f2b38af5c4f3cb49d6a21205e040f8"
+    },
+    {
+      "bits": "f168e388b5f8e43e",
+      "encoded": "0.00001",
+      "sha256": "661710915adfa7c40b5dbd6b2122dfa65b1accb57a8b7cdee05423ecfe14b0c7"
+    },
+    {
+      "bits": "408cb5781daf1544",
+      "encoded": "100000000000000000000",
+      "sha256": "c344e9487bfbd5c4e03c9fb90d62a5dde5e00b54d55c46e9f4a803aea162b80c"
+    },
+    {
+      "bits": "50efe2d6e41a4b44",
+      "encoded": "1e+21",
+      "sha256": "241c4643fa70b1dcde1205b71be4e3bebb17e9f880c8e1a33d0ead6c27271d3c"
+    },
+    {
+      "bits": "f64ae1c7022db544",
+      "encoded": "1e+23",
+      "sha256": "0b1af6b73e932475817f8eb620deecf21ad7570df3400a23db5c79a9001597f7"
+    },
+    {
+      "bits": "01c84e676dc1ab43",
+      "encoded": "1000000000000000100",
+      "sha256": "8fa4a0cdb0a98b4d9a79cc496f69b1d9ea172390094239961266446383d2988b"
+    },
+    {
+      "bits": "fb598c42cac0f33f",
+      "encoded": "1.2345678901234567",
+      "sha256": "05c9e796f4a020a2e0cb1008d3a7432483f1b77b0dea768399adcee66d90ac8e"
+    },
+    {
+      "bits": "0100000000000000",
+      "encoded": "5e-324",
+      "sha256": "c46e7ca1be4c8734f373a56530787288fa2058d73d07855e9247e949f811a42a"
+    },
+    {
+      "bits": "ffffffffffffef7f",
+      "encoded": "1.7976931348623157e+308",
+      "sha256": "c2784e1abd6317452708f3fbf9641c16b959561bc621a1d408c23a20aa2cb585"
+    },
+    {
+      "bits": "0000000000001000",
+      "encoded": "2.2250738585072014e-308",
+      "sha256": "8d51a73768cb59d15302f6b0a4c7147a04b0cce9df743b5bf50e31ab87b2d807"
+    },
+    {
+      "bits": "ffffffffffff0f00",
+      "encoded": "2.225073858507201e-308",
+      "sha256": "e702bc3dff32cd2ddd22840752621268554b94aecfdb6f6234a0138bb59447d4"
+    },
+    {
+      "bits": "ffffffffffff3f43",
+      "encoded": "9007199254740991",
+      "sha256": "f40b423c2dd95ff2b2f027e22208f438cf7242862e5e746860e697308c9add26"
+    },
+    {
+      "bits": "0000000000004043",
+      "encoded": "9007199254740992",
+      "sha256": "c681da39d7273a6a24c15c9cac3a75526ff2ecf8ba4ee60346a0c70c8163bdb2"
+    },
+    {
+      "bits": "0100000000004043",
+      "encoded": "9007199254740994",
+      "sha256": "25aa68783313802627958889943e895749ac4c0c7469b2a305cd450a12120768"
+    },
+    {
+      "bits": "ffffffffffffef3f",
+      "encoded": "0.9999999999999999",
+      "sha256": "12d5191c859deac9fee6fecae738d2458bd085951ec1486febd820c1f618f172"
+    },
+    {
+      "bits": "010000000000f03f",
+      "encoded": "1.0000000000000002",
+      "sha256": "19119a03721db7fc2a2f06afad179bdd384cc44b54e1d4f4f57e374c5b44fbd0"
+    },
+    {
+      "bits": "49afbc9af2d77a3e",
+      "encoded": "1.0000000000000001e-7",
+      "sha256": "2e4d40490d2f4134ef7cfc8f9e3402214c61a42d199294668d80b19d0931376d"
+    },
+    {
+      "bits": "4fefe2d6e41a4b44",
+      "encoded": "999999999999999900000",
+      "sha256": "914b4f8b4bbe2f6e7c36ad7791fc842a7516d149e694b3a71b78cee465ff6d7a"
+    },
+    {
+      "bits": "2066ab88f7968d69",
+      "encoded": "2.8311827902260205e+200",
+      "sha256": "957db8aefb7d470e0bcf4b82c3f34270e6c08ac3aa1bdf16755b89d8fadf5d6c"
+    },
+    {
+      "bits": "9e7030b1ef0e5e5b",
+      "encoded": "1.3334697918818864e+132",
+      "sha256": "5bf3690fcd6d27acf4b00b5ebb818b64af22ed6c6a94bf058ba745e4000efb7b"
+    },
+    {
+      "bits": "6ed6f7ca13c07b37",
+      "encoded": "1.990986526614407e-41",
+      "sha256": "41338eef6df49b74e0324f9503dc763c0945f68481603962c39d46c26f98e4d6"
+    },
+    {
+      "bits": "4f7249a0af7c1a4e",
+      "encoded": "1.7852239647707972e+68",
+      "sha256": "2ba8d843b628d0bed42b84a9d6e15be8dd2107811e6aac05db3a66d186792c2e"
+    },
+    {
+      "bits": "68117c30404078f8",
+      "encoded": "-2.0498655711026363e+272",
+      "sha256": "2c0a11e7835a804fbea0d85babad2995eef21c3e5105ee2a03d507fc009a5f0a"
+    },
+    {
+      "bits": "783777feb45d9f0b",
+      "encoded": "1.0695556454872082e-252",
+      "sha256": "5d8018f59785a07399943b6e0acc9aa181e0efbde8a11253f7df43edc9583b96"
+    },
+    {
+      "bits": "a0191ce5347c2da3",
+      "encoded": "-3.0949656319443577e-139",
+      "sha256": "488c0c21ee533d0fd4d1f390820a5085270e2087475d485dcf3be9f3cfcf122f"
+    },
+    {
+      "bits": "41b6d4992fa88eec",
+      "encoded": "-8.256504926080821e+214",
+      "sha256": "7c203a88285d478c80984a6bf98e0a0dfd39a41367a710d9305850414aa5d0d4"
+    },
+    {
+      "bits": "aac9e10840b9460b",
+      "encoded": "2.4214273624772286e-254",
+      "sha256": "6f7234ec4690b3271d4e964eda69fd5745cd95cc2085ffb42c98a62d88434443"
+    },
+    {
+      "bits": "9739b45154e85006",
+      "encoded": "2.9806044916881176e-278",
+      "sha256": "176519c7d3ccf109a60678292eb8083c93700a9e2c4e8a1c0f20aab0daf18497"
+    },
+    {
+      "bits": "d9da16709f40f8c2",
+      "encoded": "-426653310348717.56",
+      "sha256": "59731b80269f7c2e2a7f4f1a3da205e970907c3cf6e105e2dafb1d6e78364bca"
+    },
+    {
+      "bits": "aa789397c9d94ee8",
+      "encoded": "-2.8150926826912166e+194",
+      "sha256": "61814d0644ef92108d46ad4dd19bf5ed19fa7610eaee4df7cb5dc914f6027eac"
+    },
+    {
+      "bits": "32ee8b5d947cfa29",
+      "encoded": "1.8044647141333267e-106",
+      "sha256": "cd707e9bd4033ddf23cc72da4e62f652afbae5d0146ceb1c1cdb3db883b68e05"
+    },
+    {
+      "bits": "a03b71abe2c9aa0c",
+      "encoded": "1.1973023562675725e-247",
+      "sha256": "bcaf86d3c6eec1d9a69c29f5a6dacf3a3335418def37bb22a4eeee0035ac1ebf"
+    },
+    {
+      "bits": "09c642e7c880f44f",
+      "encoded": "1.4838079968009724e+77",
+      "sha256": "6c6d60bd814b990f07fc0ea4b9073beab13ce00d4a76d28920707e2514eec57c"
+    },
+    {
+      "bits": "fe08502279f2b44a",
+      "encoded": "7.83726333244895e+51",
+      "sha256": "a6b7d449c9f81567d3e28aca1e141ecb4c07b2d698e5632e70fe9360f16423cf"
+    },
+    {
+      "bits": "84b88c4b8a8f164f",
+      "encoded": "9.965328395416653e+72",
+      "sha256": "464cdb5ff18abc9e2c80b6c1b9e1c54dc154e9ba2db0650072c4a34cfd7adbe2"
+    },
+    {
+      "bits": "d99f1742cf02708c",
+      "encoded": "-8.945021110763556e-249",
+      "sha256": "9d072df07aa2230fe7f2f235f547b20534573f0df661aa49cb430b0a9498488c"
+    },
+    {
+      "bits": "bb3f1d090e11ab73",
+      "encoded": "1.5139811357426017e+249",
+      "sha256": "5f82540bd4570e72fbe0c3a2e59ef51c709d5f4333a3b9611f3707c7cfc3cdf2"
+    },
+    {
+      "bits": "abe0d120e9575584",
+      "encoded": "-8.760477488605816e-288",
+      "sha256": "b991cbab9789cf72ac48669351a1586fac8559fdca6b37801fbf426b511f411e"
+    },
+    {
+      "bits": "1d77a4fb7e5abadd",
+      "encoded": "-3.2136328419202006e+143",
+      "sha256": "b71bbfd8c3cb1bc02ce0f186886164425f84ad9d3450266750a36a27d77b7ec1"
+    },
+    {
+      "bits": "84f14f48db7d9a79",
+      "encoded": "5.87008858195912e+277",
+      "sha256": "4c7a317b216a08c13412660fd404c9d069bd50cdcf3728f5f182bf3edeafa3bb"
+    },
+    {
+      "bits": "abdf01f271b16ff7",
+      "encoded": "-2.0438617107702073e+267",
+      "sha256": "052d7f5557c100f24a474e346d54cad1b43d043a5f4fe520f01cc08fb2b82cb1"
+    },
+    {
+      "bits": "f1ab7329171bb9dd",
+      "encoded": "-3.061486873931658e+143",
+      "sha256": "aa816d42a252b0c65cbea8eeecd28724009546aa8e17edb42b369ada9b04b42e"
+    },
+    {
+      "bits": "3a0bab25dc4241dd",
+      "encoded": "-1.6444408467107452e+141",
+      "sha256": "43ad5ecf208a8a7b2a4d4546b798f85bf85e50e1647b8e3d080468a47e9bc251"
+    },
+    {
+      "bits": "71b24d5670ac7fe0",
+      "encoded": "-6.7947743917819626e+156",
+      "sha256": "845399e4228c327902d2d0deb2d821929a489b0a3f83d3458a7438c69531334b"
+    },
+    {
+      "bits": "8877c5ab52d7baa3",
+      "encoded": "-1.4425217550778476e-136",
+      "sha256": "5cee30c53e70054efd1e5016491bbc106cf460d3b3b2a52df50b56957f2fcc99"
+    },
+    {
+      "bits": "ba944dd3b76e865a",
+      "encoded": "1.214802577893411e+128",
+      "sha256": "5240a35f19d161291dcce0a520a5d593a8deff5c002b28db9a61663d27f6f251"
+    },
+    {
+      "bits": "ff66487db4786043",
+      "encoded": "37090529749710840",
+      "sha256": "b4c5dee1ccec99313f303ee98a54a9e224ba816276bdfd87e73ae6fa669ac921"
+    },
+    {
+      "bits": "6f0fadc22f075b0b",
+      "encoded": "5.76021566288975e-254",
+      "sha256": "595532d9c28fe319edb68fa12dbfd751eb68cb7fd9b39fbf648bcfeef1b2b935"
+    },
+    {
+      "bits": "f08c641cad8ba332",
+      "encoded": "9.279833295416167e-65",
+      "sha256": "f18584f20f858bdba805a2df632fa79dc9b9f2aed11c47095f54b7bd2352ae24"
+    },
+    {
+      "bits": "8642173985aebaf9",
+      "encoded": "-2.3648839751380712e+278",
+      "sha256": "4e0026e9cbff992d41731e7b65eceebcf117c14111b07426197bc3537e9131fe"
+    },
+    {
+      "bits": "b04e2121ab131e16",
+      "encoded": "3.8372048370961006e-202",
+      "sha256": "f9a5e1850601afdaf761768c97e141ef32a11bbbc4569f609269717290c0f535"
+    },
+    {
+      "bits": "5e2a08599f4b3bd4",
+      "encoded": "-5.830262097639183e+97",
+      "sha256": "316e5d9c54db4a8d1735880be97f7c374919f17be66542a2e836f59e588a501f"
+    },
+    {
+      "bits": "5b525614f5f7b61d",
+      "encoded": "1.5580328258962462e-165",
+      "sha256": "8318d8feb6433602b54e685a2b31cf7f6ad76115b20d0e73f0322c65f4a3a2e6"
+    },
+    {
+      "bits": "71fc4eaab134dccd",
+      "encoded": "-1.1881684892170557e+67",
+      "sha256": "01a04af8e14942b71d39187d1ae796ff38c695f7319e10a77470b8f6c07ff825"
+    },
+    {
+      "bits": "94130c22cbb6a6af",
+      "encoded": "-3.831293997020995e-79",
+      "sha256": "1f4d02b874fe894699aaf83405b6148fce6a99090ff228118ccf01cbea493249"
+    },
+    {
+      "bits": "f4a48256ba9a9841",
+      "encoded": "103198357.62758237",
+      "sha256": "382cb03b5dfa82a587e540260a5c037104965c75ed9b7e831d8fa4df4f9447e4"
+    },
+    {
+      "bits": "7d88310b2299f87d",
+      "encoded": "6.434852783395298e+298",
+      "sha256": "90be20cbc61ab005514c6414785022ff817508b7e3f964fe61b0657f50b8e0fb"
+    },
+    {
+      "bits": "cc2741b5100da5a6",
+      "encoded": "-1.5922279797851226e-122",
+      "sha256": "a166316eccabf6d1d19de03d64e1c5eb405db434c9c797e99a8ebedf47024cb3"
+    },
+    {
+      "bits": "f3dce6e72ffb6cb3",
+      "encoded": "-5.6359515226509216e-61",
+      "sha256": "4fcb8dd8e0ad231ad4c1583c59d2f4cc7c3e75f4c9c369ddc52a8761f045aa2e"
+    },
+    {
+      "bits": "4ba828ad3b1f13bc",
+      "encoded": "-2.5915148309122686e-19",
+      "sha256": "9d39eec43cacf0c207a737be584c08715d4abcdcc3127a2d1011b5a50597d969"
+    },
+    {
+      "bits": "e1087621544221ed",
+      "encoded": "-4.75975865975392e+217",
+      "sha256": "18f2a7e99099eb9b0b51c1470295b2970179cd599d2b355584bf30ad171c921f"
+    },
+    {
+      "bits": "c1bc1f6842b37d6f",
+      "encoded": "1.1257360249502792e+229",
+      "sha256": "ad640c0d589bd44a0e98b666fc26a630d0ca029e9faa94dfca854ca405a5ad5c"
+    },
+    {
+      "bits": "c866a6fb97d390d8",
+      "encoded": "-4.243195825342915e+118",
+      "sha256": "1b2624e25d2b99f8419c7f1655ca3621bc3e20ddec1210634f3cd13b111a3ac0"
+    },
+    {
+      "bits": "260ea89e90b3fc72",
+      "encoded": "7.838987030259185e+245",
+      "sha256": "e20c1257a327c617709c60b8f94792caabeef89665d4ca4c97f0473f854238ca"
+    },
+    {
+      "bits": "37fb5675cf8b39ec",
+      "encoded": "-2.1500182119572916e+213",
+      "sha256": "7660807acae91c0c853b547a24450f93729d583fdec1782b1818c0d62745b678"
+    },
+    {
+      "bits": "8fa84075476c7e6a",
+      "encoded": "9.538467665704439e+204",
+      "sha256": "ba39de124c0413bf78617d24a89b47c42f36ca1ed8b2234e37ff2f329317b897"
+    },
+    {
+      "bits": "3c282d5909137079",
+      "encoded": "8.904504472947984e+276",
+      "sha256": "12828974a396b80235d9bfaf0d66105a0001d0a7a8f4eede3685537c5363be4c"
+    },
+    {
+      "bits": "a1de3019b3057b5e",
+      "encoded": "1.3497074192250412e+147",
+      "sha256": "5f0068b063e2cd5c5bb28bc8ad99b578a49832b4a6a3ec4572f09d17f191fe21"
+    },
+    {
+      "bits": "752062e7a3e9f6ce",
+      "encoded": "-2.5301975726712372e+72",
+      "sha256": "fb3f318d602774c048cf8a2bd8327d66334320e4adeb0a961d613804345ef0b4"
+    },
+    {
+      "bits": "0288926b2b7cc868",
+      "encoded": "5.71963032552093e+196",
+      "sha256": "8eaadbfb1d4ce2d3e2db2b42a3a169ac45e6e4d8bf996c7d383c5a594f655b3e"
+    },
+    {
+      "bits": "2ddee88edba38b30",
+      "encoded": "7.638537416485405e-75",
+      "sha256": "efe86c9d80808fb460d2d0e10af7b0cdce33f6afb158a9e52c288b1439acabed"
+    },
+    {
+      "bits": "c3d5ecdac928c64a",
+      "encoded": "1.6581579352559018e+52",
+      "sha256": "8d8bad14999abdda246a4d52722c650b3e330d50f12a3b3a217b8a92ade58667"
+    },
+    {
+      "bits": "e6ab367423530d88",
+      "encoded": "-6.938544222539619e-270",
+      "sha256": "225954163eecd992061af0c16f85af238796484d630046f42b1032a22700d3ca"
+    },
+    {
+      "bits": "f7604d6f9eca2fa9",
+      "encoded": "-2.6438836951468576e-110",
+      "sha256": "082e4a33cb44225903b571ab77eac51cf6c9f1a7f5e95a55cf2a0bf400d26886"
+    },
+    {
+      "bits": "a076f85ff698a774",
+      "encoded": "8.650327090148862e+253",
+      "sha256": "2b3881f930d52ef481b2a9a1c7d07dd513cde21813eab1633a2166deb7bfd58d"
+    },
+    {
+      "bits": "6a7e9a70e119b3d5",
+      "encoded": "-6.845052761545722e+104",
+      "sha256": "22113e0a17874b2530220ab86642a8b379f850750edb6487522218a0612cff67"
+    },
+    {
+      "bits": "6636636791205134",
+      "encoded": "1.0914093420050083e-56",
+      "sha256": "f7d71fb2ba2fd66b5a9aa334f0fbaa96842d6a3990ef4e6d4a0f61e34b627388"
+    },
+    {
+      "bits": "b01e22180a5a7225",
+      "encoded": "2.6475157232409384e-128",
+      "sha256": "7cbc896e9a7f23c59c2ae652100d5bb6e47e133ca9f4bad1e5202fd5045b8a7c"
+    },
+    {
+      "bits": "738f56a84fa6a24e",
+      "encoded": "6.435758715515375e+70",
+      "sha256": "ece493492c434f12f06548676e7b77c2c446ff0dfbcde61ba72aef2c61110c33"
+    },
+    {
+      "bits": "3a240257f8d22863",
+      "encoded": "4.6842613835717275e+169",
+      "sha256": "c9860b8c82b6d55c4b93762df470978a8705a3de2c04c9f2705460df28897841"
+    },
+    {
+      "bits": "23268a5704bf877a",
+      "encoded": "1.7241670622934228e+282",
+      "sha256": "dc74c2866c49f4fb9b3bbec18d3b4656847b78654f09508d69117a23169451a7"
+    },
+    {
+      "bits": "574f8821a6d73524",
+      "encoded": "3.005120390199716e-134",
+      "sha256": "e7d32e68f711d22a41bdc7836ca196712ded68a8f22a5249b060dbe58cad9aef"
+    },
+    {
+      "bits": "0640ea461369bad3",
+      "encoded": "-2.2036085802387818e+95",
+      "sha256": "ba345895f7075a853a610988664be02a97b363238cdb18ebcc191c186755ba07"
+    },
+    {
+      "bits": "bf8d904d2c36cfd8",
+      "encoded": "-6.296576967259376e+119",
+      "sha256": "fcc3a1a8ef5bcf24068ee4ce5800c0838c156a27b2fc428dc16b58b1351051df"
+    },
+    {
+      "bits": "098c5fffa6c70bd5",
+      "encoded": "-4.8609271007355276e+101",
+      "sha256": "3f1e3f3e4384271c07b7fb0fe0fcb21dbce3077ea94a36e6c0710b0b599c288d"
+    },
+    {
+      "bits": "797a1512549e1a16",
+      "encoded": "3.395986981647707e-202",
+      "sha256": "34105274793bf3dab406b6046d71e67e8d77e2aaabec7e24dcd98d38961e1193"
+    },
+    {
+      "bits": "3cabd7ffe4e2b55c",
+      "encoded": "4.072400711709319e+138",
+      "sha256": "bc6e9b7a5b2db18fd0b4fee7ce76458e89c60f1914804e90b9316a1a07077c1a"
+    },
+    {
+      "bits": "9040cbfdfc45f82e",
+      "encoded": "1.999178897796178e-82",
+      "sha256": "5f8bff6189a19ca5626a8fb687027fc58c2c1ec4effb84aab6395a4749bf7744"
+    },
+    {
+      "bits": "3f0dbdeef29c43ac",
+      "encoded": "-1.836442031439543e-95",
+      "sha256": "b7e52b9e3ec00495e593109217be33330cc05197d604fa32b2684038650d60e1"
+    },
+    {
+      "bits": "9cd06b24a08b7791",
+      "encoded": "-1.590265156893252e-224",
+      "sha256": "f3e01c52b4011b43fcf48e4d0ad4d2512df950449678cca5a76e4d3beb01ca94"
+    },
+    {
+      "bits": "81cf746023fb16c9",
+      "encoded": "-1.2812340405794762e+44",
+      "sha256": "a51a2d1149e0151280008435197e8ed4ed61d00fd788ada7dd10400d89c8dbec"
+    },
+    {
+      "bits": "5a9320d89f793d83",
+      "encoded": "-4.615082294353278e-293",
+      "sha256": "d39129461dd6e88837c6d1e501bcce538ee5eb61101b216a00cbd418c6f6aa64"
+    },
+    {
+      "bits": "987cdfad7eeac70b",
+      "encoded": "6.52412240180474e-252",
+      "sha256": "2bd3f9d10a432daa07304cb3fa94aa9e4927a4d4cad3d1f05e8a9d01e5f089e5"
+    },
+    {
+      "bits": "7a7682275c59ed40",
+      "encoded": "60106.8798229517",
+      "sha256": "d8b04e917c3c7bf59bf00255f44603da5059eecd91548c6d7a40c7f27e888e24"
+    },
+    {
+      "bits": "5f3b1393038d6c7b",
+      "encoded": "3.396446045996708e+286",
+      "sha256": "55adcfd25b84d0b448f20472ca2b9dbb65d8d696d6a3640dbf96128945507010"
+    },
+    {
+      "bits": "c5945fb3e6902579",
+      "encoded": "3.733327228722633e+275",
+      "sha256": "3c048083f3e98abff927ae3bbd3f5b663b7500154c04b7a43ff390d56148893f"
+    },
+    {
+      "bits": "3a9a1fac564746b4",
+      "encoded": "-7.098392603587104e-57",
+      "sha256": "ae00fc40e3f1ac7fe2d0af45eacc9feb2107c6c2cf3a9473fff9b0d522cc5ed1"
+    },
+    {
+      "bits": "00993be9ad5561d9",
+      "encoded": "-3.5809990421757506e+122",
+      "sha256": "4ed775f24bcb52de922f71741bea316ec1a325ffd330f9e042562e1439657a9a"
+    },
+    {
+      "bits": "a7044589aff9ef13",
+      "encoded": "1.1872663899539307e-212",
+      "sha256": "38167ea7b1f6e2ade00885fae1844e3eb04e8af5e118cf1f285467d512b98fa3"
+    },
+    {
+      "bits": "8297977711339529",
+      "encoded": "2.2566639235282223e-108",
+      "sha256": "c2cdb7d237c1ecde4e5fd828f8a1d693cffe65a87419b2ac1b7e2b29c5db59d1"
+    },
+    {
+      "bits": "aac91d717e5a35cd",
+      "encoded": "-8.784317038343337e+63",
+      "sha256": "6be73f8fb41b0183ac52a8359cf217bbde67a4d94fa34479ece74ff649803d12"
+    },
+    {
+      "bits": "23812fa966797278",
+      "encoded": "1.5615729337002825e+272",
+      "sha256": "2078934e3fde02ac98c5f82c08522000fbd24b729fe0a2e3d5bef014f8728b86"
+    },
+    {
+      "bits": "e9fb8adc52d804fd",
+      "encoded": "-1.664132796986488e+294",
+      "sha256": "fe8dfae57ec5f74f6e0bd9143d21c269a8feed71562615d9e6c9918d9098e456"
+    },
+    {
+      "bits": "f5c1dba7e7ce4423",
+      "encoded": "8.736691208258585e-139",
+      "sha256": "389327241cc62810470433c699e27a882e7590c968ef8217b42bf3e93b7e6ad6"
+    },
+    {
+      "bits": "cb0696e9ec3fa100",
+      "encoded": "1.228220031996268e-305",
+      "sha256": "a36de471bfaa60de8c265d1b8b636dc0060cea333d097904298c2a82a6c585b0"
+    },
+    {
+      "bits": "0224c9cce6146be1",
+      "encoded": "-1.9037186569067416e+161",
+      "sha256": "e1337b57f1b827de59f97859359dab3fa7759ce5a426218f0ff42902d592aa08"
+    },
+    {
+      "bits": "bd3605fdd4d18521",
+      "encoded": "3.4128722507543946e-147",
+      "sha256": "20334fa5da2b4bc48cbeff314305224bebda6ad0f5d6e251f38bc06bdbd21070"
+    },
+    {
+      "bits": "6b9d5cecf390c981",
+      "encoded": "-4.7720049661827124e-300",
+      "sha256": "55f700068d45a0e53d1a887212058dec602f77cb385c8a81aa548413888f0801"
+    },
+    {
+      "bits": "188a22c928035994",
+      "encoded": "-1.1887687674939779e-210",
+      "sha256": "f768c70b41e2e9a15279e5f5e6843d0577b3cfd39842ecb0e780449309ff0fb8"
+    },
+    {
+      "bits": "f67fb73392eb7355",
+      "encoded": "4.461616235254062e+103",
+      "sha256": "ca5b472eacf19e9394820639454823401bfa0cf25abb36a5e15112069d0fd7a1"
+    },
+    {
+      "bits": "d24d362894df03d0",
+      "encoded": "-2.876471539553187e+77",
+      "sha256": "6308bf651ab2f9029740b182f62e6e9cc23deea45f0367d42bdf105b2a193f33"
+    },
+    {
+      "bits": "ec47d0d53a869878",
+      "encoded": "8.291886204449127e+272",
+      "sha256": "fc7ba0e7a749e5cd908646b79b6a0bd7ce03524990948456c0360901badb335b"
+    },
+    {
+      "bits": "b5b0a163ae7750e3",
+      "encoded": "-2.485909761422423e+170",
+      "sha256": "546eb4dbee3af205c7d1ea67d4e11d238b676622f0c1f92fe7dda030df635d68"
+    },
+    {
+      "bits": "fcee1d593d8f817c",
+      "encoded": "5.475940232335641e+291",
+      "sha256": "9f43803d9744f03d3ad64f3d5db2784c60e97f92cdec29b2654938705c96bc53"
+    },
+    {
+      "bits": "4e38a7e1399871d3",
+      "encoded": "-9.175270610113454e+93",
+      "sha256": "db3d96a0a86684048b77a334d92d34f827458bc1795b96a36023429267cf496b"
+    },
+    {
+      "bits": "42c8afeeb1f157e3",
+      "encoded": "-3.6145685606205404e+170",
+      "sha256": "e4109a05ebf4518638779a1d65908423fe5080a5e4a697e681ce8a8263b6da15"
+    },
+    {
+      "bits": "213f5ab1beeb7221",
+      "encoded": "1.4797332411233162e-147",
+      "sha256": "382f47f8664ef399dbb7bcd4a1d5a9a0a76cd78a90a13048bdbfa23448b53f7f"
+    },
+    {
+      "bits": "3ca2a7fcccefe414",
+      "encoded": "5.094735982609196e-208",
+      "sha256": "7c28be39127dff5dd9d38d60e6749d61c7e98a4f98835287d1f41c5fa934cc4b"
+    },
+    {
+      "bits": "0243b8aaae1fd2f9",
+      "encoded": "-6.425460818110273e+278",
+      "sha256": "6d19f72fd06d774d5149fbcf2b1b098905c350b72d58e4f0f6294f11b22b4774"
+    },
+    {
+      "bits": "1dd5d7fec793fa8a",
+      "encoded": "-8.850220067734131e-256",
+      "sha256": "badbcb8235989448a2142b8d729f178a1347f9f292aaa8999b9efad628cda87d"
+    },
+    {
+      "bits": "46efc1c892ef0350",
+      "encoded": "2.8855147644620044e+77",
+      "sha256": "30f859e0a76cca29359d153e53e5ea9ffca698822bd34cd52ad4edba74bde5d6"
+    },
+    {
+      "bits": "2a94c693eb653d69",
+      "encoded": "8.790160412996008e+198",
+      "sha256": "eb4a36a9a5d16adb1ec49f364a35679fcadae33ae3bdac53d40ea74fba2ef5e3"
+    },
+    {
+      "bits": "4b828c758985775d",
+      "encoded": "1.7926906818423109e+142",
+      "sha256": "ca37f2797215e63944eb496cccd606b715ef6c6b652b8125bc2c0338c89d3939"
+    },
+    {
+      "bits": "2a9e1815c47566dd",
+      "encoded": "-8.558904413889545e+141",
+      "sha256": "0e637fff205b7708661354ab5fe45e26008e47744389b5d68c822b930f0dd8c4"
+    },
+    {
+      "bits": "4b7901683f612fa2",
+      "encoded": "-5.026009181578827e-144",
+      "sha256": "e09d6f67e9703345abd1066458cbdb2740d024cad04195b0d2db05e8bde827be"
+    },
+    {
+      "bits": "5b611c8fc018d765",
+      "encoded": "3.833602693936209e+182",
+      "sha256": "9d8d0eeba732aa4b3a9935de53b79701d97488ccfa5308165144d0241d5de482"
+    },
+    {
+      "bits": "472f245f01e65883",
+      "encoded": "-1.5593969561785526e-292",
+      "sha256": "67be71d68f7025523fb7c12dcc700874f6e7036dd477dd428fa2608b8139a863"
+    },
+    {
+      "bits": "6db0896ccf98030a",
+      "encoded": "1.9915053117423555e-260",
+      "sha256": "a39bfc54746676225b18ed5facdd77782bf0d78d46e3a4896b0fc9d0eebbaaf2"
+    },
+    {
+      "bits": "02cc525a8b308379",
+      "encoded": "2.1260454399745223e+277",
+      "sha256": "4629d0493e43774a0efbbbc41056f6eefe25f566af895b70c1ae24b09a8d15c9"
+    },
+    {
+      "bits": "02b7d9ed5ec90abc",
+      "encoded": "-1.8151309416806423e-19",
+      "sha256": "5753220c619cb73773523da6563e7d5e0f036fd799d4c1df9bf59f0c6a176c60"
+    },
+    {
+      "bits": "0e020e4189d7bfa8",
+      "encoded": "-2.0688124630700015e-112",
+      "sha256": "d7355a65eab6a48fcf9ea86f71a6adfcf9a86b71fd3d00ec9a24143de4a2d8e6"
+    },
+    {
+      "bits": "6e0b951b5254eae5",
+      "encoded": "-8.740333069492049e+182",
+      "sha256": "f26e95a0eabcbd15153f37b1d8e71d26c06555d17ac2efd999dfe9d16444db8e"
+    },
+    {
+      "bits": "a23f68436ce017d7",
+      "encoded": "-3.588821368228819e+111",
+      "sha256": "9b8b4043700ee9c009237661470187cd3660c0046aa8e76773a860b1053fee70"
+    },
+    {
+      "bits": "c1c9544897affcfc",
+      "encoded": "-1.1450495960647019e+294",
+      "sha256": "9d390ff687fe09193bc3bfb868845885e4cd7b8854d2ea48380fc36c5f863115"
+    },
+    {
+      "bits": "1019c148c1b08617",
+      "encoded": "2.428375921445503e-195",
+      "sha256": "43ccb64b37e0e9f64e886394093990bd0bad7b7aca2477b46f48b883929cc248"
+    },
+    {
+      "bits": "cef140f2b2b95163",
+      "encoded": "2.6757977429856575e+170",
+      "sha256": "189776fe2eaa96ed766fc04b0a4bc6a648dce9da4b0d68cfdaeaef3fa92e7371"
+    },
+    {
+      "bits": "a1a39dd8750fdff1",
+      "encoded": "-3.2361115897552608e+240",
+      "sha256": "00edbd1e8b7c8c73f94e2b699019de3a9b868866e056ec5cd042387dfaddeab3"
+    },
+    {
+      "bits": "cd4a05160319ca54",
+      "encoded": "2.854111027159223e+100",
+      "sha256": "8f8ce4d029e4681e3176012baf2cf59042f3087403f848486a4c3039536842fe"
+    },
+    {
+      "bits": "362ca4ea47af798b",
+      "encoded": "-2.1895658291647716e-253",
+      "sha256": "7d098dd0a7cd6dde7a1c1bb1229383408233c9a9bdf184f94dc1fc4b8996bfcb"
+    },
+    {
+      "bits": "ef11b36ca82350df",
+      "encoded": "-1.320754901672375e+151",
+      "sha256": "629cfcad0a653dd25dd84e555e7965ea10a1b0760a3c7030fb00e625020180d6"
+    },
+    {
+      "bits": "7a898cbf4b1bd8fa",
+      "encoded": "-5.601087242408637e+283",
+      "sha256": "4879cd12acba33c2daa57b2a5d00a74f51a3906f553ac4ef3f1ffc08d87f7afd"
+    },
+    {
+      "bits": "f3f591cfe441d2d4",
+      "encoded": "-3.993350619023355e+100",
+      "sha256": "7d27bf547165b79c15169886923415741f54778d93b39465cfb105809b24d501"
+    },
+    {
+      "bits": "f37d3f01d33cac3e",
+      "encoded": "8.415459000730429e-7",
+      "sha256": "60d4b43aebaf8c61f4ea3f316a6e1bf7abc8d97f7d9e7431d4ad4df50acd2fe5"
+    },
+    {
+      "bits": "4809f69fc7e23b85",
+      "encoded": "-1.8752885978944716e-283",
+      "sha256": "4fa7ccdea29eed3625f0b49f961e182c274c413a9135602c7f9014b9ec0c1f11"
+    },
+    {
+      "bits": "b6b00cd55b765020",
+      "encoded": "4.911269264764651e-153",
+      "sha256": "b116b3cdfb7cf656db2dff01e3e3af9ea3daaf87aafbe8661908b52eb1a7b4a4"
+    },
+    {
+      "bits": "d623fbfdd64db4a9",
+      "encoded": "-8.645387960275654e-108",
+      "sha256": "b9f4cd6a493b3d7b7cb99d892c3ae1e185b935cdbd18328e20cc4a9b77ee619a"
+    },
+    {
+      "bits": "f127dd2160e94b21",
+      "encoded": "2.7285834371117136e-148",
+      "sha256": "4d83019d71079e7ec957bf4540be6837d72bd1c6f79b3fae888584357d4d50fd"
+    },
+    {
+      "bits": "332d9fd04fa21392",
+      "encoded": "-1.3579152279347974e-221",
+      "sha256": "473adf57a026de18f444d78486774bbc251ee8b6d6fdeffca9c2fb12478b0ef9"
+    },
+    {
+      "bits": "221d1c2dbe45b979",
+      "encoded": "2.239974460063929e+278",
+      "sha256": "e690f261d9afd294bf4eba2c186c43a6161829e5ade1f27d2e7f3e12930cec58"
+    },
+    {
+      "bits": "190adb7075789c22",
+      "encoded": "5.836840023960598e-142",
+      "sha256": "909c41397f5ff987624a4313fa96e7d2568c4e5bd7bb88a8b64a9b20a1810eb0"
+    },
+    {
+      "bits": "3c59c31f8e8a78e8",
+      "encoded": "-1.791486556246451e+195",
+      "sha256": "9fae4ab202b6afb11cd290f237c00b1f07b8f0a2f666fa69a8622038708c07cd"
+    },
+    {
+      "bits": "5af50fdc08253076",
+      "encoded": "1.9858449198545464e+261",
+      "sha256": "3ef98a3a0d04d26995449a5080e83dc8ad435b2d6b9493c2c53eb8127f987746"
+    },
+    {
+      "bits": "4094b220fd066f35",
+      "encoded": "2.5915210088270324e-51",
+      "sha256": "3f8c30b9a773063a4756f2e74e8a9024ba9f523e25cb6acadd398e8c677337c0"
+    },
+    {
+      "bits": "8548a963f976801d",
+      "encoded": "1.3960705296236156e-166",
+      "sha256": "0802d2ef742eb333fbdef53aa164374ae4ff754b9077042031e2b7ad0091f2fa"
+    },
+    {
+      "bits": "96b5b4783550c62e",
+      "encoded": "2.2971815732209346e-83",
+      "sha256": "dd08b584604efc6057ed406eef27fcbbb15aef4c75cc2fda86ef6b5e619e1056"
+    },
+    {
+      "bits": "f5c8d07c521805dc",
+      "encoded": "-1.9165836479563017e+135",
+      "sha256": "675628a32eb0f0f622ecaa3a6f13aa5726e37770dd23ba0bd149c05e7e15e6c5"
+    },
+    {
+      "bits": "759de39eb331e444",
+      "encoded": "7.629133051971936e+23",
+      "sha256": "4ace74d0b919df16de01ef33355698dd6a478adf0ad14ed25ba10321a249c915"
+    },
+    {
+      "bits": "9a2b949849c80ba1",
+      "encoded": "-1.6974676299851862e-149",
+      "sha256": "917d1fc7f34cf1f6b9005765162ec52d8d31b393cfd1e5385dd0f16b37ffcaea"
+    },
+    {
+      "bits": "480d52d8157793a6",
+      "encoded": "-7.361395251411015e-123",
+      "sha256": "68e52278c773454e9e9b54c405f67a8da34c64f955837baa37afc71cf36cf836"
+    },
+    {
+      "bits": "8dd647c606705bae",
+      "encoded": "-2.2068225542208117e-85",
+      "sha256": "eaa8122c73a6ccf3fdd0435dc16ca77b95727f3477510b3d12481ccd63b2911f"
+    },
+    {
+      "bits": "4bd521cb6f7c91c0",
+      "encoded": "-1119.1091733251985",
+      "sha256": "bf7adff7832c4384509865a5f0725c7fb071031fc88e093207a7aeaa30870062"
+    },
+    {
+      "bits": "c197810c5db74cf1",
+      "encoded": "-5.8435198942630136e+237",
+      "sha256": "8597f9423ddd660720a3f3837ca18f92f82df0aa09b2e7a205b2b021e1af85d7"
+    },
+    {
+      "bits": "4eb54393dbf0aa58",
+      "encoded": "1.3587501522734738e+119",
+      "sha256": "4f98641f7ef4de3e8680679fa2314fa7c7cdb892eb000a8182e4195ce80a5537"
+    },
+    {
+      "bits": "e3e383d01c660533",
+      "encoded": "6.502223612617693e-63",
+      "sha256": "56a3150b5c3cc7db952e7bb18d14d460d1454585718bff5fe0b21cc35f40cf62"
+    },
+    {
+      "bits": "1f96136717e2dfaf",
+      "encoded": "-4.302319167212619e-78",
+      "sha256": "18bcc7ec884e145ab18bfab6ca2873425de60ab4f42a461b80084971c5f82ee1"
+    },
+    {
+      "bits": "f9503820aad8cb6e",
+      "encoded": "5.1536507412055294e+225",
+      "sha256": "c85d6504431d92363a5cd9ebd37ed7adb752334512edb9622f055f3d55011abe"
+    },
+    {
+      "bits": "e5da0caeed695c9f",
+      "encoded": "-1.2934550461256992e-157",
+      "sha256": "82870c8a8bcfa3ca6124b8bdb819e9026caca6f606248742e3b6efc3ac80843c"
+    },
+    {
+      "bits": "7ddb595e2675ffc3",
+      "encoded": "-36268162786036010000",
+      "sha256": "0be71b2d6cfc57d23d9b36b8e6ddce3e2a7d1ace0f80bfafc764afc3ed0217a5"
+    },
+    {
+      "bits": "ebd22f86921623f2",
+      "encoded": "-6.364010746871136e+241",
+      "sha256": "23bb285d932461fa440ddca7cb308c22556fa52f9917cb322fb0497c61abc835"
+    },
+    {
+      "bits": "aac3d28ed9f75a02",
+      "encoded": "2.5772447516552474e-297",
+      "sha256": "cc41295f3c02745c14382b32e070b16b7700c15221a7ca327d561b09ff4afbec"
+    },
+    {
+      "bits": "a9c89ec8ecedf720",
+      "encoded": "7.31027767489601e-150",
+      "sha256": "d6ff103edd82113e5538c908e7e0b6b4f8427077175f785623d163bf9214ecad"
+    },
+    {
+      "bits": "696a0a748a8fad11",
+      "encoded": "1.5972321304988238e-223",
+      "sha256": "1469801f9920ab3568b456105182175a9ce836c7b88d6fd7516341bb07089a36"
+    },
+    {
+      "bits": "246bcfab51c6d293",
+      "encoded": "-3.485585238952665e-213",
+      "sha256": "2c690bac71e9752600ffc4d0d3ad0117d871f83d31e32d9fe00cf813256e610a"
+    },
+    {
+      "bits": "7df808a83e7ce757",
+      "encoded": "2.89177862491805e+115",
+      "sha256": "b07a23dcab857d7a0400e7a1be64215fa7f376e65dc2a5aade517ea3af55ccf5"
+    },
+    {
+      "bits": "cee17cb46c88e320",
+      "encoded": "2.983589654716654e-150",
+      "sha256": "add7bb17adbc1244f4945a262a07c460bef7a090789d0673a0183951594f0ce1"
+    },
+    {
+      "bits": "fb332a6cf19cfd60",
+      "encoded": "1.6263012549162056e+159",
+      "sha256": "529e66a3450fde06984bcf97ec25b09a9266deffa7235c09694cd732ec139ddf"
+    },
+    {
+      "bits": "407d19bf18969786",
+      "encoded": "-6.652794276304619e-277",
+      "sha256": "63f3f0ee2fe39e6b99e570f143c61bc5050c076df00ab9e6ff4a14a285ad25de"
+    },
+    {
+      "bits": "722ac1fe15f16faa",
+      "encoded": "-2.7854162759401707e-104",
+      "sha256": "0f45a26229fd79b0dd149cab9d05d2da60a98856099858c430d59819f7213da4"
+    },
+    {
+      "bits": "531de2dd977c4e57",
+      "encoded": "3.665883908104178e+112",
+      "sha256": "3da1e188f4c867a8c215aa7545cbb2f7bd896dc2955b2cf2288c846c6d96c960"
+    },
+    {
+      "bits": "d9cf46836792050d",
+      "encoded": "6.170520338451452e-246",
+      "sha256": "fa1678dee3b4b7ad548aa3006956e332fb7925fc02a30aa4bd44f6c7ec51d34f"
+    },
+    {
+      "bits": "a3956c562f6eca5f",
+      "encoded": "2.7685457679742584e+153",
+      "sha256": "7a67b8aea53f300cb175c1ee73593571e875081b7ebe3cab098c6a356714b901"
+    },
+    {
+      "bits": "2862ff535583fd48",
+      "encoded": "4.1135147241724196e+43",
+      "sha256": "ac96de58e0bd2dc60e3dd3adb9bbe99324e4d81c4aa120116561da8096824176"
+    },
+    {
+      "bits": "debc7cea8d070fc1",
+      "encoded": "-254193.7394957309",
+      "sha256": "ebf2a7d26d050cf9e27a2ab46f7aca32616ef2ce8da81aa2127c2c6fedd42da8"
+    },
+    {
+      "bits": "3259281e1565ccb4",
+      "encoded": "-2.316063303686709e-54",
+      "sha256": "9cafe86830ff03e0fc38dbd71cd1087958be35654c8f79e2dfe7db3d493fb151"
+    },
+    {
+      "bits": "62fdb535aef526c9",
+      "encoded": "-2.5600909247341397e+44",
+      "sha256": "65468f05a083ab2065b6f3ca97e818a0bfd9e56a456aae22368e79d75293d400"
+    },
+    {
+      "bits": "87f2f4e5f5c5210f",
+      "encoded": "8.734158496458054e-236",
+      "sha256": "bb54c5464023a6ddbff9d05759828a4e309427078a8b5f5cdd38bf715f455938"
+    },
+    {
+      "bits": "7ab970c4758aadb8",
+      "encoded": "-1.1112036302557855e-35",
+      "sha256": "a2f87bcc1bdadfb3c3fc076659277bb105d5c88bc9e8dada4e633297f802d85d"
+    },
+    {
+      "bits": "04fe8635c76f87a2",
+      "encoded": "-2.4024108860019615e-142",
+      "sha256": "0e64a0d0aa728749d44007c5b06aed50faa93cd94cf89a710fc12495f5e3e733"
+    },
+    {
+      "bits": "78a78aa00a74de78",
+      "encoded": "1.6474424381545574e+274",
+      "sha256": "3cba9eec32fc4cd5ae11511563d615b51c0c5df849cead675b2a8d31ab61e4d9"
+    },
+    {
+      "bits": "858bb27d648185b4",
+      "encoded": "-1.0963245409809345e-55",
+      "sha256": "2a48543529ec561eec628563070b448c924401a5f2ca78b1a4f9de254c54070a"
+    },
+    {
+      "bits": "30658991474fc818",
+      "encoded": "2.7280484661769443e-189",
+      "sha256": "ee95af440be29028070902e1654e4b1822e199f3f4617a7831669cfa5e264474"
+    },
+    {
+      "bits": "375d3435beadce6c",
+      "encoded": "1.3219761763950904e+216",
+      "sha256": "d329f1a6a0e73b341920f75f9343cb3e65dee09ffc6d39ed38290192924b64b4"
+    },
+    {
+      "bits": "42115f9659049afa",
+      "encoded": "-3.7780963871467e+282",
+      "sha256": "3a96f627d97e149aefc7ae59daa63691433b97c6ad331fcc611ce7e07f0d36a2"
+    },
+    {
+      "bits": "71533ef879215d78",
+      "encoded": "6.155850033616627e+271",
+      "sha256": "2b8818e639b82000365c8eaa0fbfe778bfa121e029abd28d3ac2d7478cde8f79"
+    },
+    {
+      "bits": "40873f524b132df8",
+      "encoded": "-7.680178968837228e+270",
+      "sha256": "22e4a4a1fd4a6f970a02f6fbed9141563e1c4cc72831023c862f9f6095e7ecde"
+    },
+    {
+      "bits": "4993cf125aa07ef4",
+      "encoded": "-1.4033692706609122e+253",
+      "sha256": "8522cc56d066cb63bd32f910e51d30a39ce64349a69caa8471224c23797e4637"
+    },
+    {
+      "bits": "60fccb2ea34cbd79",
+      "encoded": "2.5968939734050133e+278",
+      "sha256": "32521532db190ffc04561150983812c42996261121be3e24699259732c4e0ec9"
+    },
+    {
+      "bits": "57d201d5b2fb2306",
+      "encoded": "4.403510224371509e-279",
+      "sha256": "3ceb805e22347e81138f5315870b474a5009b8b09e69ced984d2f4671cdae70c"
+    },
+    {
+      "bits": "1864e553cb6ea513",
+      "encoded": "4.973839889805257e-214",
+      "sha256": "b8c8a9735dea004c59e610a14ce4e7884ff17047951628c462108ad2cb7257dc"
+    },
+    {
+      "bits": "556ff6713bba8e3f",
+      "encoded": "0.015003647246707589",
+      "sha256": "0eac915bf5072d935aac22feec46ec795c2520ec128ec6a1e8df4b73e3a8a8c7"
+    },
+    {
+      "bits": "bf65fcf15ad83cd4",
+      "encoded": "-6.161284020752718e+97",
+      "sha256": "1422b356302859ec1fa22cbb6235757d40d819016346534582e5cd6a43ae5311"
+    },
+    {
+      "bits": "e147c0a99fd8ba86",
+      "encoded": "-3.0289115287341475e-276",
+      "sha256": "94a583da5c1d51418fb3cb7fe45ca0e3fcefbc345a182ac68e5f0aacc196a4ac"
+    },
+    {
+      "bits": "2b9f836898a1b877",
+      "encoded": "5.0830254153302975e+268",
+      "sha256": "36ef23177b7bc051836c6a2001eb34c2c6d320e419670d961430384e77073ee0"
+    },
+    {
+      "bits": "fd9bf912fe4c4311",
+      "encoded": "1.629474181839341e-225",
+      "sha256": "f59f994f8ffaacf36fad8a6761276c781eeed9a54fa92b70e86ca59a92c4fd31"
+    },
+    {
+      "bits": "90a24a639c9a0fd4",
+      "encoded": "-8.438203112239893e+96",
+      "sha256": "7e7e49753f37e5b6d37475411256a27f1852992ebaed2518ca24ce6382df261c"
+    },
+    {
+      "bits": "722fddcc8b26584f",
+      "encoded": "1.7068145969257547e+74",
+      "sha256": "72056cb2f684e48946cdb3090c8664d76016e8c1023efcc9611fe65a138c581f"
+    },
+    {
+      "bits": "af0aa53ab74de4e5",
+      "encoded": "-6.740000743726907e+182",
+      "sha256": "dd43d7a240aee3bf0ab3d864b63cd5b8e4a6844f6f64449b60e9af4cfb5dce3c"
+    },
+    {
+      "bits": "5ee801e6bbfe42ba",
+      "encoded": "-4.7950259100473925e-28",
+      "sha256": "31427f9a5f971046470600c4c6775e4a140efe3f69ab452025ec50fd1e330e9c"
+    },
+    {
+      "bits": "51622857e0932f37",
+      "encoded": "7.0799521793194075e-43",
+      "sha256": "8234a54217094d273edcfc48f092e92f6f40981325e7dc98997dc27002b4eb07"
+    },
+    {
+      "bits": "69d82d6f59dd3250",
+      "encoded": "2.1843767625271914e+78",
+      "sha256": "ea0d5621d8fbd5d248002b78b0b1294ebbe3a218e324441e937ae1a05c09dee2"
+    },
+    {
+      "bits": "35eaa6786500e319",
+      "encoded": "5.589869236578144e-184",
+      "sha256": "0f2424cd38da4638e9caa96f87d8d13ce4321e510439e1153ce16c879935ebd8"
+    },
+    {
+      "bits": "d20e1c4411aa037d",
+      "encoded": "1.5698741763570886e+294",
+      "sha256": "74a8d686ea34050ad496bad4eaf1f6e92c4f784860ce733139378342baf6d8a3"
+    },
+    {
+      "bits": "11487000a8f93f27",
+      "encoded": "1.238269774898559e-119",
+      "sha256": "b6df88f3a01d556789cfb5b92ed9f6224d3900c98dbe17cc593eb3ce98348c27"
+    },
+    {
+      "bits": "0d2058d9813a6476",
+      "encoded": "1.9905397822569406e+262",
+      "sha256": "ddab87a8ddf56dd261f0d2b935ac160ed3b73e80f4a927da5f1395cb181f6a25"
+    },
+    {
+      "bits": "7b21b8d7b03e72a1",
+      "encoded": "-1.4268663141966496e-147",
+      "sha256": "dc61ef486d6113939166e6cda657505609b471222e9386b443840d7197870d2b"
+    },
+    {
+      "bits": "a2f12d326e02270f",
+      "encoded": "1.130734052237405e-235",
+      "sha256": "ae798db36c7ec0dd4512481a326642bc42547730be6a26a0ba8e82d38757ef5a"
+    },
+    {
+      "bits": "bb0e3c028ec68efe",
+      "encoded": "-4.122040623232177e+301",
+      "sha256": "ec4bf21eee104c27e4230aac2f92a96f1fb4e0ec5d62008933272e277ef5e05f"
+    },
+    {
+      "bits": "81a1bdeda7053868",
+      "encoded": "1.0959937573536662e+194",
+      "sha256": "e181d3d103c9db0f71af2dcfeff672bf950c6d9848b6a5ae2c464dfbcef3b53d"
+    },
+    {
+      "bits": "c1ed1679566d7d31",
+      "encoded": "2.664823803710567e-70",
+      "sha256": "fab7bb52701fabe0e388c162909fba88aa0356b3a23a73e55968d8f041617652"
+    },
+    {
+      "bits": "9d842b06e1e7bba1",
+      "encoded": "-3.49185531756045e-146",
+      "sha256": "dde0a5baf85cd2e98767ece5241698c389d1d34d54c72471c1ea049d481be462"
+    },
+    {
+      "bits": "0281b275abaac897",
+      "encoded": "-4.223801338531488e-194",
+      "sha256": "d0c7272e9a52106ff80575abe8d6fd54b48c7b0d21fd90fa146f8b7cab13645f"
+    },
+    {
+      "bits": "45f72cd147644ab7",
+      "encoded": "-2.366891384741938e-42",
+      "sha256": "8b2e7eeb50980ab518ec537b5d1d2b2165fa2f9bd1584c71d8d002ddd57f135a"
+    },
+    {
+      "bits": "66cd9d83be1f137c",
+      "encoded": "4.659234815198178e+289",
+      "sha256": "16a65ce98117a81d58cd4deda91c76ff8b5022e56692b8c30e62d7d3676180ba"
+    },
+    {
+      "bits": "ccd97ee30ff8af30",
+      "encoded": "3.533946972958902e-74",
+      "sha256": "fc24be847dd6aa621954e19181b866cd61d1c7b9d7a11486fe605e6065cfb3ad"
+    },
+    {
+      "bits": "d884613a05b5aa55",
+      "encoded": "4.785368919530878e+104",
+      "sha256": "a6e6fb5cee77b7cf4fea21e1ad05516c1a6c91e7031a36a4b0140354df46962d"
+    },
+    {
+      "bits": "808448626c00cf29",
+      "encoded": "2.6400759377113444e-107",
+      "sha256": "2b180a26173289772bb46d22a5aabce4084cab71c9b46438f96592ab359cca8a"
+    },
+    {
+      "bits": "2d759ef1b09c42d8",
+      "encoded": "-1.4667061848961813e+117",
+      "sha256": "01a1cc869678c7fe66a3e2474e30b2e76985e6bd52ea1cbac80a5ed5fc28efa8"
+    },
+    {
+      "bits": "1af24ff11c069aee",
+      "encoded": "-6.020448085707749e+224",
+      "sha256": "208fc20a36a68fa3bee6219959c4187dbde8b345a124696146dedf3e9e9312c0"
+    },
+    {
+      "bits": "30f76365b2a43a6b",
+      "encoded": "3.4215729164829e+208",
+      "sha256": "2b8ae8908098f9c22eb1c78b79928a387f10499441975619525e1f50b22f2342"
+    },
+    {
+      "bits": "e49733cae33b26a1",
+      "encoded": "-5.4338628561186065e-149",
+      "sha256": "7617754192e17e59c4ff9d447a08857ec49f64afb0b83696bbe1d4896e1fd2fa"
+    },
+    {
+      "bits": "0e7117ad3582e425",
+      "encoded": "3.7871151284628766e-126",
+      "sha256": "734513e79bc2507e03554593f5cf3e468dc26e38c1fc6203a6567893b7cfdb86"
+    },
+    {
+      "bits": "6464ed0154e85701",
+      "encoded": "3.486254638556134e-302",
+      "sha256": "25062fff187f5a9d7b38553e756d3108aaea37794b842d607ca87c05ce0e4b9d"
+    },
+    {
+      "bits": "3ad9ff779635c317",
+      "encoded": "3.289311171163253e-194",
+      "sha256": "59ee9fbe9f5aba08604daade25ca8c4d3a018a7fdba4484e6c0f830bbe64cf89"
+    },
+    {
+      "bits": "ee68485f44b9e518",
+      "encoded": "9.751389740694162e-189",
+      "sha256": "a190b5f6ea5d6f4c3a7176787547fbed0c297f328f940d3979b68a12dd32855f"
+    },
+    {
+      "bits": "e2ba6056fc95a766",
+      "encoded": "3.207003601647752e+186",
+      "sha256": "4ec0e0d700601ffb017f89e0a9d66926b030acacf8bd8f9268ed55d9e9eafa2e"
+    },
+    {
+      "bits": "f0a11317a69c9f06",
+      "encoded": "8.91650639701878e-277",
+      "sha256": "7240e48112d0b4f6ae91b5a384f0612bc0e461c662fe4ab24e61a59eec718981"
+    },
+    {
+      "bits": "43e26f54501cddac",
+      "encoded": "-1.3955728500372821e-92",
+      "sha256": "a9830ccca70f35b01ed7c7529e5407e862e483384a9307f12776651fcf288366"
+    },
+    {
+      "bits": "9b64b4e50831c14d",
+      "encoded": "3.620961373153063e+66",
+      "sha256": "708cee9f35722424ccb60acce80417d2a910f040bca33d2793a31ad4a192bb59"
+    },
+    {
+      "bits": "f89be01757af6c97",
+      "encoded": "-7.674790249367123e-196",
+      "sha256": "bb32dd1ef6dd30bc814c4f2d4f5a013020a4937698f66e1f05d09b92a1e44884"
+    },
+    {
+      "bits": "948c4f523af276d8",
+      "encoded": "-1.446602255638003e+118",
+      "sha256": "99c2d040c09d3486273b4818d54945ab863be90a97e21b2cdc1fb4f7077f98e9"
+    },
+    {
+      "bits": "629507c0d74ad267",
+      "encoded": "1.3040278367634342e+192",
+      "sha256": "7ea7aed52dc6c16a10470701e21ad892e88f5db36af51041c1ee7a0de996a2c6"
+    },
+    {
+      "bits": "f30f9fffa3784dd2",
+      "encoded": "-2.9313477267970727e+88",
+      "sha256": "e4ab4df2a1b4fca936243f7f891d3051c81678e0de1145acf9bf2d593f671855"
+    },
+    {
+      "bits": "efe77dd64f67863a",
+      "encoded": "9.04872662167769e-27",
+      "sha256": "51c9841e1212bb5d20ea2d88d4b221bfa12b7f76e25637160c0ca1083850ddeb"
+    },
+    {
+      "bits": "7873903b6759128a",
+      "encoded": "-3.729422905393134e-260",
+      "sha256": "1eb2b1ee93c306f9e1acf0bcda6920e91d71a50c51b8573b4316b0deef0b71ef"
+    },
+    {
+      "bits": "f8e6e5e645b7631d",
+      "encoded": "4.1793548848010474e-167",
+      "sha256": "125a09d16b365898b1f3f9f34e831069ff40bc04caa25f2952654907107b0769"
+    },
+    {
+      "bits": "8072ef1a3f135e63",
+      "encoded": "4.5401042200574487e+170",
+      "sha256": "c27460150c87d26b233986776153e717191480af0024ad4f208a02da23f2aede"
+    },
+    {
+      "bits": "c3d70d86999e40a2",
+      "encoded": "-1.0647577674563007e-143",
+      "sha256": "6c9dbd3fecb8f436ca507249b65e5a88505d421d018421c1411e558cd00359f8"
+    },
+    {
+      "bits": "502cef8322f3c6aa",
+      "encoded": "-1.280823712884819e-102",
+      "sha256": "16059458cc47d59ec6fd863bedf454ff7a0246764f873392fcbda460963e0cef"
+    },
+    {
+      "bits": "13a7f3e07b2e2016",
+      "encoded": "4.128894462545802e-202",
+      "sha256": "65b8baf8b33e40db0e6a1722537386f106a2ae2ce7521dfe89a8d60aae7d195c"
+    },
+    {
+      "bits": "0cb6076e8f370980",
+      "encoded": "-1.2817861035899453e-308",
+      "sha256": "c35275b26412f1fd430d292788f98fed2906536086514e51b2ed3802a59fb283"
+    },
+    {
+      "bits": "931ae8790ebef22d",
+      "encoded": "2.355410804418748e-87",
+      "sha256": "d357e37700aef42e39691fa23d574c6403eae7eb77ee1d05fc12043adfc9944a"
+    },
+    {
+      "bits": "f7215b3c6555d854",
+      "encoded": "5.322363171017474e+100",
+      "sha256": "f714598235190d6afaed3d69fba1022dead605b7d57859f301b0944e6367b3f9"
+    },
+    {
+      "bits": "bf91ef90b35ad039",
+      "encoded": "3.2253174611256574e-30",
+      "sha256": "9a0c653c5ec58e2359e85156b6616e853bdadc1f7261c34bf601ca19b9d79643"
+    },
+    {
+      "bits": "f05d4262ce687516",
+      "encoded": "1.7481044401020087e-200",
+      "sha256": "117b2e13f1beaaf030bde86486a8e635e0396e1898abdfdf34388f674ebd0bcf"
+    },
+    {
+      "bits": "785af2d666801f2a",
+      "encoded": "8.584474661516981e-106",
+      "sha256": "b94621ae6177b29d0fd7fb235bf7e4776960f9035f118bb888c3d3119d0495b1"
+    },
+    {
+      "bits": "8f8076983cd38f44",
+      "encoded": "1.8786248792330622e+22",
+      "sha256": "521bf14ba646de489430ecbddcde23dd9a3e5bea8235d623dda60a2d3a633dff"
+    },
+    {
+      "bits": "4885e963e831553b",
+      "encoded": "7.012821432186611e-23",
+      "sha256": "b51962f5dbd8ea9c233f20cf0c24bc0933ff0b7de894c3961dcb7c5068c78af9"
+    },
+    {
+      "bits": "dc946730e2c1729d",
+      "encoded": "-7.952324060504653e-167",
+      "sha256": "6c7360d9950ad157408cd190db2c4579de0342069b51611d5dea686b6395796c"
+    },
+    {
+      "bits": "e58b926c52972880",
+      "encoded": "-6.839627121346459e-308",
+      "sha256": "a0809e562967696aa6cbebd4f4dbc2781d6f8b170d50f6a0532646a204a0a20b"
+    },
+    {
+      "bits": "535891ca5e5bf2d2",
+      "encoded": "-3.7393696575376944e+91",
+      "sha256": "d397addc59a546aa797cd9b6db2b9cd511002d34f8b80ab30437089f0e7b28f7"
+    },
+    {
+      "bits": "d225a3aa1e59390d",
+      "encoded": "5.8005525325998494e-245",
+      "sha256": "279c09ae94751be5c9c3f36a13cb83178169c4965a51f5532542f8c1d8299cb6"
+    },
+    {
+      "bits": "73c84be5712cf914",
+      "encoded": "1.2251479858405802e-207",
+      "sha256": "13235f5bd307f54b08d166bb4b5cf017ec7ef8910fc4bf0604a0f02a7e8e1e69"
+    },
+    {
+      "bits": "8a8d951f98c9b76a",
+      "encoded": "1.193288462060359e+206",
+      "sha256": "af43deb8c945fbce4be8745ae33312474849b5bbe06e0418f678ac31f5522f5d"
+    },
+    {
+      "bits": "1a8b14e301b6893c",
+      "encoded": "4.460141681994932e-17",
+      "sha256": "99d0b243730f81f95dd51c3afe55ab2bb941680aa7924364b7ceccc96a039ca7"
+    },
+    {
+      "bits": "85f77b434061e28c",
+      "encoded": "-1.3143662322055588e-246",
+      "sha256": "5d5d049812a42250d10e3a362355391030b66e3f92202748a14712530f6a8f49"
+    },
+    {
+      "bits": "85258ad918a8633a",
+      "encoded": "1.9848123246600515e-27",
+      "sha256": "8186c348e0bc46b5a850d5c24db127728b46892da51e97611f0a25fd7ce21a4d"
+    },
+    {
+      "bits": "a87a71a3faaba308",
+      "encoded": "4.766260825775299e-267",
+      "sha256": "7778397a61e8f4891d3ec1b869db7603d86a9d8e4994be844a28ab4000c71a5f"
+    },
+    {
+      "bits": "947746c60e8a2a1e",
+      "encoded": "2.3043138467323076e-163",
+      "sha256": "767a394dfd16911bcb32b410691bd6282543090fb8cd3296f6e87913b47c882b"
+    },
+    {
+      "bits": "dbda06a2d548ed52",
+      "encoded": "2.9826799985201292e+91",
+      "sha256": "b1a2148cc8f2cfec8b14571187047d4924b04a486e8130705818caabc5aec8cd"
+    },
+    {
+      "bits": "ee30058522cd0440",
+      "encoded": "2.600163497181817",
+      "sha256": "cb8e1dab0f9ba3b252bf807625326feb6bde3379d49e0e6664b29040bb952d71"
+    },
+    {
+      "bits": "b2dfbced77361ebf",
+      "encoded": "-0.0001152525614401812",
+      "sha256": "185f60ec902d889dc0d850c854cbc689928429bc006d42e4e2e02b703576236c"
+    },
+    {
+      "bits": "7fb9cd43ce42a668",
+      "encoded": "1.3000231349225713e+196",
+      "sha256": "7d3192300b732fe1945c46b76b1925dd7b1cb5614867799d9ee9a78173d79001"
+    },
+    {
+      "bits": "918405bf1ac863fd",
+      "encoded": "-1.0107143847405968e+296",
+      "sha256": "8bb70f87cb68fe949761a3b89183cc6e735b9441f174b53f8b7e65592103a6bc"
+    },
+    {
+      "bits": "6a8f7908a0a70e0b",
+      "encoded": "2.0416061901968965e-255",
+      "sha256": "d77168b48861220a3607bfcca01f36f7483ab4786db8946acb41e31bef713bf9"
+    },
+    {
+      "bits": "0000000000006000",
+      "encoded": "7.120236347223045e-307",
+      "sha256": "08d2cf77c8a0ba8952e2569844f17b132f47c9dc293bfa2e41e25a8fcc141472"
+    },
+    {
+      "bits": "0000000000000001",
+      "encoded": "7.291122019556398e-304",
+      "sha256": "8daab189037e2374bbff8043cceff588ed9ebdff20636ef4553be2795ce782a5"
+    },
+    {
+      "bits": "0000000000002004",
+      "encoded": "8.209073602596753e-289",
+      "sha256": "c621089caa972101161b8b04ee7b755792b5d722ad12c74226cab8808b467314"
+    },
+    {
+      "bits": "0000000000006006",
+      "encoded": "5.641232424577593e-278",
+      "sha256": "339ce47bf3700f1ebf7175febeb53a779793dfc9cbd2a5adb6f05e7e4658a98f"
+    },
+    {
+      "bits": "000000000000700d",
+      "encoded": "5.858190679279809e-244",
+      "sha256": "99ccd6bd9bb38c7b969291bd2f5c61cefb1e3354d52b52cd060a723920afe49f"
+    },
+    {
+      "bits": "000000000000800e",
+      "encoded": "7.678447687145631e-239",
+      "sha256": "2692f812521ec83ff9f9379b1dfa4b5237b53fc460176057212afa5961fbb8a0"
+    },
+    {
+      "bits": "000000000000b00e",
+      "encoded": "6.142758149716505e-238",
+      "sha256": "5f51cbd6223b5eda6abd3e54c6033dca576f303a83b56c2aaff39ab14b503452"
+    },
+    {
+      "bits": "000000000000500f",
+      "encoded": "6.290184345309701e-235",
+      "sha256": "ac38a55f423832f77b925933a638a6ce623d33214851e3d6d5b52b285cf379d8"
+    },
+    {
+      "bits": "000000000000e013",
+      "encoded": "5.940911144672375e-213",
+      "sha256": "a5455299b673168916f1f7c82b886b3817ea57e055b36e35340e13ff1f860423"
+    },
+    {
+      "bits": "0000000000008014",
+      "encoded": "6.083493012144512e-210",
+      "sha256": "59bd43e9b12044cc7fe7a2d30bedd4c607f0d3d7e4858c24ca6aedffc149dc88"
+    },
+    {
+      "bits": "0000000000009016",
+      "encoded": "5.225680706521042e-200",
+      "sha256": "0908b54367cbfd6bd2093f154ac26e4f786f6c7d602982d49031f6922e4eac33"
+    },
+    {
+      "bits": "0000000000003017",
+      "encoded": "5.351097043477547e-197",
+      "sha256": "3676c3fa823aa89a8303750642d184bb1cc6c6162089f9dcbd8273a7295697c9"
+    },
+    {
+      "bits": "000000000000a01d",
+      "encoded": "5.426657103235053e-166",
+      "sha256": "d422723dd2b4d7cb077c1090a61a1ad1ac3630918fdbb19b35d17167c6a1bef2"
+    },
+    {
+      "bits": "0000000000002020",
+      "encoded": "5.966672584960166e-154",
+      "sha256": "f583866df10e62c57d6c0923178c9cd148fc6806b35656458a220cc9fa3b8451"
+    },
+    {
+      "bits": "000000000000f020",
+      "encoded": "4.887898181599368e-150",
+      "sha256": "791e9e5a68f5cbefcdd255262edbd441248078691f5fd55887b692658f5a8fa0"
+    },
+    {
+      "bits": "0000000000006021",
+      "encoded": "6.256509672447191e-148",
+      "sha256": "625aba8ac8a23af7409978df6c24e211b01c763913324c9b1e253a472cc051d0"
+    },
+    {
+      "bits": "0000000000000028",
+      "encoded": "5.075883674631299e-116",
+      "sha256": "e6943526db980ccd1b0f5675fc1096541438182b5b42a2d74a98113637b1d338"
+    },
+    {
+      "bits": "0000000000001029",
+      "encoded": "6.653062250012736e-111",
+      "sha256": "9baaadbce001930a705a2ab966c8c8a9ec47bb30963d31746636928a46b086b0"
+    },
+    {
+      "bits": "000000000000702d",
+      "encoded": "7.854549544476363e-90",
+      "sha256": "ee51b1d8919c75727bd151e5a7028568a9a9be537155e4bfff9b4f169029f39b"
+    },
+    {
+      "bits": "0000000000003037",
+      "encoded": "7.174648137343064e-43",
+      "sha256": "1aecf18f3bb1b84a5b8196b9f42b76ed0a8802977cb1d5ee5373e4e1dff757c5"
+    },
+    {
+      "bits": "000000000000e039",
+      "encoded": "6.310887241768095e-30",
+      "sha256": "4ec3d2f344e50b8171a97230dfbfa69e179acdc476f4e562b457ae9800dfb820"
+    },
+    {
+      "bits": "000000000000203b",
+      "encoded": "6.617444900424222e-24",
+      "sha256": "ab73be10db4e88b6ea4362b216d72e1064f68d1ae26ca2388c791b1c4cb3420e"
+    },
+    {
+      "bits": "000000000000303d",
+      "encoded": "5.684341886080802e-14",
+      "sha256": "9677eaad30d13e811931f83ee8d3f8bc3a6c878393c5c1e70c2f97da06ea64d1"
+    },
+    {
+      "bits": "000000000000703e",
+      "encoded": "5.960464477539063e-8",
+      "sha256": "0dd6cc68908a1263037ea151d636d0a9aeab35f40ef0fed47165ca79b520eee9"
+    },
+    {
+      "bits": "0000000000008045",
+      "encoded": "6.189700196426902e+26",
+      "sha256": "cbca1aeba994afc0237a8eeac2e924b71493636d5f570a1866ec3b9c7570d06d"
+    },
+    {
+      "bits": "0000000000009047",
+      "encoded": "5.316911983139664e+36",
+      "sha256": "527c2b96207a409ac7ce421462d917169475d6d89779f1f77fcc8944a9bfcd35"
+    },
+    {
+      "bits": "0000000000003048",
+      "encoded": "5.444517870735016e+39",
+      "sha256": "be1515a133762b023640a80b0727a6e6967869d079befe2c5571efc6dd600216"
+    },
+    {
+      "bits": "000000000000b04a",
+      "encoded": "5.986310706507379e+51",
+      "sha256": "22b078d89759e55f0e8bd9a9ea2b821bfcf0c743ebaec3ee2e00c5d0c76b9f0b"
+    },
+    {
+      "bits": "000000000000504b",
+      "encoded": "6.129982163463556e+54",
+      "sha256": "6f6ae5ab41723fddd281733dad21810c26a40d107b58b49fd66b6390fe5e9e70"
+    },
+    {
+      "bits": "0000000000002051",
+      "encoded": "6.070840288205404e+82",
+      "sha256": "a2c66cf39655d34f4ffc87b252b2e0aa172ca76612c51e21e7dd4257d5f25f7b"
+    },
+    {
+      "bits": "0000000000000053",
+      "encoded": "6.518515124270356e+91",
+      "sha256": "9b50a6caa815c1068ec74926b936d7f242ea58ad8a2f1b5b43fed6c327c5ccd4"
+    },
+    {
+      "bits": "0000000000008055",
+      "encoded": "7.167183174968974e+103",
+      "sha256": "5edb6d7168593bd6ccfed13f7f763cb7753524e2e6f0a2f3197a6a39adf8cdb5"
+    },
+    {
+      "bits": "0000000000009057",
+      "encoded": "6.156563468186638e+113",
+      "sha256": "7dfbf606679d5f13065080e02f559a901fe8f66bfda807b1c20e96582125d247"
+    },
+    {
+      "bits": "000000000000d058",
+      "encoded": "6.455624695217272e+119",
+      "sha256": "eb8a17a6f7cab847c88a02664dbfb4c32790bc0226bce29f90f91a64594b762a"
+    },
+    {
+      "bits": "0000000000004059",
+      "encoded": "8.263199609878108e+121",
+      "sha256": "0d77cd11a3e75bff78880f3f41adccb470a5674091ddb1c53eeb93fee9b9fb4a"
+    },
+    {
+      "bits": "000000000000005e",
+      "encoded": "6.243497100631985e+144",
+      "sha256": "1370cf9a41341075a0481dafb49d932e68f531a37f0d26d3bf3d959e822a71b8"
+    },
+    {
+      "bits": "0000000000005061",
+      "encoded": "5.623642243178996e+160",
+      "sha256": "dafe1981f64dfbacebe36569bb648435e55ce78d4f284aa22f266dc8f05fab53"
+    },
+    {
+      "bits": "000000000000f061",
+      "encoded": "5.758609657015292e+163",
+      "sha256": "ade51b43b7de432d5633a628f3e3b069153dfdd530d10b967fc490f73d45943b"
+    },
+    {
+      "bits": "0000000000009062",
+      "encoded": "5.896816288783659e+166",
+      "sha256": "6f0344a6372b74640d62abafeb61a1cc80298da34edb366c170a0801b6ec7702"
+    },
+    {
+      "bits": "000000000000d063",
+      "encoded": "6.183260036827614e+172",
+      "sha256": "183ae87e249dfd24f750783c7ceab369523bc5f118b99f020e79c76f0971d119"
+    },
+    {
+      "bits": "0000000000001065",
+      "encoded": "6.483618076376552e+178",
+      "sha256": "be51b4a8a0bafa93889ebcb4b4e445c229a7cf38ca8deb6b68501de1276f5e3c"
+    },
+    {
+      "bits": "000000000000506c",
+      "encoded": "5.386379163185535e+213",
+      "sha256": "95389d1735df655dd9c6c9b446178ea8957a9fa903ca3cf7a42288a50e1d0670"
+    },
+    {
+      "bits": "0000000000002072",
+      "encoded": "5.334411546303884e+241",
+      "sha256": "fa018c623d729c6a02e92c20294d8b1f68df3698068d374fa60a4bedbd8baac8"
+    },
+    {
+      "bits": "000000000000e075",
+      "encoded": "6.150157786156811e+259",
+      "sha256": "0dd1e385341fbabc836c9c9d16d951fa3339054f076bafd8fbfa442e18a1aa63"
+    },
+    {
+      "bits": "000000000000f077",
+      "encoded": "5.282945311356653e+269",
+      "sha256": "c79a3c69da8ee637cc93fc2104d9f7fc819879510f8f2dffb6a8846db87b4b16"
+    },
+    {
+      "bits": "000000000000f07c",
+      "encoded": "6.386688990511104e+293",
+      "sha256": "f1de92839e6b03f14f1ee729fe4a25b9ed623125aff808af2ddd26d1ccec1421"
+    }
+  ],
+  "deal": {
+    "schema": "astra-deal-1",
+    "dealId": "canonical-vertical-tab",
+    "layoutId": "canonical-vertical-tab",
+    "origin": "SYNTHETIC_CANONICAL_TEST",
+    "slotCapacity": 7,
+    "cells": [
+      {
+        "id": "c0",
+        "type": "A\u000b",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 10,
+          "h": 10
+        }
+      },
+      {
+        "id": "c1",
+        "type": "A\u000b",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 20,
+          "y": 0,
+          "w": 10,
+          "h": 10
+        }
+      },
+      {
+        "id": "c2",
+        "type": "A\u000b",
+        "zone": "board",
+        "z": 0,
+        "rect": {
+          "x": 40,
+          "y": 0,
+          "w": 10,
+          "h": 10
+        }
+      }
+    ],
+    "snapshotHash": "92a778e60284a4e0197202d1dd852b1d00c439320c9c1d1ddc5cf7adaa37d68d"
+  },
+  "snapshotEncoded": "[\"ASTRA_CONTENT_V1\",\"astra-deal-1\",\"canonical-vertical-tab\",\"SYNTHETIC_CANONICAL_TEST\",7,[[\"c0\",\"A\\u000b\",\"board\",0,0,10,10,0,null,null],[\"c1\",\"A\\u000b\",\"board\",20,0,10,10,0,null,null],[\"c2\",\"A\\u000b\",\"board\",40,0,10,10,0,null,null]]]",
+  "snapshotHash": "92a778e60284a4e0197202d1dd852b1d00c439320c9c1d1ddc5cf7adaa37d68d"
+}
