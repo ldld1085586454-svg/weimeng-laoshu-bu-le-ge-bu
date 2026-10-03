@@ -1,0 +1,243 @@
+{
+  "schema": "godot-source-manifest-v1",
+  "sourceCommit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+  "sourceRoot": "<read-only-js-source-root>",
+  "sourceReadOnly": true,
+  "audioBuild": {
+    "script": "tools/build-full.js",
+    "scriptSha256": "b7f1cde4edb9efbb95abcf9f08bd99f8f5114e4a84d8e46a36eec57fb02b29ab",
+    "temporaryRoot": "<temporary-audio-build>"
+  },
+  "excluded": [
+    "local-data/social.json",
+    "localStorage",
+    "tiles.png",
+    "JS runtime bundles"
+  ],
+  "files": [
+    {
+      "destination": "data/deals/deal-270.json",
+      "source": "examples/deal-270.json",
+      "sha256": "e7cde69fed0b3d9915e82669c11819113d36872e74c013815f934e7a044f2951",
+      "bytes": 51158,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/deals/deal-270.receipt.json",
+      "source": "examples/deal-270.receipt.json",
+      "sha256": "90d51c8cb2ae6c363ba1f6b113972795979b9cbcd89c747f9de3ab2ee27f0c60",
+      "bytes": 4479,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/deals/deal-540.json",
+      "source": "examples/deal-540.json",
+      "sha256": "19b735e3d483859bad613c455e629ec619f8c1841b00f477159127d64874a9a1",
+      "bytes": 102141,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/deals/deal-540.receipt.json",
+      "source": "examples/deal-540.receipt.json",
+      "sha256": "69c7ddb4ca36a60ae106e5d3c45d43b07a7490aa63ed7bd32e8d14e6ac1cd280",
+      "bytes": 8094,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/deals/deal-720.json",
+      "source": "examples/deal-720.json",
+      "sha256": "d97b07d1eb5d0e5f14ac71717f6ca7253d972fda5e672c6588d9d51cef35ce0a",
+      "bytes": 136243,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/deals/deal-720.receipt.json",
+      "source": "examples/deal-720.receipt.json",
+      "sha256": "e11d21b5de7b90c0bf225160e31609fdad6a96921a3aa79a92f59764abe358a1",
+      "bytes": 10504,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/home.png",
+      "source": "assets/theme/home.png",
+      "sha256": "62c33cb1341303e7cbbcee475df507a633a3656ac2813acc31b394f6b2edeb9a",
+      "bytes": 1137484,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/board.png",
+      "source": "assets/theme/board.png",
+      "sha256": "6633038847e3fccb2e7f953068b5f86e8e02c591a8bf230166fbb536ba90ae44",
+      "bytes": 1184669,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/characters.png",
+      "source": "assets/theme/characters.png",
+      "sha256": "0b124df450fa2c9e96c3c694a4a1f8a7374099d71331681643831b8d52d00631",
+      "bytes": 1059826,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/components.png",
+      "source": "assets/theme/components.png",
+      "sha256": "f8f914156c7a86fb43d2ae91dbfaa533fbf7e7e44d6045006a3f45a18499ad18",
+      "bytes": 496327,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/primary.png",
+      "source": "assets/theme/primary.png",
+      "sha256": "5d7bd36e23711066f0eac78bf922c708a5fa4b5dfa4a8e9282fdaf1082727f35",
+      "bytes": 852858,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/user-cards.png",
+      "source": "assets/theme/user-cards.png",
+      "sha256": "5056d84a520cf0d99bbe99226a4733906747ef6ad558fbbcdd2da1b4b9af7220",
+      "bytes": 1089009,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/manifest.json",
+      "source": "assets/theme/manifest.json",
+      "sha256": "069a4ea1fccafc405320cfb86bb98df1701a2fc46c894eb4851993d280e975ac",
+      "bytes": 4956,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/user-cards-index.json",
+      "source": "assets/theme/user-cards-index.json",
+      "sha256": "0cfb11331047cd99e13a3e3de5ccd9cb57eeae580ebce249566097b404cbea83",
+      "bytes": 3292,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/README.md",
+      "source": "assets/theme/README.md",
+      "sha256": "8c5eb4dedc31d7b4b559f355839d51ab992adbadcb7de0e5779411bae662f2cf",
+      "bytes": 1945,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/fonts/ZCOOLKuaiLe-Regular.ttf",
+      "source": "assets/theme/fonts/ZCOOLKuaiLe-Regular.ttf",
+      "sha256": "812a6fc1fe54b6d73a419245c32dfeba8aa33104d5be90d1cf6af082007cb71d",
+      "bytes": 1514968,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "assets/theme/fonts/OFL.txt",
+      "source": "assets/theme/fonts/OFL.txt",
+      "sha256": "91ef06981e715027e93a66e95fe827db07c4c959dbca164489509febc0dfe400",
+      "bytes": 4397,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "copied source bytes"
+    },
+    {
+      "destination": "data/catalog.json",
+      "source": "src/product/catalog.js",
+      "sha256": "8d7b7b6785e30de34df4a1531a836fe01fba780e78f06e47d1ae6a299da65af4",
+      "bytes": 1652,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "data/profile.json",
+      "source": "src/play/profile.js",
+      "sha256": "4d38932ff6b4f8d95b854fa8f1cbf225e575f335295afe7d5bc4652a9a0cf360",
+      "bytes": 153,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "data/limits.json",
+      "source": "src/product/round.js",
+      "sha256": "fee09c5874b2481a3b559d14a1d8201a7c73af1ff3c7ba46fd2049d61d7a42ae",
+      "bytes": 60,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "data/deals/tutorial.json",
+      "source": "src/product/catalog.js:tutorial()",
+      "sha256": "881b5a9008499de7e0f1dfb5f0cfab6e67ffe87cd43c12c4c216052143a87f61",
+      "bytes": 2415,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "data/default-prefs.json",
+      "source": "ui/product/app.js:23 (motion enabled default)",
+      "sha256": "8b168fe65ab1d1f5140854d4af780ce0dc95314769c1f65925f68271febb9e8a",
+      "bytes": 103,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "data/font-audit.json",
+      "source": "src/product/catalog.js, src/product/social.js, ui/product/app.js, ui/product/art.js, ui/product/input.js, ui/product/theme.js",
+      "sha256": "5e39be68c9243a5d461a9adf36196cf123ebab5da04c75d3f5c86020f4684452",
+      "bytes": 1768,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "explicit JSON export from source module"
+    },
+    {
+      "destination": "assets/audio/click.wav",
+      "source": "tools/build-full.js -> wechat_full/audio/click.wav",
+      "sha256": "71609dab3f62892a7c4ebf9b32317b17b7f2465ce24864436eeb06c88edf6c1d",
+      "bytes": 2910,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "newly synthesized development tones; independent temporary source build"
+    },
+    {
+      "destination": "assets/audio/clear.wav",
+      "source": "tools/build-full.js -> wechat_full/audio/clear.wav",
+      "sha256": "460947510944847bed3df0cc0729135e2b969b9b55c83161ed06eec588a140f1",
+      "bytes": 10628,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "newly synthesized development tones; independent temporary source build"
+    },
+    {
+      "destination": "assets/audio/win.wav",
+      "source": "tools/build-full.js -> wechat_full/audio/win.wav",
+      "sha256": "40773d0c3c07151d400258f97439d8776844343139915b9b2d574e5ba4c621d4",
+      "bytes": 22094,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "newly synthesized development tones; independent temporary source build"
+    },
+    {
+      "destination": "assets/audio/fail.wav",
+      "source": "tools/build-full.js -> wechat_full/audio/fail.wav",
+      "sha256": "a313cc6838a61642202f3eda5a1557738bb189d6a71cfe7bc7118d30d3ca75e2",
+      "bytes": 14596,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "newly synthesized development tones; independent temporary source build"
+    },
+    {
+      "destination": "assets/audio/music.wav",
+      "source": "tools/build-full.js -> wechat_full/audio/music.wav",
+      "sha256": "24cf85d9ea55cb3d061af1f973d6769ae8a4e45e225c292cf98e3fff13afad0c",
+      "bytes": 282284,
+      "commit": "362c61027b7a7f7e573f4b28608e3b3098e2092a",
+      "origin": "newly synthesized development tones; independent temporary source build"
+    }
+  ]
+}

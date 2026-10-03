@@ -1,0 +1,17 @@
+{
+  "schema": "godot-font-audit-v1",
+  "scope": "all Han characters in source UI/product JS + catalog/social JS + product title (superset of UI literals)",
+  "corpusFiles": [
+    "src/product/catalog.js",
+    "src/product/social.js",
+    "ui/product/app.js",
+    "ui/product/art.js",
+    "ui/product/input.js",
+    "ui/product/theme.js"
+  ],
+  "uniqueHanCharacters": 417,
+  "headingFont": "assets/theme/fonts/ZCOOLKuaiLe-Regular.ttf",
+  "headingMissing": [],
+  "requiredCharacters": "一七三上下不与且东个中为主乐了于云交产享京人仅今仍从以们会伪位余作你使例供保信修候停储先免兑入全关具内再准减出击分列则创初到制前剩力功加务动励北区单南卜卡即历压原友发取变口古只可台史合吉同名后吗吧含启告周哪商器四回围国图圈在地坏城域堆境增处备复夏夜天太失头奖好始存学宁它安完实家容对导将小少尚尝局属山川州工已巾布帽幕平年并广庆建开张弹强当录形待微徽态性恢息戏成我或战手执把披拟择持按挑损换据排接提撤支收改放效教数整文新方无日旧早时明昨是显暂更替最有朋服期未本术机材束条来林果标格案棋榜槽模次止正每求江没河油法洗津活派测浏浙海消港游湖湾满澳点版牌状猫献王玩环现理甘生用留疆白的盘目相看真着短研示社神福离秋秒移程究端笔第等简算系素累细终经结绘给络统继绩续网置羊美群者耗聊肃胜能至苏草荣获营蒙藏行被装西要观规视览解誉计认让记设证试话说请调象贡败贵费走起跳转载辽过近返还这进追送选通道配重钮锁门闭队阵陕除难需震露青非面音页项预领频题香验黑默龙",
+  "fallbackRequired": false
+}

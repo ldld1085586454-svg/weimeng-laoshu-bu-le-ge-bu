@@ -1,0 +1,7 @@
+{
+  "sound": true,
+  "music": true,
+  "vibration": true,
+  "bullets": true,
+  "reducedMotion": false
+}

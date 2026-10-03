@@ -1,0 +1,9 @@
+{
+  "id": "community-working-v03",
+  "bufferReturn": "any",
+  "undoSources": [
+    "board"
+  ],
+  "clearUndoAfterAssist": true,
+  "reviveEffect": null
+}
