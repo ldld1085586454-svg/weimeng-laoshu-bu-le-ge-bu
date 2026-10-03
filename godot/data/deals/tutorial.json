@@ -1,0 +1,153 @@
+{
+  "schema": "astra-deal-1",
+  "dealId": "tutorial-reconstruction-012",
+  "layoutId": "tutorial-flat",
+  "origin": "SYNTHETIC_NOT_HISTORICAL",
+  "slotCapacity": 7,
+  "cells": [
+    {
+      "id": "teach-0",
+      "type": "T00",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-1",
+      "type": "T00",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 110,
+        "y": 0,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-2",
+      "type": "T00",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 220,
+        "y": 0,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-3",
+      "type": "T01",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 0,
+        "y": 110,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-4",
+      "type": "T01",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 110,
+        "y": 110,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-5",
+      "type": "T01",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 220,
+        "y": 110,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-6",
+      "type": "T02",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 0,
+        "y": 220,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-7",
+      "type": "T02",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 110,
+        "y": 220,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-8",
+      "type": "T02",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 220,
+        "y": 220,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-9",
+      "type": "T03",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 0,
+        "y": 330,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-10",
+      "type": "T03",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 110,
+        "y": 330,
+        "w": 96,
+        "h": 96
+      }
+    },
+    {
+      "id": "teach-11",
+      "type": "T03",
+      "zone": "board",
+      "z": 0,
+      "rect": {
+        "x": 220,
+        "y": 330,
+        "w": 96,
+        "h": 96
+      }
+    }
+  ]
+}
