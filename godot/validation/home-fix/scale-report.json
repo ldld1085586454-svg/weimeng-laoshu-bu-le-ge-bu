@@ -1,0 +1,229 @@
+{
+	"failures": [],
+	"ok": true,
+	"scenarios": [
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				430,
+				932
+			],
+			"render": [
+				430,
+				932
+			],
+			"requested": [
+				430,
+				932
+			],
+			"screenshot": "home-430x932.png"
+		},
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				390,
+				720
+			],
+			"render": [
+				332,
+				720
+			],
+			"requested": [
+				390,
+				720
+			],
+			"screenshot": "home-390x720.png"
+		},
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				540,
+				960
+			],
+			"render": [
+				442,
+				960
+			],
+			"requested": [
+				540,
+				960
+			],
+			"screenshot": "home-540x960.png"
+		},
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				645,
+				1398
+			],
+			"render": [
+				645,
+				1398
+			],
+			"requested": [
+				645,
+				1398
+			],
+			"screenshot": "home-645x1398.png"
+		},
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				860,
+				1864
+			],
+			"render": [
+				860,
+				1864
+			],
+			"requested": [
+				860,
+				1864
+			],
+			"screenshot": "home-860x1864.png"
+		},
+		{
+			"clicks": [
+				{
+					"id": "menu:rank",
+					"ok": true
+				},
+				{
+					"id": "menu:friends",
+					"ok": true
+				},
+				{
+					"id": "menu:wardrobe",
+					"ok": true
+				},
+				{
+					"id": "menu:profile",
+					"ok": true
+				},
+				{
+					"id": "menu:club",
+					"ok": true
+				}
+			],
+			"client": [
+				932,
+				600
+			],
+			"render": [
+				276,
+				600
+			],
+			"requested": [
+				932,
+				600
+			],
+			"screenshot": "home-932x600.png"
+		}
+	],
+	"scope": "Linux Godot real window sizes and native viewport captures; logical-coordinate mouse input; Windows OS DPI not measured"
+}

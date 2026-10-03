@@ -1,0 +1,14 @@
+✔ runner prints PASS only after the suite returns completion (759.652608ms)
+✔ runner rejects a suite interrupted by a real runtime script error (729.951063ms)
+ℹ injected runtime suite exited 1; no PASS crash marker
+✔ runner rejects a suite that finishes checks but returns false (737.047002ms)
+✔ runner enters the live scene tree before node-based suites (730.798814ms)
+✔ runner waits for suites that observe a native process frame (739.99132ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3814.369604

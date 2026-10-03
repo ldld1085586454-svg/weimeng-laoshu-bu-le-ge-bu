@@ -1,0 +1,96 @@
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+FAIL menu:rank normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:rank hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:rank pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:rank disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:friends normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:friends hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:friends pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:friends disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:topic normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:topic hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:topic pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:topic disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:wardrobe normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:wardrobe hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:wardrobe pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:wardrobe disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:profile normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:profile hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:profile pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:profile disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:club normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:club hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:club pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:club disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:bullet normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:bullet hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:bullet pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:bullet disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:about normal keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:about hover keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:about pressed keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL menu:about disabled keeps the native icon/text drawing region safely inside rounded button: expected true, got false
+FAIL icon-only settings glyph is centered in its 48px hit target: expected 1, got 0
+TEST RESULT suites=1 checks=52 failures=33

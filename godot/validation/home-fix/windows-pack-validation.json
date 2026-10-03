@@ -1,0 +1,7 @@
+{
+	"checks": 29,
+	"engine": "4.6.3-stable (official)",
+	"failures": [],
+	"ok": true,
+	"scope": "PCK mount, resource loads, live packed home startup and graceful cleanup under Linux Godot; not Windows execution"
+}

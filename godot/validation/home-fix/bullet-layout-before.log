@@ -1,0 +1,4 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL banner layout is screen-aware rather than sharing the overlapping fixed y=124 region: expected true, got false
+TEST RESULT suites=1 checks=3 failures=1
