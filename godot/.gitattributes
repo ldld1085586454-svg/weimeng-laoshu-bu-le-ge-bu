@@ -1,0 +1,11 @@
+* text=auto eol=lf
+# Imported resources and witnesses retain the byte identity in source-manifest.json.
+data/** -text
+assets/** -text
+tests/fixtures/** -text
+# Project-authored text stays consistent across Windows and Linux checkouts.
+*.gd text eol=lf
+*.tscn text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+project.godot text eol=lf

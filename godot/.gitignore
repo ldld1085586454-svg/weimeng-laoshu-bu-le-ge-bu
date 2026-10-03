@@ -1,0 +1,6 @@
+.godot/
+.execution/
+.execution-*/
+artifacts/
+dist/
+*.tmp
