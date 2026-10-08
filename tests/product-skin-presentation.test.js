@@ -43,7 +43,8 @@ async function assertWinSkin(app,characters,skin){
  await click(app,'start');await finishChallenge(app);
  assert.equal(app.getInfo().profile.skin,skin);
  characters.length=0;app.frame();
- assert.deepEqual(characters,['character.'+skin],'the win portrait must preserve the equipped skin');
+ assert.equal(characters.at(-1),'character.'+skin,'the foreground win portrait must preserve the equipped skin');
+ assert.ok(characters.every(key=>key==='character.'+skin),'the board companion must also preserve the same equipped skin');
 }
 
 test('skin presentation: a cap earned by a real daily clear remains visible after equipping and clearing again',async t=>{

@@ -7,7 +7,7 @@ function createController(deal,options={}){
  if(options.saved){const r=R.restore(options.saved);if(!r.ok)throw Error('CORRUPT_SAVE:'+r.code);state=r.state;}
  else state=R.createIntegrated(deal,options.roundId);
  const store=options.store||null,nonce=Date.now().toString(36)+'-'+Math.floor(Math.random()*1e9).toString(36);
- function write(s){try{if(store)store.write(R.serialize(s));storageError=null;return true;}catch(e){storageError=String(e.message||e);return false;}}
+ function write(s){try{if(store)store.write(R.serialize(s),{status:s.board.status,pendingPhase:s.pending?.phase||null,reviveUsed:s.used.revive});storageError=null;return true;}catch(e){storageError=String(e.message||e);return false;}}
  function flush(){const ok=write(state);dirty=!ok;return {ok,code:ok?'SAVED':'STORAGE_WRITE_FAILED'};}
  function send(type,extra={},observed=false,roundId=state.roundId){
   if(dirty&&!observed&&!flush().ok)return {ok:false,code:'STORAGE_WRITE_FAILED'};
@@ -19,7 +19,7 @@ function createController(deal,options={}){
  }
  function result(e){
   if(!e||e.roundId!==state.roundId)return {ok:false,code:'WRONG_ROUND'};
-  const kind={ad_close:'AD_CLOSE',share_hide:'SHARE_HIDE',share_return:'SHARE_RETURN',failed:'FAIL',cancelled:'CANCEL'}[e.kind];
+  const kind={ad_close:'AD_CLOSE',share_hide:'SHARE_HIDE',share_return:'SHARE_RETURN',unverified:'INTERRUPT',failed:'FAIL',cancelled:'CANCEL'}[e.kind];
   if(!kind)return {ok:false,code:'INVALID_PROVIDER_EVENT'};
   return send(kind,{token:e.token,...(kind==='AD_CLOSE'&&typeof e.isEnded==='boolean'?{isEnded:e.isEnded}:{})},true,e.roundId);
  }
@@ -33,7 +33,7 @@ function createController(deal,options={}){
  apply:()=>state.pending?send('COMMIT',{token:state.pending.token}):{ok:false,code:'NO_PENDING_REWARD'},
  failApplication:()=>state.pending?send('APPLY_FAILED',{token:state.pending.token},true):{ok:false,code:'NO_PENDING_REWARD'},result};
  // Reloading does not turn a waiting ad or share into earned evidence.
- if(options.saved&&state.pending&&state.pending.phase!=='EARNED')send('INTERRUPT',{token:state.pending.token});
+ if(options.saved&&state.pending&&state.pending.phase!=='EARNED'&&options.recoverVerification!==true)send('INTERRUPT',{token:state.pending.token});
  return api;
 }
 module.exports={createController};

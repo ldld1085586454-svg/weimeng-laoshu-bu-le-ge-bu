@@ -1,0 +1,18 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sheep-game-development@0.13.0 full:release-gate
+> node tools/release-gate-full.js
+
+{
+  "ok": false,
+  "mode": "development",
+  "blockers": [
+    "HISTORICAL_PROFILE",
+    "ART_AUDIO_RELEASE",
+    "OWN_APPID_ADUNIT",
+    "NATIVE_DEVICE",
+    "PRIVACY_PLATFORM",
+    "PRODUCTION_SERVICE"
+  ],
+  "note": "Changing flags is not verification. This delivery is not a production release."
+}

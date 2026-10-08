@@ -2,10 +2,10 @@
 
 // Optional shared artwork. Every unavailable entry leaves the existing Canvas drawing available.
 const KEYS=new Set([
- 'background.home','background.board','character.plain','character.cap','character.scarf','character.grave','character.home','character.win',
+ 'background.home','background.board','character.plain','character.cap','character.scarf','character.grave','character.home','character.win','character.reference',
  'honor.first','honor.king','honor.fast','decoration.laurel','decoration.progress','button.primary','tile.frame',
  ...Array.from({length:15},(_,i)=>'tile.T'+String(i).padStart(2,'0')),
- ...['move','undo','shuffle','revive','rank','friends','topic','wardrobe','profile','club','settings','bullet','locate','back','close'].map(id=>'icon.'+id),
+ ...['move','undo','shuffle','revive','rank','friends','topic','wardrobe','profile','club','settings','bullet','locate','back','close','volume','mute','music','eye','eye_off'].map(id=>'icon.'+id),
 ]);
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const positive=value=>Number.isFinite(value)&&value>0;

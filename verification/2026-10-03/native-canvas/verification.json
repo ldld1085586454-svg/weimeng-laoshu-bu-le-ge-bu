@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "renderer": "@napi-rs/canvas",
+  "pointerDriven": true,
+  "nativeSurfaceResetEveryPresses": 12,
+  "performanceAcceptance": false,
+  "peakRssBytes": 509083648,
+  "tutorialPicks": 12,
+  "dailyPicks": 270,
+  "viewportSizes": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      430,
+      932
+    ],
+    [
+      1280,
+      900
+    ]
+  ],
+  "checks": [
+    "asset decoding",
+    "pointer cancellation",
+    "tutorial",
+    "daily clear",
+    "contribution",
+    "home resume",
+    "undo simulation",
+    "mascot motion"
+  ],
+  "screenshots": [
+    "home-390.png",
+    "home-320.png",
+    "home-430.png",
+    "home-desktop.png",
+    "tutorial-complete.png",
+    "board-390.png",
+    "win-390.png",
+    "home-resume.png",
+    "undo-applied.png",
+    "mascot-tap.png",
+    "mascot-blink.png"
+  ],
+  "browserTested": false,
+  "wechatToolsTested": false,
+  "phoneTested": false
+}

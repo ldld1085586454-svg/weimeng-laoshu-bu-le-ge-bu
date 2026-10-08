@@ -1,0 +1,6 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+function portable(file){const sandbox={module:{exports:{}},console};vm.runInNewContext('Object.hasOwn=undefined;Array.prototype.at=undefined;\n'+fs.readFileSync(path.join(__dirname,'..',file),'utf8'),sandbox);return sandbox.module.exports;}
+test('portable runtime: mascot cues do not require Object.hasOwn',()=>{const mascot=portable('ui/product/mascot.js').createMascot();assert.equal(mascot.play('tap'),true);assert.equal(mascot.play('toString'),false);});
+test('portable runtime: icons do not require Object.hasOwn',()=>{const icons=portable('ui/product/icons.js'),ctx=new Proxy({},{get:()=>()=>{}});assert.equal(icons.drawIcon(ctx,'settings',0,0,24),true);assert.equal(icons.drawIcon(ctx,'toString',0,0,24),false);});
+test('portable runtime: progress queuing does not require Array.at',async()=>{const {createProgressSync}=portable('src/product/progress.js');let revision=0;const sync=createProgressSync({scope:'test',request:async(action,data)=>({revision:++revision,progress:{ticket:{id:data.ticketId},log:data.log,elapsedMs:data.elapsedMs}})});const saved=await sync.save({ticket:{id:'round'},log:'serialized-log',elapsedMs:0});assert.equal(saved.revision,1);sync.destroy();});

@@ -1,0 +1,49 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sheep-game-development@0.13.0 full:stress
+> node tools/full-stress.js
+
+{
+  "version": "0.12",
+  "seed": "full-product-v012-stress-20260918",
+  "rounds": 100,
+  "commands": 5738,
+  "saveReplays": 798,
+  "lateCallbacksRejected": 387,
+  "cancellations": 65,
+  "earnedRetries": 105,
+  "revivals": 100,
+  "randomTerminals": {
+    "WON": 0,
+    "LOST": 100,
+    "PLAYING": 0
+  },
+  "approvedClears": [
+    {
+      "tiles": 270,
+      "picks": 270,
+      "status": "WON",
+      "replay": true
+    },
+    {
+      "tiles": 540,
+      "picks": 540,
+      "status": "WON",
+      "replay": true
+    },
+    {
+      "tiles": 720,
+      "picks": 720,
+      "status": "WON",
+      "replay": true
+    }
+  ],
+  "realAds": false,
+  "note": "混合流程主动制造失败；不是100局全部通关，也不是玩家通关率。",
+  "ok": true
+}
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

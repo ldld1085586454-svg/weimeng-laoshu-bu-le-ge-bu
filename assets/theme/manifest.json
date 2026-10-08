@@ -258,6 +258,9 @@
         "w": 1957,
         "h": 445
       }
+    },
+    "character.reference": {
+      "src": "assets/theme/mascot/reference-cutout-v1.png"
     }
   },
   "fonts": {

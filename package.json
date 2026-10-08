@@ -1,14 +1,16 @@
 {
   "name": "sheep-game-development",
-  "version": "0.12.0-dev.1",
+  "version": "0.13.0",
   "private": true,
   "description": "Unified 2022-style development reconstruction: playable rounds, rewards, social, native WeChat adapter and loopback server; not production.",
   "type": "commonjs",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.13"
   },
   "scripts": {
     "start": "node tools/start-full.js",
+    "online:serve": "node services/online/server.js",
+    "online:test": "node --test tests/product-online-server.test.js tests/product-online-client.test.js tests/product-progress.test.js tests/product-online-ui.test.js tests/product-online-e2e.test.js",
     "build": "node tools/build-full.js",
     "test": "node tools/run-tests.js",
     "generate": "node tools/generate.js",

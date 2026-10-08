@@ -3,8 +3,8 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const files=['src/content-hash.js','src/schema.js','src/layout.js','src/runtime.js','src/play/profile.js','src/play/shuffle.js',
  'src/product/board.js','src/product/effects.js','src/product/round.js','src/product/controller.js','src/product/clock.js',
- 'src/product/catalog.js','src/product/social.js','src/product/client.js','src/product/wechat.js','src/integration/wechat-provider.js',
- 'src/product/art-assets.js','ui/product/input.js','ui/product/theme.js','ui/product/art.js','ui/product/app.js'];
+ 'src/product/catalog.js','src/product/social.js','src/product/client.js','src/product/online-client.js','src/product/progress.js','src/product/wechat.js','src/integration/wechat-provider.js',
+ 'src/product/art-assets.js','ui/product/input.js','ui/product/mascot.js','ui/product/icons.js','ui/product/theme.js','ui/product/art.js','ui/product/app.js'];
 const deals=[270,540,720].map(n=>{const d=require('../examples/deal-'+n+'.json'),r=require('../examples/deal-'+n+'.receipt.json');if(!require('../src/release').verifyRelease(d,r).ok)throw Error('INVALID_DEAL_'+n);return d;});
 const object=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 function within(dir,file){const relative=path.relative(dir,file);return relative!==''&&!path.isAbsolute(relative)&&relative!=='..'&&!relative.startsWith('..'+path.sep);}
@@ -71,7 +71,7 @@ const definitions=files.map(f=>JSON.stringify(f.slice(0,-3))+':function(module,e
 const sounds=Object.fromEntries(Object.entries(audio).map(([k,v])=>[k,'data:audio/wav;base64,'+v.toString('base64')]));
 const fontStyles=artwork.heading?'@font-face{font-family:'+JSON.stringify(artwork.heading.family)+';src:url('+JSON.stringify(artwork.heading.data)+') format("'+(artwork.heading.mime==='font/ttf'?'truetype':'woff2')+'");font-style:normal;font-weight:400;font-display:swap}':'';
 const fontLicense=artwork.licenses?.length?'<script type="application/json" id="font-license">'+inlineJSON(artwork.licenses)+'</script>':'';
-const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2f6e9"><title>羊了个羊 · 每日三消</title><style>
+const html=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2f6e9"><title>卜了个卜 · 每日三消</title><style>
 ${fontStyles}
 :root{--grass:#f2f6e9;--outside:#e6ecdc;--frame:#f5f7eb}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--outside)}body{display:flex;justify-content:center;align-items:center;font-family:system-ui,sans-serif;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}canvas{display:block;width:min(100vw,460px);height:100%;max-height:1040px;background:var(--grass);touch-action:none;outline:none;box-shadow:0 0 0 1px #ced8bb,0 10px 32px #677b4220}#fatal{position:fixed;background:var(--frame);padding:24px;border-radius:12px;max-width:360px;color:#233a27;display:none;white-space:pre-wrap}
 </style>${fontLicense}</head><body data-build-mode="development"><canvas id="game" tabindex="0" aria-label="每日三消游戏">浏览器需要支持 Canvas。</canvas><div id="loading" style="position:fixed;color:#66765a;font:14px system-ui">正在加载…</div><div id="fatal"></div><script>

@@ -1,0 +1,22 @@
+{
+  "back": "res://assets/ui-icons/arrow-left-bold.svg",
+  "settings": "res://assets/ui-icons/gear-bold.svg",
+  "close": "res://assets/ui-icons/x-bold.svg",
+  "move": "res://assets/ui-icons/tray-arrow-down-bold.svg",
+  "undo": "res://assets/ui-icons/arrow-counter-clockwise-bold.svg",
+  "shuffle": "res://assets/ui-icons/shuffle-bold.svg",
+  "revive": "res://assets/ui-icons/heart-bold.svg",
+  "rank": "res://assets/ui-icons/trophy-bold.svg",
+  "friends": "res://assets/ui-icons/users-bold.svg",
+  "topic": "res://assets/ui-icons/sword-bold.svg",
+  "wardrobe": "res://assets/ui-icons/t-shirt-bold.svg",
+  "profile": "res://assets/ui-icons/user-bold.svg",
+  "club": "res://assets/ui-icons/users-three-bold.svg",
+  "locate": "res://assets/ui-icons/map-pin-bold.svg",
+  "bullet": "res://assets/ui-icons/chat-text-bold.svg",
+  "volume": "res://assets/ui-icons/speaker-high-bold.svg",
+  "mute": "res://assets/ui-icons/speaker-slash-bold.svg",
+  "music": "res://assets/ui-icons/music-notes-bold.svg",
+  "eye": "res://assets/ui-icons/eye-bold.svg",
+  "eye_off": "res://assets/ui-icons/eye-slash-bold.svg"
+}
